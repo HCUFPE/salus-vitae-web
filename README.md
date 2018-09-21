@@ -1,27 +1,16 @@
-# SalusVitae
+# Salus Vitae Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.2.
+Salus Vitae é um projeto que visa trazer soluções de software para a área de saúde.
 
-## Development server
+## Sobre o Projeto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+O objetivo do Salus Vitae é de informatizar o processo, minimizar o tempo de checagem e administração medicamentosa. Através de nossa aplicação será possível o enfermeiro/técnico ter a visualização das alterações da prescrição eletrônica daquele paciente, localização por ala do paciente, notificação de horário para administração do medicamento. Com o objetivo de evitar erros como, por exemplo, dosagem de medicamentos, horários e fármacos incorretos.
 
-## Code scaffolding
+# Equipe do Projeto
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Carlos Pessoa, Gabriel Soares, Iago Oliveira, José Vitor Oliveira, Luhan Lacerda, Matheus Braz, Rodolfo Estevam, Rodrigo Ribeiro
 
-## Build
+Equipe de Desenvolvimento Front-End
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+José Vitor, Luhan Lacerda
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
