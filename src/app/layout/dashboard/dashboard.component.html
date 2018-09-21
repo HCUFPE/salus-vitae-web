@@ -32,10 +32,10 @@
     <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
     <hr />
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-md-12">
             <div class="card card-default">
                 <div class="card-header">
-                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+                  <i class="fas fa-medkit"></i> Pacientes
                 </div>
                 <!-- /.card-header -->
                 <app-timeline></app-timeline>
@@ -44,20 +44,19 @@
             <!-- /.card -->
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
+        <!-- <div class="col-lg-4">
             <div class="card card-default mb-3">
                 <div class="card-header">
                     <i class="fa fa-bell fa-fw"></i> Notifications card
                 </div>
-                <!-- /.card-header -->
+
                 <app-notification></app-notification>
-                <!-- /.card-body -->
+
             </div>
-            <!-- /.card -->
 
             <app-chat></app-chat>
-            <!-- /.card .chat-card -->
-        </div>
+
+          </div> -->
         <!-- /.col-lg-4 -->
     </div>
 </div>
