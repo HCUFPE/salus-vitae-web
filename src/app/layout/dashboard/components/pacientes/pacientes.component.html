@@ -1,0 +1,36 @@
+<section class="content-header">
+  <h1>
+    Pacientes
+  </h1>
+</section>
+
+
+<section class="content">
+
+  <div class="panel panel-default" class="col-sm-6 col-xs-12">
+      <table class="table" >
+        <tr>
+              <th>Nome</th>
+              <th>Mãe</th>
+              <th>RG</th>
+              <th>Data Nascimento</th>
+              <th>Data Admissão</th>
+              <th>Peso Admissão</th>
+              <th>Tipo Perfil</th>
+              <th>Alergia</th>
+          </tr>
+          <tr *ngFor="let paciente of pacientes">
+              <!-- <app-paciente [paciente]="paciente"></app-paciente> -->
+              <a [routerLink]="['/pacientes', paciente.id]"><td>{{paciente.nome}}</td></a>
+              <td>{{paciente.nomeMae}}</td>
+              <td>{{paciente.numeroRg}}</td>
+              <td>{{paciente.dataNascimento}}</td>
+              <td>{{paciente.dataAdmissao}}</td>
+              <td>{{paciente.pesoAdmissao}}</td>
+              <td>{{paciente.tipoPerfil}}</td>
+              <td>{{paciente.alergias}}</td>
+            </tr>
+      </table>
+  </div>
+
+</section>
