@@ -1,3 +1,10 @@
-<p>
-  paciente works!
-</p>
+<a [routerLink]="['/pacientes', paciente.id]">
+          <td>{{paciente.nome}}</td>
+          <td>{{paciente.nomeMae}}</td>
+          <td>{{paciente.numeroRg}}</td>
+          <td>{{paciente.dataNascimento}}</td>
+          <td>{{paciente.dataAdmissao}}</td>
+          <td>{{paciente.pesoAdmissao}}</td>
+          <td>{{paciente.tipoPerfil}}</td>
+          <td>{{paciente.alergias}}</td>
+</a>

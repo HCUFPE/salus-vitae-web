@@ -2,8 +2,8 @@ export interface Paciente {
 
   id: string;
   nome: string;
-  dataNascimento: Date;
-  dataAdmissao: Date;
+  dataNascimento: string;
+  dataAdmissao: string;
   tipoPerfil: string;
   numeroRg: string;
   nomeMae: string;
