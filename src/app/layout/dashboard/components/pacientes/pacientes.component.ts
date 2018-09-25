@@ -9,12 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PacientesComponent implements OnInit {
   pacientes: Paciente[];
-
+  filtro: string;
+  
   constructor(private pacienteService: PacientesService) { }
-
+  
   ngOnInit() {
     this.pacienteService.pacientes()
     .subscribe(pacientes => (this.pacientes = pacientes));
   }
-
+  
+  getAlergias(paciente: Paciente) {
+    return paciente.alergias.map(a => a['descricao']).join(', ');
+  }
+  
+  getPacientes(value: string) {
+    return this.pacientes && this.filtro ?
+    this.pacientes.filter(p => p.nome.toLocaleLowerCase().includes(this.filtro.toLocaleLowerCase()) ||
+    p.numeroCpf.includes(this.filtro)) : this.pacientes;
+  }
+  
 }
