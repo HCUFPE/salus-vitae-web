@@ -34,7 +34,7 @@ export const createTranslateLoader = (http: HttpClient) => {
                 deps: [HttpClient]
             }
         }),
-        AppRoutingModule
+        AppRoutingModule,
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],
