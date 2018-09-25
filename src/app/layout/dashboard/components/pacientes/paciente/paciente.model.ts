@@ -9,6 +9,6 @@ export interface Paciente {
   numeroCpf: string;
   nomeMae: string;
   nomePai: string;
-  alergias: [Object];
+  alergias: Object[];
 
 }
