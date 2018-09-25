@@ -1,3 +1,4 @@
+import { PacientesService } from './components/pacientes/pacientes.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
@@ -7,11 +8,12 @@ import { DashboardComponent } from './dashboard.component';
 import {
     TimelineComponent,
     NotificationComponent,
-    ChatComponent
+    ChatComponent,
+    PacienteComponent,
+    PacientesComponent
 } from './components';
 import { StatModule } from '../../shared';
-import { PacientesComponent } from './components/pacientes/pacientes.component';
-import { PacienteComponent } from './components/pacientes/paciente/paciente.component';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
     imports: [
@@ -19,15 +21,19 @@ import { PacienteComponent } from './components/pacientes/paciente/paciente.comp
         NgbCarouselModule.forRoot(),
         NgbAlertModule.forRoot(),
         DashboardRoutingModule,
-        StatModule
+        StatModule,
+        HttpModule
     ],
     declarations: [
         DashboardComponent,
         TimelineComponent,
         NotificationComponent,
         ChatComponent,
-        PacientesComponent,
-        PacienteComponent
+        PacienteComponent,
+        PacientesComponent
+    ],
+    providers: [
+      PacientesService
     ]
 })
 export class DashboardModule {}
