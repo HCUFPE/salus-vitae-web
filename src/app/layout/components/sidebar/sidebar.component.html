@@ -4,7 +4,7 @@
             <i class="fa fa-wheelchair" aria-hidden="true"></i>&nbsp;
             <span>{{ 'Pacientes' | translate }}</span>
         </a>
-        <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <!-- <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Charts' | translate }}</span>
         </a>
@@ -27,8 +27,8 @@
         <a [routerLink]="['/components']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-th-list"></i>&nbsp;
             <span>{{ 'Component' | translate }}</span>
-        </a>
-        <div class="nested-menu">
+        </a> -->
+        <!-- <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <i class="fa fa-plus"></i>&nbsp;
                 <span>{{ 'Menu' | translate }}</span>
@@ -55,21 +55,18 @@
                     </li>
                 </ul>
             </li>
-        </div>
-        <a [routerLink]="['/blank-page']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        </div> -->
+        <!-- <a [routerLink]="['/blank-page']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Blank Page' | translate }}</span>
-        </a>
+        </a> -->
         <!-- <a href="http://www.strapui.com/" class="list-group-item">
             <i class="fa fa-caret-down"></i>&nbsp;
             <span>{{ 'More Themes' | translate }}</span>
         </a> -->
 
         <div class="header-fields">
-            <a (click)="rltAndLtr()" class="list-group-item">
-                <span><i class="fa fa-arrows-h"></i>&nbsp; RTL/LTR</span>
-            </a>
-            <div class="nested-menu">
+            <!-- <div class="nested-menu">
                 <a class="list-group-item" (click)="addExpandClass('languages')">
                     <span><i class="fa fa-language"></i>&nbsp; {{ 'Language' | translate }} <b class="caret"></b></span>
                 </a>
@@ -112,7 +109,7 @@
                         </li>
                     </ul>
                 </li>
-            </div>
+            </div> -->
             <div class="nested-menu">
                 <a class="list-group-item" (click)="addExpandClass('profile')">
                     <span><i class="fa fa-user"></i>&nbsp; John Smith</span>
