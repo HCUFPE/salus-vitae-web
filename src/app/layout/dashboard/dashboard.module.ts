@@ -15,6 +15,7 @@ import {
     PacientesComponent
 } from './components';
 import { StatModule } from '../../shared';
+import { ProntuarioComponent } from './components/prontuario/prontuario.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { StatModule } from '../../shared';
         NotificationComponent,
         ChatComponent,
         PacienteComponent,
-        PacientesComponent
+        PacientesComponent,
+        ProntuarioComponent
     ],
     providers: [
       PacientesService

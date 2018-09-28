@@ -2,7 +2,7 @@
   <div class="row">
     <h1 class="ml-3 mr-auto">Pacientes</h1>
     <div class="col-md-6">
-      <input type="text" placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
+      <input type="autogrow" placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
     </div>
   </div>
 </section>
@@ -29,8 +29,7 @@
           <tr *ngFor="let paciente of getPacientes(); index as i">
             <th scope="row">{{i + 1}}</th>
             <!-- <app-paciente [paciente]="paciente"></app-paciente> -->
-            <a [routerLink]="['/pacientes', paciente.id]">
-              <td>{{paciente.nome}}</td></a>
+            <a [routerLink]="['/pacientes', paciente.id]"><td>{{paciente.nome}}</td></a>
               <td>{{paciente.nomeSocial}}</td>
               <td>{{paciente.sexo}}</td>
               <td>{{paciente.nomeMae}}</td>
