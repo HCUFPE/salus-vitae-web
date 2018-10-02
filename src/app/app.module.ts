@@ -37,7 +37,7 @@ export const createTranslateLoader = (http: HttpClient) => {
             }
         }),
         AppRoutingModule,
-        FormsModule,
+        FormsModule
     ],
     declarations: [AppComponent],
     providers: [AuthGuard],

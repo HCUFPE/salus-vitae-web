@@ -6,16 +6,14 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
-import { PacientesService } from './components/pacientes/pacientes.service';
+import { ProntuariosService } from './components/prontuarios/prontuarios.service';
 import {
-    TimelineComponent,
     NotificationComponent,
-    ChatComponent,
-    PacienteComponent,
-    PacientesComponent
+    ProntuarioComponent,
+    ProntuariosComponent
 } from './components';
 import { StatModule } from '../../shared';
-import { ProntuarioComponent } from './components/prontuario/prontuario.component';
+import { MedicamentosService } from './components/prontuarios/medicamentos.service';
 
 @NgModule({
     imports: [
@@ -28,15 +26,14 @@ import { ProntuarioComponent } from './components/prontuario/prontuario.componen
     ],
     declarations: [
         DashboardComponent,
-        TimelineComponent,
         NotificationComponent,
-        ChatComponent,
-        PacienteComponent,
-        PacientesComponent,
+        ProntuarioComponent,
+        ProntuariosComponent,
         ProntuarioComponent
     ],
     providers: [
-      PacientesService
+      ProntuariosService,
+      MedicamentosService
     ]
 })
 export class DashboardModule {}

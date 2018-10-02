@@ -1,0 +1,96 @@
+<section class="content-header">
+  <div class="row">
+    <h1 class="ml-3 mr-auto">Prescrição Médica</h1>
+  </div>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-4 align-items-center">
+      <div class="card mb-3">
+        <div class="card-body">
+          <p>Paciente: <b>{{prontuario?.idPaciente?.nome}}</b></p>
+          <div class="search-results">
+            <div>
+              <dl class="details">
+                <dt>Nome:</dt>
+                <dd>{{prontuario?.idPaciente?.nome}}</dd>
+                <dt>DN:</dt>
+                <dd>dd/MM/yyyy</dd>
+                <dt>Admissão:</dt>
+                <dd>dd/MM/yyyy</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 align-items-center">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="search-results">
+            <div class="details">
+              <dt>Registro:</dt>
+              <dd>-</dd>
+              <dt>Mãe:</dt>
+              <dd>dd/MM/yyyy</dd>
+              <dt>Peso Admissão:</dt>
+              <dd>dd/MM/yyyy</dd>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 align-items-center">
+      <div class="card mb-3">
+        <div class="card-body">
+          <dt>Leito:</dt>
+          <dd>6666</dd>
+          <dt>Sus:</dt>
+          <dd>-</dd>
+          <dt>Peso Seco:</dt>
+          <dt>-</dt>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /.row -->
+<section>
+  <div class="row">
+    <div class="col-xl-12 align-items-center">
+      <div class="card mb-3">
+        <div class="card-body">
+          <p>Lorem</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="panel panel-default">
+    <div class="table-responsive-md">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Dosagem</th>
+            <th>Posologia</th>
+            <th>Data de Validade</th>
+            <th>Data de Fabricação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let medicamento of getMedicamentos(); index as i">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{medicamento?.nome}}</td>
+            <td>{{medicamento?.dosagem}}</td>
+            <td></td>
+            <td>{{medicamento?.dataValidade | date:'dd/MM/yyyy'}}</td>
+            <td>{{medicamento?.dataFabricacao | date:'dd/MM/yyyy'}}</td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
