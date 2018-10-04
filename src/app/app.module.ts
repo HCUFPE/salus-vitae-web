@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthGuard } from './shared';
+import { AuthGuard, InputComponent } from './shared';
+import { MessagesComponent } from './shared/messages/messages.component';
 
 
 // AoT requires an exported function for factories
@@ -39,7 +40,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         AppRoutingModule,
         FormsModule
     ],
-    declarations: [AppComponent],
+    declarations: [AppComponent, MessagesComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
