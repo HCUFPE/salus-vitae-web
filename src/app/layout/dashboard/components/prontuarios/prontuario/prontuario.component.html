@@ -71,7 +71,7 @@
   <div class="panel panel-default">
     <div class="table-responsive-md">
       <table class="table table-striped">
-        <thead>
+        <thead colspan="2">
           <tr>
             <th>#</th>
             <th>Nome</th>
@@ -89,8 +89,12 @@
             <td></td>
             <td>{{medicamento?.dataValidade | date:'dd/MM/yyyy'}}</td>
             <td>{{medicamento?.dataFabricacao | date:'dd/MM/yyyy'}}</td>
+            <td>
+              <i class="fa fa-pencil-square-o btn-edit" (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento"></i>
+            </td>
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
+      <app-modal-aprazar [medicamento]="medicamentoModal"></app-modal-aprazar>
+  </div>
+</section>
