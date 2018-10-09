@@ -32,18 +32,24 @@
                         <input type="password" formControlName="senha" class="form-control input-underline input-lg" placeholder="Senha" maxlength="20">
                       </app-input>
                       <div *ngFor="let error of inputInvalid('senha')">
-                          <div [ngSwitch]="error">
-                            <span *ngSwitchCase="'required'">
-                              Senha é obrigatório
-                            </span>
-                            <span *ngSwitchCase="'minlength'">
-                              Senha deve possuir no mínimo 6 caracteres
-                            </span>
-                            <span *ngSwitchCase="'maxlength'">
-                              Senha deve possuir no máximo 20 caracteres
-                            </span>
-                          </div>
+                        <div [ngSwitch]="error">
+                          <span *ngSwitchCase="'required'">
+                            Senha é obrigatório
+                          </span>
+                          <span *ngSwitchCase="'minlength'">
+                            Senha deve possuir no mínimo 6 caracteres
+                          </span>
+                          <span *ngSwitchCase="'maxlength'">
+                            Senha deve possuir no máximo 20 caracteres
+                          </span>
                         </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="isInvalidLogin">
+                      <span>
+                        Login inválido
+                      </span>
                     </div>
                 </div>
                 <button class="btn rounded-btn" type="submit" (click)="login()" [disabled]="loginForm.invalid"> Log in </button>
