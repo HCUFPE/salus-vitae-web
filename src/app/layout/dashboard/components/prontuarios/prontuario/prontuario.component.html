@@ -17,7 +17,7 @@
                 <dt>DN:</dt>
                 <dd>dd/MM/yyyy</dd>
                 <dt>Admissão:</dt>
-                <dd>dd/MM/yyyy</dd>
+                <dd>{{prontuario?.dataAdmissao | date:'dd/MM/yyyy'}}</dd>
               </dl>
             </div>
           </div>
@@ -32,9 +32,9 @@
               <dt>Registro:</dt>
               <dd>-</dd>
               <dt>Mãe:</dt>
-              <dd>dd/MM/yyyy</dd>
+              <dd>{{prontuario?.idPaciente?.nomeMae}}</dd>
               <dt>Peso Admissão:</dt>
-              <dd>dd/MM/yyyy</dd>
+              <dd>{{prontuario?.pesoAdmissao}}</dd>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <dt>Leito:</dt>
-          <dd>6666</dd>
+          <dd>{{prontuario?.leito}}</dd>
           <dt>Sus:</dt>
           <dd>-</dd>
           <dt>Peso Seco:</dt>
@@ -71,7 +71,7 @@
   <div class="panel panel-default">
     <div class="table-responsive-md">
       <table class="table table-striped">
-        <thead>
+        <thead colspan="2">
           <tr>
             <th>#</th>
             <th>Nome</th>
@@ -79,6 +79,7 @@
             <th>Posologia</th>
             <th>Data de Validade</th>
             <th>Data de Fabricação</th>
+            <th>Administrar medicamento</th>
           </tr>
         </thead>
         <tbody>
@@ -89,8 +90,12 @@
             <td></td>
             <td>{{medicamento?.dataValidade | date:'dd/MM/yyyy'}}</td>
             <td>{{medicamento?.dataFabricacao | date:'dd/MM/yyyy'}}</td>
+            <td>
+              <i class="fa fa-pencil-square-o btn-edit" (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento" data-backdrop="static" data-keyboard="false"></i>
+            </td>
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
+      <app-modal-aprazar *ngIf="modalMedicamento" [medicamento]="modalMedicamento" (hideModal)="dismissModal()"></app-modal-aprazar>
+  </div>
+</section>

@@ -27,6 +27,12 @@
               "src/app/styles/app.scss"
             ],
             "scripts": [
+              "src/app/scripts/jquery-slim.min.js",
+              "src/app/scripts/anchor.min.js",
+              "src/app/scripts/clipboard.min.js",
+              "src/app/scripts/holder.min.js",
+              "src/app/scripts/popper.min.js",
+              "src/app/scripts/bootstrap.min.js",
               "node_modules/chart.js/dist/Chart.js"
             ]
           },

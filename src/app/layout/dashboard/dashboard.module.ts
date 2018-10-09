@@ -14,6 +14,7 @@ import {
 } from './components';
 import { StatModule } from '../../shared';
 import { MedicamentosService } from './components/prontuarios/medicamentos.service';
+import { ModalAprazarComponent } from './components/prontuarios/modal-aprazar/modal-aprazar.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,7 @@ import { MedicamentosService } from './components/prontuarios/medicamentos.servi
         NotificationComponent,
         ProntuarioComponent,
         ProntuariosComponent,
-        ProntuarioComponent
+        ModalAprazarComponent
     ],
     providers: [
       ProntuariosService,

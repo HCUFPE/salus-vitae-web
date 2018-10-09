@@ -7,6 +7,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 
+import { NgxMaskModule } from 'ngx-mask';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard, InputComponent } from './shared';
@@ -38,7 +40,8 @@ export const createTranslateLoader = (http: HttpClient) => {
             }
         }),
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        NgxMaskModule.forRoot()
     ],
     declarations: [AppComponent, MessagesComponent],
     providers: [AuthGuard],

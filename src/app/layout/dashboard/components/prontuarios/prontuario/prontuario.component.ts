@@ -16,6 +16,7 @@ export class ProntuarioComponent implements OnInit {
 
   prontuario: Prontuario;
   filtro: string;
+  modalMedicamento: Medicamento;
 
   constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService,
     private medicamentoService: MedicamentosService) { }
@@ -60,6 +61,14 @@ export class ProntuarioComponent implements OnInit {
     }
 
     return prescricao.medicamentos;
+  }
+
+  showModal(medicamento: Medicamento) {
+    this.modalMedicamento = medicamento;
+  }
+
+  dismissModal() {
+    this.modalMedicamento = undefined;
   }
 
 }

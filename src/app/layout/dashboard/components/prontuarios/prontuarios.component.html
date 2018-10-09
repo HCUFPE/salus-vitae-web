@@ -29,13 +29,13 @@
           <tr *ngFor="let prontuario of getProntuarios(); index as i">
             <th scope="row">{{i + 1}}</th>
             <td><a [routerLink]="['/prontuarios', prontuario._id]">{{prontuario.idPaciente.nome}}</a></td>
-            <td>{{prontuario.idPaciente.nomeSocial}}</td>
+            <td>Nome Social</td>
             <td>{{prontuario.idPaciente.sexo}}</td>
             <td>{{prontuario.idPaciente.nomeMae}}</td>
             <td>{{prontuario.idPaciente.nomePai}}</td>
             <td>{{prontuario.idPaciente.numeroRg}}</td>
             <td>{{prontuario.idPaciente.numeroCpf}}</td>
-            <td>{{prontuario.idPaciente.dataNascimento | date:'dd/MM/yyyy'}}</td>
+            <td>Data de Nascimento</td>
             <td>{{getAlergias(prontuario)}}</td>
             </tr>
           </tbody>
