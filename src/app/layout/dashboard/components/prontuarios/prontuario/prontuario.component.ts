@@ -65,7 +65,10 @@ export class ProntuarioComponent implements OnInit {
 
   showModal(medicamento: Medicamento) {
     this.modalMedicamento = medicamento;
+  }
 
+  dismissModal() {
+    this.modalMedicamento = undefined;
   }
 
 }

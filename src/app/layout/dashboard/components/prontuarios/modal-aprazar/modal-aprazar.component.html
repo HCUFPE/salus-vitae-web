@@ -4,23 +4,26 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitulo">Aprazamento do Medicamento</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+        <h5 class="modal-title" id="modalAprazamentoTitulo">Aprazamento do Medicamento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="close()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <p><b>Nome: </b>{{ getNomeRemedio() }}</p>
-        <form action="#">
-          <div class="form-group">
-            <label for="hora-aprazamento">Hora Inicio:</label>
-            <input id="hora-aprazamento" type="number" name="hora-aprazamento" class="form-control">
+        <form [formGroup]="aprazamentoForm">
+          <div class="form-content">
+            <div class="form-group">
+              <label for="hora-aprazamento">Hora Inicio:</label>
+              <!-- <input id="hora-aprazamento" type="number" name="hora-aprazamento" class="form-control"> -->
+              <input formControlName="hora" id="hora-aprazamento" type="text" placeholde="hh:mm" [pattern]="timePattern" [attr.mask]="mask" name="hora-aprazamento" class="form-control">
+            </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()" data-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Salvar</button>
+          <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Fechar</button>
+          <button type="button" class="btn btn-primary" [disabled]="aprazamentoForm.invalid" (click)="confirmar()">Salvar</button>
       </div>
     </div>
   </div>

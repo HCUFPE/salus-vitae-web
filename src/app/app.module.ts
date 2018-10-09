@@ -7,9 +7,12 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule } from '@angular/forms';
 
+import { NgxMaskModule } from 'ngx-mask';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthGuard } from './shared';
+import { AuthGuard, InputComponent } from './shared';
+import { MessagesComponent } from './shared/messages/messages.component';
 
 
 // AoT requires an exported function for factories
@@ -37,9 +40,10 @@ export const createTranslateLoader = (http: HttpClient) => {
             }
         }),
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        NgxMaskModule.forRoot()
     ],
-    declarations: [AppComponent],
+    declarations: [AppComponent, MessagesComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
