@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   usuario: Usuario[];
   usuarioLogando: Usuario;
+  isInvalidLogin: boolean;
 
   constructor(public router: Router,
               private fb: FormBuilder,
@@ -52,6 +53,8 @@ export class LoginComponent implements OnInit {
       this.notificationService.notify(`Bem vindo, ${this.loginForm.value.id}`);
       localStorage.setItem('isLoggedin', 'enfermeira');
       this.router.navigate(['dashboard']);
+    } else {
+      this.isInvalidLogin = true;
     }
     // if (this.verificarExistencia(this.loginForm.value.id, this.loginForm.value.cpf, this.usuario)) {
     //     this.loginService.login(this.loginForm.value.id, this.loginForm.value.cpf)
