@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 
 import { Medicamento } from '../../../../../models/medicamento.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-aprazar',
@@ -13,25 +12,25 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   @Input() medicamento: Medicamento;
   @Output() hideModal: EventEmitter<void> = new EventEmitter();
   @ViewChild('btnClose') btnClose: ElementRef;
-  aprazamentoForm: FormGroup;
-  timePattern = {'2': { pattern: /[0-2]/ }, '1': { pattern: /[0-1]/ }, '4': { pattern: /[0-4]/ },
-   '5': { pattern: /[0-5]/ }, '9': { pattern: /[0-9]/ } };
-  mask = '29:59';
+  // aprazamentoForm: FormGroup;
+  // timePattern = {'2': { pattern: /[0-2]/ }, '1': { pattern: /[0-1]/ }, '4': { pattern: /[0-4]/ },
+  //  '5': { pattern: /[0-5]/ }, '9': { pattern: /[0-9]/ } };
+  // mask = '29:59';
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor() { }
 
   ngOnInit() {
-    this.aprazamentoForm = this.formBuilder.group({
-      hora: this.formBuilder.control('', [Validators.required, Validators.pattern(/^([01][0-9]|2[0-3]):([0-5][0-9])$/)])
-    });
+    // this.aprazamentoForm = this.formBuilder.group({
+    //   hora: this.formBuilder.control('', [Validators.required, Validators.pattern(/^([01][0-9]|2[0-3]):([0-5][0-9])$/)])
+    // });
 
-    this.aprazamentoForm.get('hora').valueChanges.subscribe((value: string) => {
-      if (value.charAt(0) === '2') {
-        this.mask = '24:59';
-      } else {
-        this.mask = '29:59';
-      }
-    });
+    // this.aprazamentoForm.get('hora').valueChanges.subscribe((value: string) => {
+    //   if (value.charAt(0) === '2') {
+    //     this.mask = '24:59';
+    //   } else {
+    //     this.mask = '29:59';
+    //   }
+    // });
   }
 
   getNomeRemedio() {
@@ -54,7 +53,6 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
 
   confirmar() {
     if (confirm('Você tem certeza sobre o aprazamento?')) {
-      console.log();
       this.btnClose.nativeElement.click();
     }
   }
