@@ -2,8 +2,12 @@
     <div class="list-group">
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-wheelchair" aria-hidden="true"></i>&nbsp;
-            <span>{{ 'Pacientes' | translate }}</span>
+            <span>{{ 'Prontuários' | translate }}</span>
         </a>
+        <a routerLink="/dashboard/aprazamentos" [routerLinkActive]="['router-link-active']" class="list-group-item">
+          <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;
+          <span>{{ 'Aprazamentos' | translate }}</span>
+      </a>
 
         <div class="header-fields">
             <div class="nested-menu">

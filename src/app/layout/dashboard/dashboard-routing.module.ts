@@ -9,7 +9,8 @@ const routes: Routes = [
   },
   { path: 'prontuarios', children: [
     { path: ':id', component: ProntuarioComponent }
-  ]}
+  ]},
+    { path: 'aprazamentos', loadChildren: './components/aprazamentos/aprazamentos.module#AprazamentosModule' }
 ];
 
 @NgModule({
