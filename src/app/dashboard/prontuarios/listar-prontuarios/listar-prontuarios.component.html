@@ -1,0 +1,45 @@
+<section class="content-header">
+  <div class="row">
+    <h1 class="ml-3 mr-auto">Prontuários</h1>
+    <div class="col-md-6 teste">
+      <input placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="panel panel-default">
+    <div class="table-responsive-md">
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Nome Social</th>
+            <th>Sexo</th>
+            <th>Mãe</th>
+            <th>Pai</th>
+            <th>RG</th>
+            <th>CPF</th>
+            <th>Data Nascimento</th>
+            <th>Alergia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prontuario of getProntuarios(); index as i">
+            <th scope="row">{{i + 1}}</th>
+            <td><a [routerLink]="['/dashboard/prontuarios', prontuario._id]">{{prontuario.idPaciente.nome}}</a></td>
+            <td>Nome Social</td>
+            <td>{{prontuario.idPaciente.sexo}}</td>
+            <td>{{prontuario.idPaciente.nomeMae}}</td>
+            <td>{{prontuario.idPaciente.nomePai}}</td>
+            <td>{{prontuario.idPaciente.numeroRg}}</td>
+            <td>{{prontuario.idPaciente.numeroCpf}}</td>
+            <td>Data de Nascimento</td>
+            <td>{{getAlergias(prontuario)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

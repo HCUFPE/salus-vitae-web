@@ -1,8 +1,7 @@
-import { NotificationService } from './../shared/messages/notification.service';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, ReactiveFormsModule, FormGroup, FormControl, AbstractControl } from '@angular/forms';
-import { routerTransition } from '../router.animations';
+import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 
+import { routerTransition } from '../router.animations';
 import { LoginService } from './login.service';
 import { Usuario } from '../models/usuario.model';
 import { Router } from '@angular/router';
@@ -22,8 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public router: Router,
               private fb: FormBuilder,
-              private loginService: LoginService,
-              private notificationService: NotificationService) { }
+              private loginService: LoginService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -50,7 +48,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.value.id === 'enfermeira' && this.loginForm.value.senha === '123456') {
-      this.notificationService.notify(`Bem vindo, ${this.loginForm.value.id}`);
       localStorage.setItem('isLoggedin', 'enfermeira');
       this.router.navigate(['dashboard']);
     } else {
