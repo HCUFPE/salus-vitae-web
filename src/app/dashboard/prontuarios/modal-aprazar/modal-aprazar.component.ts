@@ -9,6 +9,9 @@ import { Medicamento } from '../../../models/medicamento.model';
 })
 export class ModalAprazarComponent implements OnInit, OnDestroy {
 
+  //Regex Time
+  public timePattern =  {'0': { pattern: new RegExp('\[0-9\]')}};
+  
   @Input() medicamento: Medicamento;
   @Output() hideModal: EventEmitter<void> = new EventEmitter();
   @ViewChild('btnClose') btnClose: ElementRef;
