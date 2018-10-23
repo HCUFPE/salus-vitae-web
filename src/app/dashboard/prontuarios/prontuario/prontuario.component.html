@@ -10,8 +10,8 @@
         <div class="card-body">
           <p>Paciente: <b>{{prontuario?.idPaciente?.nome}}</b></p>
           <div class="search-results">
-            <div>
-              <dl class="details">
+            <div class="details">
+              <dl>
                 <dt>Nome:</dt>
                 <dd>{{prontuario?.idPaciente?.nome}}</dd>
                 <dt>DN:</dt>
@@ -29,12 +29,14 @@
         <div class="card-body">
           <div class="search-results">
             <div class="details">
-              <dt>Registro:</dt>
-              <dd>-</dd>
-              <dt>Mãe:</dt>
-              <dd>{{prontuario?.idPaciente?.nomeMae}}</dd>
-              <dt>Peso Admissão:</dt>
-              <dd>{{prontuario?.pesoAdmissao}}</dd>
+              <dl>
+                <dt>Registro:</dt>
+                <dd>-</dd>
+                <dt>Mãe:</dt>
+                <dd>{{prontuario?.idPaciente?.nomeMae}}</dd>
+                <dt>Peso Admissão:</dt>
+                <dd>{{prontuario?.pesoAdmissao}}</dd>
+              </dl>
             </div>
           </div>
         </div>
@@ -97,5 +99,5 @@
         </table>
       </div>
       <app-modal-aprazar *ngIf="modalMedicamento" [medicamento]="modalMedicamento" (hideModal)="dismissModal()"></app-modal-aprazar>
-  </div>
-</section>
+    </div>
+  </section>

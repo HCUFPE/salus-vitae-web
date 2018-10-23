@@ -1,3 +1,4 @@
+import { Aprazamento } from './../../../models/aprazamento.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cadastrar-aprazamento.component.css']
 })
 export class CadastrarAprazamentoComponent implements OnInit {
+
+  aprazamento: Aprazamento;
 
   constructor() { }
 
