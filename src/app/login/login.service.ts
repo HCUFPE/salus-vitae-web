@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { ErrorHandler } from './../app.error-handles';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
@@ -15,20 +13,18 @@ import { SALUS_API } from './../app.api';
 export class LoginService {
   user: Usuario;
 
-  constructor(private http: Http, private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   isLoggedIn(): boolean {
     return this.user !== undefined;
   }
 
   usuarios(): Observable<Usuario[]> {
-    return this.http.get(`${SALUS_API}/users`)
-    .map(response => response.json())
-    .catch(ErrorHandler.handleError);
+    return this.http.get<Usuario[]>(`${SALUS_API}/users`);
   }
 
   login(id: string, cpf: string): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${SALUS_API}/users/${id}`);
+    return this.http.get<Usuario>(`${SALUS_API}/users/${id}`);
   }
 
 }

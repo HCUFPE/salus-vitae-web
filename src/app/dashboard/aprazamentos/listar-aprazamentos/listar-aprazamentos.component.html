@@ -1,0 +1,41 @@
+<section class="content-header">
+  <div class="row">
+    <h1 class="ml-3 mr-auto">Listar Aprazamentos</h1>
+    <div class="col-md-6">
+      <input placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="panel panel-default">
+    <div class="table-responsive-md">
+      <table class="table table-hover text-center">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Paciente</th>
+            <th>Sexo</th>
+            <th>Leito</th>
+            <th>Data da Prescrição</th>
+            <th>Remédio</th>
+            <th>Posologia</th>
+            <th>Horário para ministração</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let aprazamento of getAprazamentos(); index as i">
+            <th scope="row">{{i + 1}}</th>
+            <td><a [routerLink]="['/dashboard/aprazamentos', aprazamento._id]">{{aprazamento.paciente.nome}}</a></td>
+            <td>{{aprazamento.paciente.sexo}}</td>
+            <td>Leito 14</td>
+            <td>17/12/2018</td>
+            <td>{{aprazamento.medicamento.nome}}</td>
+            <td>{{aprazamento.medicamento.dosagem}} - {{aprazamento.intervalo}} em {{aprazamento.intervalo}} horas</td>
+            <td>{{aprazamento.horario | date:'dd/MM/yyyy hh:mm'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
