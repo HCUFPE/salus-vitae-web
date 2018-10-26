@@ -10,8 +10,8 @@ import { Medicamento } from '../../../models/medicamento.model';
 export class ModalAprazarComponent implements OnInit, OnDestroy {
 
   //Regex Time
-  public timePattern =  {'0': { pattern: new RegExp('\[0-9\]')}};
-  
+  //public timePattern =  {'0': { pattern: new RegExp('\[0-9\]')}};
+  @Input() aprazamento: Date;
   @Input() medicamento: Medicamento;
   @Output() hideModal: EventEmitter<void> = new EventEmitter();
   @ViewChild('btnClose') btnClose: ElementRef;
@@ -46,7 +46,7 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
 
       return nome;
     }
-
+                              
     return 'Não identificado';
   }
 
@@ -55,9 +55,17 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   }
 
   confirmar() {
-    if (confirm('Você tem certeza sobre o aprazamento?')) {
+    let hr:string = (document.getElementById("aprazamento") as HTMLInputElement).value.trim();
+    let regex = new RegExp("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+    
+    if(hr.length==0 || hr.length==undefined){
+        alert("Horário inicial campo obrigatório!");
+    }else if(regex.test(hr)===false){
+      alert("Horário Inválido");
+    }else if (confirm('Você tem certeza sobre o aprazamento?\n\n'+"Horário Aprazado: "+hr)) {
       this.btnClose.nativeElement.click();
     }
+
   }
 
   ngOnDestroy() {
