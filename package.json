@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^6.1.10",
+    "@angular/animations": "^7.0.1",
     "@angular/common": "^6.1.10",
     "@angular/compiler": "^6.1.10",
     "@angular/core": "^6.1.10",
@@ -29,9 +29,12 @@
     "flatpickr": "^4.5.2",
     "font-awesome": "^4.7.0",
     "ng2-charts": "^1.6.0",
+    "ng2-toastr": "^4.1.2",
+    "ng6-toastr": "^6.0.0",
     "ngx-mask": "^6.5.18",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
+    "toastr": "^2.1.4",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

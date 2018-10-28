@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { Prontuario } from '../../../models/prontuario.model';
 import { ProntuariosService } from '../prontuarios.service';
 import { Prescricao } from '../../../models/prescricao.model';
