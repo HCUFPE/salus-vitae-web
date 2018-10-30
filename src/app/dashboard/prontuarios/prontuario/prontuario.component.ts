@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { Prontuario } from '../../../models/prontuario.model';
 import { ProntuariosService } from '../prontuarios.service';
 import { Prescricao } from '../../../models/prescricao.model';
 import { MedicamentosService } from '../medicamentos.service';
 import { Medicamento } from '../../../models/medicamento.model';
+import { Aprazamento } from 'src/app/models/aprazamento.model';
 
 @Component({
   selector: 'app-prontuario',
@@ -14,6 +16,7 @@ import { Medicamento } from '../../../models/medicamento.model';
 export class ProntuarioComponent implements OnInit {
 
   prontuario: Prontuario;
+  aprazamentos: Aprazamento[];
   filtro: string;
   modalMedicamento: Medicamento;
 
@@ -32,6 +35,8 @@ export class ProntuarioComponent implements OnInit {
         prescricao.medicamentos[index] = medicamento;
       });
     });
+
+    this.aprazamentos = [];
   }
 
   getUltimaPrescricao() {
@@ -52,6 +57,10 @@ export class ProntuarioComponent implements OnInit {
     })[0];
   }
 
+  isAprazado(medicamento: Medicamento) {
+    return this.aprazamentos.filter(a => a.medicamento._id === medicamento._id).length > 0;
+  }
+
   getMedicamentos() {
     const prescricao: Prescricao = this.getUltimaPrescricao();
 
@@ -66,7 +75,9 @@ export class ProntuarioComponent implements OnInit {
     this.modalMedicamento = medicamento;
   }
 
-  dismissModal() {
+  dismissModal(aprazamento) {
+    this.aprazamentos.push(aprazamento);
+
     this.modalMedicamento = undefined;
   }
 

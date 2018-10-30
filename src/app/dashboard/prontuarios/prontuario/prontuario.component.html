@@ -93,11 +93,16 @@
             <td>{{medicamento?.dataValidade | date:'dd/MM/yyyy'}}</td>
             <td>{{medicamento?.dataFabricacao | date:'dd/MM/yyyy'}}</td>
             <td>
-              <i class="fa fa-pencil-square-o btn-edit" (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento" data-backdrop="static" data-keyboard="false"></i>
+              <div *ngIf="!isAprazado(medicamento);else jaAprazado">
+                <i class="fa fa-pencil-square-o btn-edit" (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento" data-backdrop="static" data-keyboard="false"></i>
+              </div>
+              <ng-template #jaAprazado>
+                Já aprazado
+              </ng-template>
             </td>
           </tbody>
         </table>
       </div>
-      <app-modal-aprazar *ngIf="modalMedicamento" [medicamento]="modalMedicamento" (hideModal)="dismissModal()"></app-modal-aprazar>
+      <app-modal-aprazar *ngIf="modalMedicamento" [prontuario]="prontuario" [medicamento]="modalMedicamento" (hideModal)="dismissModal($event)"></app-modal-aprazar>
     </div>
   </section>

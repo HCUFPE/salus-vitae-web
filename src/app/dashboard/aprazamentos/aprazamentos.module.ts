@@ -15,7 +15,7 @@ import { DetalhesAprazamentoComponent } from './detalhes-aprazamento/detalhes-ap
     AprazamentosRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   declarations: [DetalhesAprazamentoComponent, ListarAprazamentosComponent, CadastrarAprazamentoComponent],
   providers: [AprazamentosService]

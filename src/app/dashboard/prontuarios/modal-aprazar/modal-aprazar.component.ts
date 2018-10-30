@@ -1,7 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, ViewContainerRef } from '@angular/core';
-import { Medicamento } from '../../../models/medicamento.model';
+
 import { ToastsManager, Toast } from 'ng6-toastr/ng2-toastr';
-import { Router } from '@angular/router';
+import * as moment from 'moment';
+
+import { Medicamento } from '../../../models/medicamento.model';
+import { Prontuario } from '../../../models/prontuario.model';
+import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
+import { Aprazamento } from '../../..//models/aprazamento.model';
+
 @Component({
   selector: 'app-modal-aprazar',
   templateUrl: './modal-aprazar.component.html',
@@ -9,33 +15,16 @@ import { Router } from '@angular/router';
 })
 export class ModalAprazarComponent implements OnInit, OnDestroy {
 
-  //Regex Time
-  //public timePattern =  {'0': { pattern: new RegExp('\[0-9\]')}};
-  @Input() aprazamento: Date;
+  aprazamento: Aprazamento;
+  @Input() prontuario: Prontuario;
   @Input() medicamento: Medicamento;
-  @Output() hideModal: EventEmitter<void> = new EventEmitter();
+  @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
   @ViewChild('btnClose') btnClose: ElementRef;
-  // aprazamentoForm: FormGroup;
-  // timePattern = {'2': { pattern: /[0-2]/ }, '1': { pattern: /[0-1]/ }, '4': { pattern: /[0-4]/ },
-  //  '5': { pattern: /[0-5]/ }, '9': { pattern: /[0-9]/ } };
-  // mask = '29:59';
 
-  constructor(public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private aprazamentoService: AprazamentosService, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
   ngOnInit() {
-
-    // this.aprazamentoForm = this.formBuilder.group({
-    //   hora: this.formBuilder.control('', [Validators.required, Validators.pattern(/^([01][0-9]|2[0-3]):([0-5][0-9])$/)])
-    // });
-
-    // this.aprazamentoForm.get('hora').valueChanges.subscribe((value: string) => {
-    //   if (value.charAt(0) === '2') {
-    //     this.mask = '24:59';
-    //   } else {
-    //     this.mask = '29:59';
-    //   }
-    // });
   }
 
   getNomeRemedio() {
@@ -53,36 +42,52 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.toastr.custom('<span style="color: red"><strong>Operação Cancelada!<strong></span>', null, {enableHTML: true})
-    .then((toast: Toast) => {
-      setTimeout(() => {
-        this.hideModal.emit();
-        this.toastr.dismissToast(toast);
-      }, 2000);
-    });
+    this.hideModal.emit(this.aprazamento);
   }
 
   confirmar() {
-    let hr: string = (document.getElementById("aprazamento") as HTMLInputElement).value.trim();
-    let regex = new RegExp("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+    const hr: string = (document.getElementById('aprazamento') as HTMLInputElement).value.trim();
+    const regex = new RegExp('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$');
+    const dt_aprazamento: string = (document.getElementById('dataaprazar') as HTMLInputElement).value.trim();
+    const now = moment();
+    const date = moment(dt_aprazamento);
+    const dateAfter = moment().add(1, 'days');
 
-    if (hr.length == 0 || hr.length == undefined) {
-      alert("Horário inicial campo obrigatório!");
+    if (hr.length === 0 || hr.length === undefined) {
+      alert('Horário inicial campo obrigatório!');
     } else if (regex.test(hr) === false) {
-      alert("Horário Inválido");
+      alert('Horário Inválido');
+    } else if (dt_aprazamento.length === undefined) {
+      alert('Data inicial campo obrigatório!');
+    } else if (!date.isValid() || date.isBefore(moment()) || date.isAfter(dateAfter)) {
+      alert('Data Inválida');
     } else {
-      if (confirm('Você tem certeza sobre o aprazamento?\n\n' + "Horário Aprazado: " + hr)) {
-        //this.btnClose.nativeElement.click();
-        this.toastr.success('Aprazamento salvo', 'Successo!')
-          .then((toast: Toast) => {
-            setTimeout(() => {
+      if (confirm('Você tem certeza sobre o aprazamento?\n\n' + 'Horário Aprazado: ' + hr + '\nData Aprazada: ' + dt_aprazamento)) {
+        this.aprazamento = { _id: now.unix().toString(), paciente: this.prontuario.idPaciente,
+            horario: now.toDate(), enfermeira: null, medicamento: this.medicamento, isConsumido: false,
+            intervalo: null, isCancelado: false };
+        this.aprazamentoService.aprazar(this.aprazamento)
+        .subscribe((res: boolean) => {
+          if (res) {
+            this.toastr.success('Aprazamento salvo', 'Successo!')
+            .then((toast: Toast) => {
               this.btnClose.nativeElement.click();
               this.toastr.dismissToast(toast);
-            }, 2000);
+            });
+          } else {
+            this.toastr.error('Erro ao aprazar', 'Não foi possível realizar o aprazamento.');
+            this.aprazamento = null;
+          }
+        }, () => {
+          this.toastr.error('Erro ao aprazar', 'Não foi possível realizar o aprazamento.');
+          this.aprazamento = null;
         });
       }
-      
     }
+  }
+
+  isRequesting(): boolean {
+    return this.aprazamento !== undefined && this.aprazamento !== null;
   }
 
   ngOnDestroy() {
