@@ -11,21 +11,22 @@
         </button>
       </div>
       <div class="modal-body">
+      <form (ngSubmit)="confirmar()" #loginForm="ngForm">
         <p><b>Nome: </b>{{ getNomeRemedio() }}</p>
-        <form>
           <div class="form-content">
             <div class="form-group">
-              <label for="hora-aprazamento">Hora Inicio:</label>
-              <input id="hora-aprazamento" type="time" [patterns]="timePattern" mask="00:00" placeholder="00:00" name="hora-aprazamento"
-                class="form-control" />
-              <!-- <input formControlName="hora" id="hora-aprazamento" type="text" placeholde="hh:mm" [pattern]="timePattern" [attr.mask]="mask" name="hora-aprazamento" class="form-control"> -->
+              <label for="aprazamento">Hora Inicio:</label>
+              <input id="aprazamento" type="time" [required]="!aprazamento"
+              name="aprazamento" class="form-control" />
+              <label for="dataaprazar">Data:</label>
+              <input id="dataaprazar" [required]="!dataaprazar"
+              type="date" name="dataaprazar" class="form-control" />
             </div>
           </div>
           <div class="modal-footer">
             <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Fechar</button>
-            <button type="button" class="btn btn-primary" (click)="confirmar()">Salvar</button>
+            <button type="submit" class="btn btn-primary"  [disabled]="!loginForm.form.valid || isRequesting()" >Salvar</button>
           </div>
-
         </form>
       </div>
     </div>

@@ -1,3 +1,4 @@
+
 <section class="content-header">
   <div class="row">
     <h1 class="ml-3 mr-auto">Detalhes Aprazamento</h1>
@@ -40,11 +41,25 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-4 pb-3 pull-right">
-      <div class="col-md-4 h-100">
-        <button class="btn btn-danger">Excluir</button>
+    <div class="col-sm-4 pb-3 align-items-center">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="search-results">
+            <div class="details">
+              <dl>
+                <dt>Justificativa da suspensão:</dt>
+                <dd>-</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- <div class="col-xs-4 pb-3 pull-right">
+      <div class="col-md-4 h-100">
+        <button class="btn btn-danger" (click)="excluir()">Excluir</button>
+      </div>
+    </div> -->
   </div>
 </section>
 <section class="content">
@@ -62,12 +77,13 @@
         <tbody>
           <tr *ngFor="let a of [aprazamento]; index as i">
             <th class="align-middle" scope="row">{{ i + 1 }}</th>
-            <td class="align-middle w-25"><input #horarioInput value="{{ a.horario | date:'dd/MM/yyyy hh:mm' }}" type="text" disabled class="form-control"></td>
-            <td class="align-middle">Não</td>
-            <td class="align-middle"><button (click)="editar($event, horarioInput)" class="btn btn-primary">Editar</button></td>
-          </tr>
-        </tbody>
-      </table>
+            <td class="align-middle w-25"><input #horarioInput ([ngModel])="dt_horario" value="{{ a.horario | date:'dd/MM/yyyy hh:mm' }}" type="text"
+              disabled class="form-control"></td>
+              <td class="align-middle">Não</td>
+              <td class="align-middle"><button type="submit" (click)="editar(horarioInput)" id="btn-action" class="btn btn-primary">{{submitType}}</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</section>
+  </section>

@@ -33,7 +33,8 @@
               "src/app/scripts/holder.min.js",
               "src/app/scripts/popper.min.js",
               "src/app/scripts/bootstrap.min.js",
-              "node_modules/chart.js/dist/Chart.js"
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/moment/min/moment.min.js"
             ]
           },
           "configurations": {

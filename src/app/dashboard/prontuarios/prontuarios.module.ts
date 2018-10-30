@@ -11,6 +11,7 @@ import { ModalAprazarComponent } from './modal-aprazar/modal-aprazar.component';
 import { ProntuariosService } from './prontuarios.service';
 import { MedicamentosService } from './medicamentos.service';
 import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuarios.component';
+import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuar
   declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent],
   providers: [
     ProntuariosService,
-    MedicamentosService
+    MedicamentosService,
+    AprazamentosService
   ]
 })
 export class ProntuariosModule { }
