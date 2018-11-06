@@ -11,16 +11,16 @@
         </button>
       </div>
       <div class="modal-body">
-      <form (ngSubmit)="confirmar()" #loginForm="ngForm">
+      <form (ngSubmit)="confirmar(dt_horario)" #loginForm="ngForm">
         <p><b>Nome: </b>{{ getNomeRemedio() }}</p>
           <div class="form-content">
             <div class="form-group">
+                <label for="dataaprazar">Data:</label>
+                <input id="dataaprazar" [required]="!dataaprazar"
+                type="date" name="dataaprazar" [(ngModel)]="dt_date" class="form-control" />
               <label for="aprazamento">Hora Inicio:</label>
-              <input id="aprazamento" type="time" [required]="!aprazamento"
+              <input id="aprazamento"  [(ngModel)]="dt_horario" type="time" [required]="!aprazamento"
               name="aprazamento" class="form-control" />
-              <label for="dataaprazar">Data:</label>
-              <input id="dataaprazar" [required]="!dataaprazar"
-              type="date" name="dataaprazar" class="form-control" />
             </div>
           </div>
           <div class="modal-footer">

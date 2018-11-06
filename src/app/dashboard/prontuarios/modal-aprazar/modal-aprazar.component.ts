@@ -16,6 +16,8 @@ import { Aprazamento } from '../../..//models/aprazamento.model';
 export class ModalAprazarComponent implements OnInit, OnDestroy {
 
   aprazamento: Aprazamento;
+  dt_horario:string;
+  dt_date:Date;
   @Input() prontuario: Prontuario;
   @Input() medicamento: Medicamento;
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
@@ -59,20 +61,22 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
       alert('Horário Inválido');
     } else if (dt_aprazamento.length === undefined) {
       alert('Data inicial campo obrigatório!');
-    } else if (!date.isValid() || date.isBefore(moment()) || date.isAfter(dateAfter)) {
+    } else if (!date.isValid() || date.isBefore(dt_aprazamento) ||date.isAfter(dateAfter)) {
       alert('Data Inválida');
     } else {
-      if (confirm('Você tem certeza sobre o aprazamento?\n\n' + 'Horário Aprazado: ' + hr + '\nData Aprazada: ' + dt_aprazamento)) {
+      if (confirm('Você tem certeza sobre o aprazamento?\n\n' + 'Data Aprazado: ' + this.dt_date + '\nHorário Aprazada: ' + this.dt_horario)) {
         this.aprazamento = { _id: now.unix().toString(), paciente: this.prontuario.idPaciente,
             horario: now.toDate(), enfermeira: null, medicamento: this.medicamento, isConsumido: false,
             intervalo: null, isCancelado: false };
         this.aprazamentoService.aprazar(this.aprazamento)
         .subscribe((res: boolean) => {
           if (res) {
-            this.toastr.success('Aprazamento salvo', 'Successo!')
+            this.toastr.success('Aprazamento registrado', 'Successo!')
             .then((toast: Toast) => {
-              this.btnClose.nativeElement.click();
-              this.toastr.dismissToast(toast);
+              setTimeout(()=>{
+                this.btnClose.nativeElement.click();
+                this.toastr.dismissToast(toast);
+              },1500);
             });
           } else {
             this.toastr.error('Erro ao aprazar', 'Não foi possível realizar o aprazamento.');
