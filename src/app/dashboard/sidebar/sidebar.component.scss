@@ -1,4 +1,5 @@
 $topnav-background-color: #222;
+$blue:#007FFF;
 .sidebar {
     border-radius: 0;
     position: fixed;
@@ -34,12 +35,13 @@ $topnav-background-color: #222;
             }
         }
         a:hover {
-            background: darken($topnav-background-color, 5%);
+            background: darken($blue, 20%);
             color: #fff;
         }
         a.router-link-active {
-            background: darken($topnav-background-color, 5%);
+            background: darken($blue, 5%);
             color: #fff;
+            font-weight: bold;
         }
         .header-fields {
             padding-top: 10px;
@@ -172,10 +174,11 @@ $topnav-background-color: #222;
         font-size: 23px;
     }
     &:hover {
-        background: darken($topnav-background-color, 5%);
+        background: darken($blue, 25%);
         color: #fff;
+        font-weight: bold;
     }
-    border-top: 1px solid #999;
+    border-top: 2px solid #fff;
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -ms-transition: all 0.2s ease-in-out;
