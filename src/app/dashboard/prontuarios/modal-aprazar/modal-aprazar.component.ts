@@ -16,8 +16,8 @@ import { Aprazamento } from '../../..//models/aprazamento.model';
 export class ModalAprazarComponent implements OnInit, OnDestroy {
 
   aprazamento: Aprazamento;
-  dt_horario:string;
-  dt_date:Date;
+  dt_horario: string;
+  dt_date: Date;
   @Input() prontuario: Prontuario;
   @Input() medicamento: Medicamento;
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
@@ -36,6 +36,10 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
       if (this.medicamento.dosagem) {
         nome += ` - ${this.medicamento.dosagem}`;
       }
+
+      // if (this.medicamento.frequencia) {
+      //   nome += ` - ${this.medicamento.frequencia}h/${this.medicamento.frequencia}`;
+      // }
 
       return nome;
     }
