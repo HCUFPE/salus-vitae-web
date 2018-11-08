@@ -32,7 +32,7 @@
                 <dt>Posologia:</dt>
                 <dd>{{aprazamento?.medicamento?.dosagem}} - {{aprazamento?.intervalo}}</dd>
                 <dt>Cancelado:</dt>
-                <dd>{{aprazamento?.isCancelado ? 'Sim' : 'Não'}}</dd>
+                <dd id="verif">{{aprazamento?.isCancelado ? 'Sim' : 'Não'}}</dd>
                 <dt>Justificativa do cancelamento:</dt>
                 <dd>{{aprazamento?.justificativa}}</dd>
               </dl>
@@ -41,14 +41,21 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-4 pb-3 align-items-center">
+    <div class="col-sm-4 pb-3 align-items-center">  
       <div class="card h-100">
         <div class="card-body">
           <div class="search-results">
             <div class="details">
               <dl>
                 <dt>Justificativa da suspensão:</dt>
-                <dd>-</dd>
+                <dd>{{rsusp}}</dd>
+                <br>
+                <div class="form-group" name="jt-suspensao" id="jt-suspensao" >
+                  <textarea id="suspensao" [(ngModel)]="suspensao" class="form-control" name="suspensao" cols="10" rows="10"></textarea> <br>
+                <br>
+                </div>
+                <button (click)="motivo()" type="submit" id="mov" name="mov" class="btn btn-primary save">{{mov}}</button> &nbsp;
+                <button *ngIf="isActive===true" id="close" name="close" (click)="cancel()" class="btn btn-danger">Cancelar</button>
               </dl>
             </div>
           </div>
@@ -59,6 +66,7 @@
       <div class="col-md-4 h-100">
         <button class="btn btn-danger" (click)="excluir()">Excluir</button>
       </div>
+      *ngIf="aprazamento?.isCancelado===true"
     </div> -->
   </div>
 </section>
@@ -70,14 +78,14 @@
           <tr>
             <td>#</td>
             <td>Horário: </td>
-            <td>Já Aprazado: </td>
+            <td>Administrado: </td>
             <td>Editar</td>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let a of [aprazamento]; index as i">
             <th class="align-middle" scope="row">{{ i + 1 }}</th>
-            <td class="align-middle w-25"><input #horarioInput ([ngModel])="dt_horario" value="{{ a.horario | date:'dd/MM/yyyy hh:mm' }}" type="text"
+            <td class="align-middle w-25"><input #horarioInput ([ngModel])="dt_horario" value="{{ a.horario | date:'dd/MM/yyyy hh:mm' }}" type="date-time"
               disabled class="form-control"></td>
               <td class="align-middle">Não</td>
               <td class="align-middle"><button type="submit" (click)="editar(horarioInput)" id="btn-action" class="btn btn-primary">{{submitType}}</button></td>

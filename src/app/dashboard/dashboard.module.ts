@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthGuard } from '../shared/guard/auth.guard';
+import { HistoricoComponent } from './historico/historico.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { AuthGuard } from '../shared/guard/auth.guard';
     declarations: [
         DashboardComponent,
         SidebarComponent,
-        HeaderComponent
+        HeaderComponent,
+        HistoricoComponent
     ],
     providers: [AuthGuard]
 })

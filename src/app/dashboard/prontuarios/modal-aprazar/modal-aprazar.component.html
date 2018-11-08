@@ -1,34 +1,58 @@
 <!-- Modal -->
 <div class="modal fade" id="modalAprazamento" tabindex="-1" role="dialog" aria-labelledby="modalAprazamentoTitulo"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalAprazamentoTitulo">Aprazamento do Medicamento</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="close()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <form (ngSubmit)="confirmar()" #loginForm="ngForm">
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="modalAprazamentoTitulo">Aprazamento do Medicamento</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="confirmar(dt_horario)" #loginForm="ngForm">
         <p><b>Nome: </b>{{ getNomeRemedio() }}</p>
-          <div class="form-content">
-            <div class="form-group">
-              <label for="aprazamento">Hora Inicio:</label>
-              <input id="aprazamento" type="time" [required]="!aprazamento"
-              name="aprazamento" class="form-control" />
-              <label for="dataaprazar">Data:</label>
-              <input id="dataaprazar" [required]="!dataaprazar"
-              type="date" name="dataaprazar" class="form-control" />
+        <div class="form-content">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="aprazamento">Hora Inicial:</label>
+                <input id="aprazamento"  [(ngModel)]="dt_horario" type="time" [required]="!aprazamento"
+                name="aprazamento" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="dataaprazar">Data:</label>
+                <input id="dataaprazar" [required]="!dataaprazar"
+                type="date" name="dataaprazar" [(ngModel)]="dt_date" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label for="input-type">Quantidade de aprazamentos:</label>
+                <div id="input-type">
+                  <div class="col-md-12">
+                    <label class="radio-inline">
+                      <input name="account_type" type="radio" />Dia inteiro
+                    </label>
+                  </div>
+                  <div class="col-md-12">
+                      <label class="radio-inline">
+                      <input name="account_type" type="radio" />Escolher
+                    </label>
+                    <input type="number" value="0" min="0" max="5"/>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Fechar</button>
-            <button type="submit" class="btn btn-primary"  [disabled]="!loginForm.form.valid || isRequesting()" >Salvar</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Fechar</button>
+          <button type="submit" class="btn btn-primary"  [disabled]="!loginForm.form.valid || isRequesting()" >Salvar</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 </div>
