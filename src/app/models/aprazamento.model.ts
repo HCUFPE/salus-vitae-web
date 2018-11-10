@@ -1,13 +1,10 @@
-import { Paciente } from './paciente.model';
 import { Usuario } from './usuario.model';
-import { Medicamento } from './medicamento.model';
+import { Medicamentos } from './medicamentos.model';
 
 export interface Aprazamento {
     _id: string;
-    paciente: Paciente;
     horario: Date;
     enfermeira: Usuario;
-    medicamento: Medicamento;
     isConsumido: boolean;
     intervalo: string;
     isCancelado: boolean;
