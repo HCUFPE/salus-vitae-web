@@ -1,4 +1,8 @@
 $topnav-background-color: #222;
+$blue:#007FFF;
+body{
+    color: $blue;
+}
 :host {
     display: block;
 }
@@ -9,7 +13,7 @@ $topnav-background-color: #222;
     right: 0;
     bottom: 0;
     overflow: auto;
-    background: $topnav-background-color;
+    background: $blue;
     text-align: center;
     color: #fff;
     padding: 3em;
@@ -39,7 +43,8 @@ $topnav-background-color: #222;
         -webkit-border-radius: 50px;
         border-radius: 50px;
         color: rgba(255, 255, 255, 0.8);
-        background: $topnav-background-color;
+        background: $blue;
+        font-weight: bold;
         border: 2px solid rgba(255, 255, 255, 0.8);
         font-size: 18px;
         line-height: 40px;
@@ -89,7 +94,7 @@ $topnav-background-color: #222;
     }
     .user-avatar {
         -webkit-border-radius: 50%;
-        border-radius: 50%;
-        border: 2px solid #fff;
+        border-radius: 52%; 
+        width: 66%;
     }
 }
