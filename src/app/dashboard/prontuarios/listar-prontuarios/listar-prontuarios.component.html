@@ -1,14 +1,43 @@
 <section class="content-header">
   <div class="row">
     <h1 class="ml-6 mr-auto">Prontuários</h1>
-    <div class="col-md-6">
-      <input placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
-    </div>
+    <form class="form-inline md-form form-sm">
+      <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="filtro">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </form>
   </div>
 </section>
-
 <section class="content">
-  <div class="panel panel-default">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card text-white bg-primary mb-3">
+        <div class="card-header" style="border-color: black">Leito 1</div>
+        <div class="card-body">
+          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i>ALEXSANDRO WEVERTON ALVES DA SILVA</p>
+          <p class="card-text">Prontuário:&nbsp;18705575</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-white bg-secondary mb-3">
+        <div class="card-header">Leito 2<br></div>
+        <div class="card-body">
+          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i>ALEXSANDRO WEVERTON ALVES DA SILVA</p>
+          <p class="card-text">Prontuário:&nbsp;18705575</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-white bg-dark mb-3">
+        <div class="card-header">Leito 3<br></div>
+        <div class="card-body">
+          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i>ALEXSANDRO WEVERTON ALVES DA SILVA</p>
+          <p class="card-text">Prontuário:&nbsp;18705575</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="panel panel-default">
     <div class="table-responsive-md">
       <table class="table table-hover text-center">
         <thead>
@@ -41,5 +70,5 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </div> -->
 </section>
