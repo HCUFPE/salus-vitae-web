@@ -1,9 +1,12 @@
-import { Usuario } from './usuario.model';
-import { Medicamento } from './medicamento.model';
+import { Prontuario } from './prontuario.model';
+import { Medicamentos } from './medicamentos.model';
 
 export interface Prescricao {
-    _id: string;
+    prescricao: number;
     dataPrescricao: Date;
-    medicoId: Usuario;
-    medicamentos: any[];
+    tipoPrescricao: string;
+    statusPrescricao: string;
+    codigoProfissional: number;
+    medicamentos: Medicamentos[];
+    prontuario: Prontuario;
 }
