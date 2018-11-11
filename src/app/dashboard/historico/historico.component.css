@@ -1,0 +1,13 @@
+#dtapra{
+    font-size: 12px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.btn.btn-info {
+    font-size: 20px;
+
+    width: 102%;
+    
+    text-align: center;
+}

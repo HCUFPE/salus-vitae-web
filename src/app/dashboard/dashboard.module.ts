@@ -9,6 +9,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthGuard } from '../shared/guard/auth.guard';
 import { HistoricoComponent } from './historico/historico.component';
+import { ModalHistoricoComponent } from './historico/modal-historico/modal-historico.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { HistoricoComponent } from './historico/historico.component';
         DashboardComponent,
         SidebarComponent,
         HeaderComponent,
-        HistoricoComponent
+        HistoricoComponent,
+        ModalHistoricoComponent
     ],
     providers: [AuthGuard]
 })
