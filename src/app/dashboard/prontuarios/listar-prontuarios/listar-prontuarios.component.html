@@ -1,45 +1,37 @@
 <section class="content-header">
   <div class="row">
-    <h1 class="ml-6 mr-auto">Prontuários</h1>
+    <h1 class="ml-3 mr-auto">Prontuários</h1>
     <div class="col-md-6">
-      <input placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
+      <input placeholder="Procurar" class="form-control" [(ngModel)]="filtro" />
     </div>
   </div>
 </section>
 
+<hr />
+
 <section class="content">
-  <div class="panel panel-default">
-    <div class="table-responsive-md">
-      <table class="table table-hover text-center">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nome</th>
-            <th>Nome Social</th>
-            <th>Sexo</th>
-            <th>Mãe</th>
-            <th>Pai</th>
-            <th>RG</th>
-            <th>CPF</th>
-            <th>Data Nascimento</th>
-            <th>Alergia</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let prontuario of getProntuarios(); index as i">
-            <th scope="row">{{i + 1}}</th>
-            <td><a [routerLink]="['/dashboard/prontuarios', prontuario._id]">{{prontuario.idPaciente.nome}}</a></td>
-            <td>Nome Social</td>
-            <td>{{prontuario.idPaciente.sexo}}</td>
-            <td>{{prontuario.idPaciente.nomeMae}}</td>
-            <td>{{prontuario.idPaciente.nomePai}}</td>
-            <td>{{prontuario.idPaciente.numeroRg}}</td>
-            <td>{{prontuario.idPaciente.numeroCpf}}</td>
-            <td>Data de Nascimento</td>
-            <td>{{getAlergias(prontuario)}}</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let prontuario of prontuarios">
+      <a [routerLink]="['/dashboard/prontuarios', prontuario.prontuario]">
+        <div class="card text-white bg-primary mb-4">
+          <div class="card-header text-center" style="border-color: rgb(212, 203, 203);">
+            <h4>Leito&nbsp;{{ prontuario.leito.leito }}</h4>
+          </div>
+          <div class="card-body">
+            <p class="card-title text-left">
+              <i class="fa fa-user fa-fw">&nbsp;</i>{{ prontuario.nomeDoPaciente }}
+            </p>
+            <p class="card-text text-inline">
+              Prontuário:&nbsp;{{ prontuario.prontuario }}
+            </p>
+            <p class="card-text">
+              Data de nascimento:&nbsp;{{ prontuario.dataNascimento | date:'dd/MM/yyyy' }}
+            </p>
+            <p class="card-text">Nome mãe:&nbsp;{{ prontuario.nomeMae }}</p>
+            <p class="card-text">Sexo:&nbsp;{{ prontuario.sexo }}</p>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 </section>

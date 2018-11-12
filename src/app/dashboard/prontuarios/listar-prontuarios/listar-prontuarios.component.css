@@ -1,0 +1,7 @@
+a {
+  text-decoration: none;
+}
+
+.card:hover {
+  background-color: #94c2ec !important;
+}

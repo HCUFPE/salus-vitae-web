@@ -80,6 +80,6 @@ export class ProntuarioComponent implements OnInit {
 
   //   this.modalMedicamento = undefined;
   // }
+  }
 
 }
-

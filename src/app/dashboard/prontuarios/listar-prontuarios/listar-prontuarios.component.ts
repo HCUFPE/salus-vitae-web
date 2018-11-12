@@ -9,14 +9,14 @@ import { ProntuariosService } from '../prontuarios.service';
   styleUrls: ['./listar-prontuarios.component.css']
 })
 export class ListarProntuariosComponent implements OnInit {
-  prontuario: Prontuario[];
+  prontuarios: Prontuario[];
   filtro: string;
 
   constructor(private prontuarioService: ProntuariosService) { }
 
   ngOnInit() {
     this.prontuarioService.prontuarios()
-    .subscribe(prontuario => (this.prontuario = prontuario));
+    .subscribe(prontuarios => (this.prontuarios = prontuarios));
   }
 
   // getAlergias(prontuario: Prontuario) {
@@ -24,7 +24,7 @@ export class ListarProntuariosComponent implements OnInit {
   // }
 
   getProntuarios(value: string) {
-    return this.prontuario && this.filtro ?
-    this.prontuario.filter(p => p.prontuario) : this.prontuario;
+    return this.prontuarios && this.filtro ?
+    this.prontuarios.filter(p => p.prontuario) : this.prontuarios;
   }
 }
