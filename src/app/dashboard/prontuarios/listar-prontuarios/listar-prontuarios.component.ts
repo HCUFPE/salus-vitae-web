@@ -19,14 +19,12 @@ export class ListarProntuariosComponent implements OnInit {
     .subscribe(prontuario => (this.prontuario = prontuario));
   }
 
-  getAlergias(prontuario: Prontuario) {
-    return prontuario.idPaciente.alergias.map(a => a['descricao']).join(', ');
-  }
+  // getAlergias(prontuario: Prontuario) {
+  //   return prontuario.idPaciente.alergias.map(a => a['descricao']).join(', ');
+  // }
 
   getProntuarios(value: string) {
     return this.prontuario && this.filtro ?
-    this.prontuario.filter(p => p.idPaciente.nome.toLocaleLowerCase().includes(this.filtro.toLocaleLowerCase()) ||
-    p.idPaciente.numeroCpf.includes(this.filtro)) : this.prontuario;
+    this.prontuario.filter(p => p.prontuario) : this.prontuario;
   }
-
 }
