@@ -14,7 +14,7 @@ import { Aprazamento } from 'src/app/models/aprazamento.model';
   styleUrls: ['./prontuario.component.css']
 })
 export class ProntuarioComponent implements OnInit {
-
+  dados:boolean=false;
   prontuario: Prontuario;
   aprazamentos: Aprazamento[];
   filtro: string;
@@ -28,7 +28,6 @@ export class ProntuarioComponent implements OnInit {
     .subscribe((prontuario: Prontuario) => {
       this.prontuario = prontuario;
       const prescricao: Prescricao = this.getUltimaPrescricao();
-
       this.medicamentoService.medicamentosById(prescricao.medicamentos)
       .subscribe((medicamento: Medicamento) => {
         const index = prescricao.medicamentos.indexOf(medicamento._id);
@@ -79,6 +78,14 @@ export class ProntuarioComponent implements OnInit {
     this.aprazamentos.push(aprazamento);
 
     this.modalMedicamento = undefined;
+  }
+
+  escApra(apr2){
+    this.dados=false;
+  }
+
+  escDet(apr1){
+    this.dados=true;
   }
 
 }

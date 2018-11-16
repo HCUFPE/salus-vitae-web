@@ -6,12 +6,12 @@ aria-hidden="true">
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="modalAprazamentoTitulo">Aprazamento do Medicamento</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="close()">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="close(loginForm)">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form (ngSubmit)="confirmar(dt_horario)" #loginForm="ngForm">
+      <form (ngSubmit)="confirmar()" #loginForm="ngForm">
         <p><b>Nome: </b>{{ getNomeRemedio() }}</p>
         <div class="form-content">
           <div class="form-group">
@@ -33,14 +33,14 @@ aria-hidden="true">
                 <div id="input-type">
                   <div class="col-md-12">
                     <label class="radio-inline">
-                      <input name="account_type" type="radio" />Dia inteiro
+                      <input name="options" [(ngModel)]="options" [checked]="!options" required [value]="false"  type="radio" />Dia inteiro
                     </label>
                   </div>
                   <div class="col-md-12">
                       <label class="radio-inline">
-                      <input name="account_type" type="radio" />Escolher
+                      <input name="options" [(ngModel)]="options" required [checked]="options" [value]="true"  type="radio" />Escolher
                     </label>
-                    <input type="number" value="0" min="0" max="5"/>
+                    <input type="number" *ngIf="options===true" class="form-control" value="0" min="0" max="5"/>
                   </div>
                 </div>
               </div>
@@ -48,8 +48,8 @@ aria-hidden="true">
           </div>
         </div>
         <div class="modal-footer">
-          <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Fechar</button>
-          <button type="submit" class="btn btn-primary"  [disabled]="!loginForm.form.valid || isRequesting()" >Salvar</button>
+          <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(loginForm)">Fechar</button>
+          <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid || isRequesting()"  >Confirmar</button>
         </div>
       </form>
     </div>

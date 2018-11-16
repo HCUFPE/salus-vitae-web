@@ -6,7 +6,8 @@ import * as moment from 'moment';
 import { Medicamento } from '../../../models/medicamento.model';
 import { Prontuario } from '../../../models/prontuario.model';
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
-import { Aprazamento } from '../../..//models/aprazamento.model';
+import { Aprazamento } from 'src/app/models/aprazamento.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-aprazar',
@@ -18,6 +19,7 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   aprazamento: Aprazamento;
   dt_horario: string;
   dt_date: Date;
+  options:boolean=null;
   @Input() prontuario: Prontuario;
   @Input() medicamento: Medicamento;
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
@@ -47,25 +49,28 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
     return 'Não identificado';
   }
 
-  close() {
-    this.hideModal.emit(this.aprazamento);
+  close(loginForm:NgForm) {
+    loginForm.reset();
+    //this.hideModal.emit(this.aprazamento); 
   }
 
   confirmar() {
-    const hr: string = (document.getElementById('aprazamento') as HTMLInputElement).value.trim();
+    
+    const hr = this.dt_horario.toString().trim();
     const regex = new RegExp('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$');
-    const dt_aprazamento: string = (document.getElementById('dataaprazar') as HTMLInputElement).value.trim();
+    const dt_aprazamento= this.dt_date.toString().trim();
     const now = moment();
-    const date = moment(dt_aprazamento);
+    const before = moment().add(-1,'days');
+    let date = moment(dt_aprazamento);
     const dateAfter = moment().add(1, 'days');
 
     if (hr.length === 0 || hr.length === undefined) {
       alert('Horário inicial campo obrigatório!');
     } else if (regex.test(hr) === false) {
       alert('Horário Inválido');
-    } else if (dt_aprazamento.length === undefined) {
+    }else if (dt_aprazamento.length === 0 || dt_aprazamento === undefined) {
       alert('Data inicial campo obrigatório!');
-    } else if (!date.isValid() || date.isBefore(dt_aprazamento) ||date.isAfter(dateAfter)) {
+    } else if (!date.isValid() || date.isBefore(before) || date.isAfter(dateAfter)) {
       alert('Data Inválida');
     } else {
       if (confirm('Você tem certeza sobre o aprazamento?\n\n' + 'Data Aprazado: ' + this.dt_date + '\nHorário Aprazada: ' + this.dt_horario)) {
@@ -90,8 +95,10 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
           this.toastr.error('Erro ao aprazar', 'Não foi possível realizar o aprazamento.');
           this.aprazamento = null;
         });
+        
       }
     }
+    
   }
 
   isRequesting(): boolean {

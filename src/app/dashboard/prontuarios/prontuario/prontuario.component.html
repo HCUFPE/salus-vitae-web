@@ -16,17 +16,17 @@
                 <dt>Nome Social:</dt>
                 <dd>{{prontuario?.idPaciente?.nome}}</dd>
                 <dt>Data de Nascimento:</dt>
-                <dd>dd/MM/yyyy</dd>
+                <dd>{{prontuario?.idPaciente?.dataNascimento | date:'dd/MM/yyyy'}}</dd>
                 <dt>Sexo:</dt>
-                <dd>-</dd>
+                <dd>{{prontuario?.idPaciente?.sexo}}</dd>
                 <dt>Mãe:</dt>
-                <dd>-</dd>
+                <dd>{{prontuario?.idPaciente?.nomeMae}}</dd>
               </dl>
             </div>
           </div>
-          <hr id="hr-line"/>
-          <a href="#" class="card-link">Detalhes do paciente</a>
-          <a href="#" class="card-link">Aprazamentos</a>
+          <hr id="hr-line" />
+          <a  (click)="escDet(aprazamento)" value="true" class="card-link">Detalhes do paciente</a>
+          <a (click)="escApra(aprazamento)"  value="false" class="card-link">Aprazamentos</a>
         </div>
       </div>
     </div>
@@ -34,7 +34,10 @@
 </section>
 
 <section class="content">
-  <div class="panel panel-default">
+  <div *ngIf="dados===true">
+       Teste
+  </div>
+  <div *ngIf="!dados" class="panel panel-default">
     <div class="table-responsive-md">
       <table class="table table-striped text-center">
         <thead colspan="2">
@@ -43,8 +46,8 @@
             <th>Nome</th>
             <th>Dosagem</th>
             <th>Posologia</th>
-            <th>Hora Início</th>
-            <th>Data</th>
+            <th>Validade</th>
+            <th>Fabricação</th>
             <th>Aprazar medicamento</th>
           </tr>
         </thead>
@@ -57,16 +60,17 @@
             <td>{{medicamento?.dataValidade | date:'dd/MM/yyyy'}}</td>
             <td>{{medicamento?.dataFabricacao | date:'dd/MM/yyyy'}}</td>
             <td>
-              <div *ngIf="!isAprazado(medicamento);else jaAprazado">
-                <i class="fa fa-pencil-square-o btn-edit" (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento" data-backdrop="static" data-keyboard="false"></i>
+              <div *ngIf="!isAprazado(medicamento);else Aprazado">
+                <button (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento"
+                  data-backdrop="static" data-keyboard="false" class="btn btn-primary"><i class="fa fa-edit"></i></button>
               </div>
-              <ng-template #jaAprazado>
-                Já aprazado
+              <ng-template #Aprazado>
+                <strong>Aprazado</strong>
               </ng-template>
             </td>
-          </tbody>
-        </table>
-      </div>
-      <app-modal-aprazar *ngIf="modalMedicamento" [prontuario]="prontuario" [medicamento]="modalMedicamento" (hideModal)="dismissModal($event)"></app-modal-aprazar>
+        </tbody>
+      </table>
     </div>
-  </section>
+    <app-modal-aprazar *ngIf="modalMedicamento" [prontuario]="prontuario" [medicamento]="modalMedicamento" (hideModal)="dismissModal($event)"></app-modal-aprazar>
+  </div>
+</section>
