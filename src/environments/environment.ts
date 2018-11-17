@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  tokenApiRootUrl: 'http://localhost:4200/token',
+  // tslint:disable-next-line:max-line-length
+  apiKeyApiSecret: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTQUxVU19WSVRBRSIsImlhdCI6MTU0MTcxOTk5NSwiYWRtaW4iOiJmYWxzZSJ9.BlzNOZz2Wh5S_Q7F6JnFx-VIyvcGfG8ewNiUQRvJq4TnUZsb-XOIMsgtzs8epj_Gj3QBmJBo5h08jQfpFjb-hg'
+
 };
 
 /*

@@ -1,3 +1,4 @@
+import { Ala } from './../../../models/ala.model';
 import { Component, OnInit } from '@angular/core';
 
 import { Prontuario } from '../../../models/prontuario.model';
@@ -10,6 +11,7 @@ import { ProntuariosService } from '../prontuarios.service';
 })
 export class ListarProntuariosComponent implements OnInit {
   prontuario: Prontuario[];
+  ala: Ala[];
   filtro: string;
 
   constructor(private prontuarioService: ProntuariosService) { }
@@ -17,10 +19,17 @@ export class ListarProntuariosComponent implements OnInit {
   ngOnInit() {
     this.prontuarioService.prontuarios()
     .subscribe(prontuario => (this.prontuario = prontuario));
+    this.getAlas();
   }
 
   getAlergias(prontuario: Prontuario) {
     return prontuario.idPaciente.alergias.map(a => a['descricao']).join(', ');
+  }
+
+  getAlas() {
+   this.prontuarioService.alas()
+   .subscribe(ala => (
+     this.ala = ala));
   }
 
   getProntuarios(value: string) {
