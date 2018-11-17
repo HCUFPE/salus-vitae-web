@@ -4,6 +4,7 @@ import { ToastsManager, Toast } from 'ng6-toastr/ng2-toastr';
 
 import { AprazamentosService } from '../aprazamentos.service';
 import { Aprazamento } from './../../../models/aprazamento.model';
+import { Medicamento } from '../../../models/medicamento.model';
 
 
 @Component({
@@ -15,11 +16,12 @@ export class DetalhesAprazamentoComponent implements OnInit {
 
   aprazamento: Aprazamento;
   dt_horario: Date;
-  submitType: String = 'Editar';
-  mov: String = 'Motivo';
+  //submitType: String = 'Editar';
+  mov: String = '';
   public suspensao: String="";
   rsusp:any="";
   isActive: boolean=false;
+  aprazamentos: Aprazamento[];
 
   constructor(public toastr: ToastsManager, vcr: ViewContainerRef, private route: ActivatedRoute,
     private aprazamentoService: AprazamentosService) {
@@ -31,12 +33,12 @@ export class DetalhesAprazamentoComponent implements OnInit {
       .subscribe((aprazamento: Aprazamento) => this.aprazamento = aprazamento);
     document.getElementById('jt-suspensao').style.display = "none";
   }
-
+/*
   editar(input: HTMLInputElement) {
     
     if (input.disabled) {
-      this.submitType = 'Salvar';
-    } else if (this.submitType === 'Salvar') {
+      this.mov = 'Salvar';
+    } else if (this.mov === 'Salvar') {
       if (confirm('Deseja atualizar o aprazamento?')) {
         this.toastr.success('Aprazamento atualizado', 'Salvo!')
           .then((toast: Toast) => {
@@ -44,7 +46,7 @@ export class DetalhesAprazamentoComponent implements OnInit {
               this.toastr.dismissToast(toast);
             }, 1500);
           });
-        this.submitType = 'Editar';
+        this.mov = '';
       } else {
         input.disabled = !input.disabled;
       }
@@ -59,7 +61,6 @@ export class DetalhesAprazamentoComponent implements OnInit {
       this.toastr.success('Aprazamento excluído', 'Successo!')
         .then((toast: Toast) => {
           setTimeout(() => {
-            window.history.go(-1);
             this.toastr.dismissToast(toast);
           }, 1500);
         });
@@ -73,17 +74,21 @@ export class DetalhesAprazamentoComponent implements OnInit {
     }
 
   }
+*/
+
+isCancelado(){
+    return this.rsusp; 
+}
 
   motivo() {
     
     this.isActive=true;
     document.getElementById('jt-suspensao').style.display = "block";
     this.mov = "Salvar";
-    //let just = (document.getElementById("suspensao") as HTMLInputElement).value;
-    if (this.suspensao.length > 0) {
-
-      if (confirm("Deseja salvar a suspensão?")) {
+    if (this.suspensao.length > 0 || this.suspensao===undefined || this.suspensao===null) {
         
+      if (confirm("Deseja fazer à suspensão?")) {
+        this.isCancelado();
         this.toastr.success('Aprazamento justificado', 'Successo!')
           .then((toast: Toast) => {
             setTimeout(() => {
@@ -93,7 +98,7 @@ export class DetalhesAprazamentoComponent implements OnInit {
         });
 
         this.isActive=false;
-        this.mov = "Motivo";
+        this.mov = "";
         document.getElementById('jt-suspensao').style.display = "none";
         this.rsusp = "- "+this.suspensao;
       }
@@ -101,7 +106,7 @@ export class DetalhesAprazamentoComponent implements OnInit {
   }
 
   cancel(){
-    this.mov="Motivo";
+    this.mov="";
     this.isActive=false;
     
     this.toastr.custom('<span style="color: red"><strong>Operação Cancelada!<strong></span>', null, { enableHTML: true })
@@ -110,9 +115,8 @@ export class DetalhesAprazamentoComponent implements OnInit {
             this.toastr.dismissToast(toast);
           }, 2000);
     });
-    
+    this.suspensao="";
     document.getElementById('jt-suspensao').style.display = "none";
-    (document.getElementById("suspensao") as HTMLInputElement).value = "";
   }
 
 }
