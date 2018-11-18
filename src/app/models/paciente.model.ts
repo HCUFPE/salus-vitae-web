@@ -1,5 +1,3 @@
-import { Alergia } from './alergia.model';
-
 export interface Paciente {
     _id: string;
     nome: string;
@@ -8,6 +6,5 @@ export interface Paciente {
     numeroCpf: string;
     nomeMae: string;
     nomePai: string;
-    alergias: Alergia[];
 }
 
