@@ -22,10 +22,6 @@ export class ListarProntuariosComponent implements OnInit {
     this.getAlas();
   }
 
-  getAlergias(prontuario: Prontuario) {
-    return prontuario.idPaciente.alergias.map(a => a['descricao']).join(', ');
-  }
-
   getAlas() {
    this.prontuarioService.alas()
    .subscribe(ala => (

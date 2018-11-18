@@ -4,5 +4,9 @@ export interface Usuario {
   email: string;
   cpf: string;
   accesToken: string;
+
+  username: string;
+  password?: string;
+  token?: string;
 }
 
