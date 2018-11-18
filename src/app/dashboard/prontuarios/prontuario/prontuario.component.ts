@@ -1,3 +1,4 @@
+import { ItemPrescricao } from './../../../models/item-prescricao.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,6 +8,7 @@ import { Prescricao } from '../../../models/prescricao.model';
 import { MedicamentosService } from '../medicamentos.service';
 import { Medicamento } from '../../../models/medicamento.model';
 import { Aprazamento } from 'src/app/models/aprazamento.model';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-prontuario',
@@ -14,11 +16,13 @@ import { Aprazamento } from 'src/app/models/aprazamento.model';
   styleUrls: ['./prontuario.component.css']
 })
 export class ProntuarioComponent implements OnInit {
-  dados:boolean=false;
+  dados : boolean = false;
   prontuario: Prontuario;
+  prescricao: Prescricao;
   aprazamentos: Aprazamento[];
   filtro: string;
   modalMedicamento: Medicamento;
+  codigosItem: string[];
 
   constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService,
     private medicamentoService: MedicamentosService) { }
@@ -27,11 +31,14 @@ export class ProntuarioComponent implements OnInit {
     this.prontuarioService.prontuariosById(this.route.snapshot.params['id'])
     .subscribe((prontuario: Prontuario) => {
       this.prontuario = prontuario;
-      const prescricao: Prescricao = this.getUltimaPrescricao();
-      this.medicamentoService.medicamentosById(prescricao.medicamentos)
-      .subscribe((medicamento: Medicamento) => {
-        const index = prescricao.medicamentos.indexOf(medicamento._id);
-        prescricao.medicamentos[index] = medicamento;
+      this.prescricao = this.getUltimaPrescricao();
+      this.prescricao.Itens.forEach(ItemPrescricao => {
+        this.codigosItem.push(ItemPrescricao.codigoItem);
+      });
+      this.medicamentoService.itensById(this.codigosItem)
+      .subscribe((itemPrescricao: ItemPrescricao) => {
+        const index = this.prescricao.Itens.indexOf(itemPrescricao);
+        this.prescricao.Itens[index] = itemPrescricao;
       });
     });
 
@@ -63,7 +70,7 @@ export class ProntuarioComponent implements OnInit {
   getMedicamentos() {
     const prescricao: Prescricao = this.getUltimaPrescricao();
 
-    if (!prescricao || !prescricao.medicamentos) {
+    if (!prescricao || !prescricao.Itens) {
       return [];
     }
 
