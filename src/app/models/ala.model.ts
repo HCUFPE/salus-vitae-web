@@ -1,7 +1,7 @@
-import { Leitos } from './leitos.model';
+import { Leito } from './leito.model';
 
 export interface Ala {
     codigoAla: string;
     ala: string;
-    leitos: Leitos[];
+    leitos: Leito[];
 }
