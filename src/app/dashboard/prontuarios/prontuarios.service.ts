@@ -29,12 +29,16 @@ export class ProntuariosService {
     return this.http.get<Prontuario[]>(`${SALUS_API}/prontuarios`);
   }
 
-  alas(): Observable<Ala[]> {
-    return this.http.get<Ala[]>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
-  }
-
   prontuariosById(id: string): Observable<Prontuario> {
     return this.http.get<Prontuario>(`${SALUS_API}/prontuarios/${id}`);
+  }
+
+  alas(): Observable<Ala> {
+    return this.http.get<Ala>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
+  }
+
+  listarProntuariosHC(prontuario: number): Observable<Prontuario> {
+    return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prontuario}`, httpOptions);
   }
 
 }
