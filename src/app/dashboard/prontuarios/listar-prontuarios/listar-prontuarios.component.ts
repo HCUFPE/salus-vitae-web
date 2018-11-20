@@ -20,6 +20,8 @@ export class ListarProntuariosComponent implements OnInit {
   public filtro: string;
   public leito: Leito[];
   public numerosProntuarios;
+  public pacientes: Leito[];
+  public pacientesInternados: any;
 
   @Input()
   public alerts: Array<Alert> = [];
@@ -33,31 +35,72 @@ export class ListarProntuariosComponent implements OnInit {
   ngOnInit() {
     this.getAlas();
     // this.getProntuariosHC();
+    // this.getPacientesInternados('');
   }
 
   getAlas() {
     this.prontuarioService.alas()
       .subscribe(ala => {
         this.ala = ala;
-        this.leito = ala.leitos;
-        console.log(this.ala.leitos[0].prontuario);
-        console.log(this.leito);
+        // console.log(this.ala);
+        this.pacientes = ala.leitos;
+        // console.log(this.pacientes);
 
-        for (const leito of ala.leitos) {
-          const numerosProntuarios = leito.prontuario;
+        // for (const pacientesInternados of ala.leitos) {
+        //   const numerosProntuarios = pacientesInternados;
 
-          console.log(numerosProntuarios);
 
-        }
-      }, error => {
-        const alert = new Alert(null, error);
-        this.alerts.push(alert);
+        //   console.log(pacientesInternados.prontuario);
+
+        //   if (numerosProntuarios.prontuario !== undefined) {
+        //     this.prontuarioService.getProntuarioById(numerosProntuarios.prontuario)
+        //       .subscribe(data => {
+        //         this.pacientesInternados = data;
+        //         // console.log(this.pacientesInternados);
+        //         const result = Object.assign({}, pacientesInternados, this.ala);
+        //         console.log(result);
+        //         return result;
+        //       });
+            // }, error => {
+            //   const alert = new Alert(null, error);
+            //   this.alerts.push(alert);
+            // }; )
+      //     }
+      //   }
       });
   }
+  //  getAlas2() {
+  //   this.prontuarioService.alas().pipe(
+  //     mergeAll().concatMap()
+  //   )
+  //     .subscribe(ala => {
+  //       this.ala = ala;
+  //       // console.log(this.ala);
+  //       this.pacientes = ala.leitos;
+  //       // console.log(this.pacientes);
 
-  getProntuariosHC() {
-    this.prontuarioService.listarProntuariosHC(this.prontuario.prontuario).subscribe(prontuario => {
-      this.prontuario = this.prontuario;
-    });
-  }
+  //       for (const pacientesInternados of ala.leitos) {
+  //         const numerosProntuarios = pacientesInternados;
+
+
+  //         console.log(pacientesInternados.prontuario);
+
+  //         if (numerosProntuarios.prontuario !== undefined) {
+  //           this.prontuarioService.getProntuarioById(numerosProntuarios.prontuario)
+  //             .subscribe(data => {
+  //               this.pacientesInternados = data;
+  //               // console.log(this.pacientesInternados);
+  //               const result = Object.assign({}, pacientesInternados, this.ala);
+  //               console.log(result);
+  //               return result;
+  //             });
+  //           // }, error => {
+  //           //   const alert = new Alert(null, error);
+  //           //   this.alerts.push(alert);
+  //           // }; )
+  //         }
+  //       }
+  //     });
+  // }
+  
 }

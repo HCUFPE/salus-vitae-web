@@ -39,17 +39,14 @@ export class ProntuarioComponent implements OnInit {
         prescricao.medicamentos[index] = medicamento;
       });
     });*/
-    let id,id2:number;
-    this.prontuarioService.listarPrescricoesHC(this.route.snapshot.params[id], this.route.snapshot.params['id'])
+    // let id,id2:number;
+    this.prontuarioService.listarPrescricoesHC()
     .subscribe((prescricao: Prescricao) => {
-      
       this.prescricao = prescricao;
       this.prescricao = this.getUltimaPrescricao();
-      
       this.prescricao.Itens.forEach(itemPrescricao => {
         this.codigosItem.push(itemPrescricao.codigoItem);
       });
-      
       this.medicamentoService.itensById(this.codigosItem)
       .subscribe((itemPrescricao: ItemPrescricao) => {
         const index = this.prescricao.Itens.indexOf(itemPrescricao);
@@ -57,7 +54,6 @@ export class ProntuarioComponent implements OnInit {
       });
 
     });
-    
     this.aprazamentos = [];
   }
 
