@@ -29,27 +29,35 @@ export class ProntuarioComponent implements OnInit {
     private medicamentoService: MedicamentosService) { }
 
   ngOnInit() {
-    // this.prontuarioService.prontuariosById(this.route.snapshot.params['id'])
-    // .subscribe((prontuario: Prontuario) => {
-    //   this.prontuario = prontuario;
-    //   this.prescricao = this.getUltimaPrescricao();
-    //   this.prescricao.Itens.forEach(itemPrescricao => {
-    //     this.codigosItem.push(itemPrescricao.codigoItem);
-    //   });
-    this.prontuarioService.listarPrescricoesHC(this.route.snapshot.params['id'], this.route.snapshot.params['id'])
+   /* this.prontuarioService.prontuariosById(this.route.snapshot.params['id'])
+    .subscribe((prontuario: Prontuario) => {
+      this.prontuario = prontuario;
+      const prescricao: Prescricao = this.getUltimaPrescricao();
+      this.medicamentoService.medicamentosById(prescricao.medicamentos)
+      .subscribe((medicamento: Medicamento) => {
+        const index = prescricao.medicamentos.indexOf(medicamento._id);
+        prescricao.medicamentos[index] = medicamento;
+      });
+    });*/
+    let id,id2:number;
+    this.prontuarioService.listarPrescricoesHC(this.route.snapshot.params[id], this.route.snapshot.params['id'])
     .subscribe((prescricao: Prescricao) => {
+      
       this.prescricao = prescricao;
       this.prescricao = this.getUltimaPrescricao();
+      
       this.prescricao.Itens.forEach(itemPrescricao => {
         this.codigosItem.push(itemPrescricao.codigoItem);
       });
+      
       this.medicamentoService.itensById(this.codigosItem)
       .subscribe((itemPrescricao: ItemPrescricao) => {
         const index = this.prescricao.Itens.indexOf(itemPrescricao);
         this.prescricao.Itens[index] = itemPrescricao;
       });
-    });
 
+    });
+    
     this.aprazamentos = [];
   }
 
@@ -77,11 +85,9 @@ export class ProntuarioComponent implements OnInit {
 
   getMedicamentos() {
     const prescricao: Prescricao = this.getUltimaPrescricao();
-
     if (!prescricao || !prescricao.Itens) {
       return [];
     }
-
     return prescricao.medicamentos;
   }
 

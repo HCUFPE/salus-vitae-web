@@ -17,7 +17,7 @@ import { HttpRequest, HttpResponse,
   const httpOptions = {
     headers: new HttpHeaders({
       // tslint:disable-next-line:max-line-length
-      'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTQUxVU19WSVRBRSIsImlhdCI6MTU0MTcxOTk5NSwiYWRtaW4iOiJmYWxzZSJ9.BlzNOZz2Wh5S_Q7F6JnFx-VIyvcGfG8ewNiUQRvJq4TnUZsb-XOIMsgtzs8epj_Gj3QBmJBo5h08jQfpFjb-hg',
+      'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTQUxVU19WSVRBRSIsImlhdCI6MTU0Mjc0NTQzNiwiYWRtaW4iOiJmYWxzZSJ9.i_L5PDneG68_j_b0DRG-AgwgVtki-9_mJQr-4GP6XMFL5zz5dJ6rcoKtsFsfRbdUJe4ufKyjl2ZCwBMCXw9Fag',
       'Content-Type': 'application/json'
     })
   };
@@ -30,8 +30,8 @@ import { HttpRequest, HttpResponse,
       return this.http.get<Prontuario[]>(`${SALUS_API}/prontuarios`);
     }
 
-    prontuariosById(id: string): Observable<Prontuario> {
-      return this.http.get<Prontuario>(`${SALUS_API}/prontuarios/${id}`);
+    prontuariosById(id: string): Observable<Prontuario> {  
+      return this.http.get<Prontuario>(`${HC_API}/prontuario/${id}`);
     }
 
     alas(): Observable<Ala> {
