@@ -1,10 +1,10 @@
+import { Prescricao } from 'src/app/models/prescricao.model';
 import { ItemPrescricao } from './../../../models/item-prescricao.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Prontuario } from '../../../models/prontuario.model';
 import { ProntuariosService } from '../prontuarios.service';
-import { Prescricao } from '../../../models/prescricao.model';
 import { MedicamentosService } from '../medicamentos.service';
 import { Medicamento } from '../../../models/medicamento.model';
 import { Aprazamento } from 'src/app/models/aprazamento.model';
@@ -16,24 +16,32 @@ import { stringify } from 'querystring';
   styleUrls: ['./prontuario.component.css']
 })
 export class ProntuarioComponent implements OnInit {
-  dados : boolean = false;
+  dados: Boolean = false;
   prontuario: Prontuario;
   prescricao: Prescricao;
   aprazamentos: Aprazamento[];
   filtro: string;
   modalMedicamento: Medicamento;
+  itemPrescricao: ItemPrescricao;
   codigosItem: string[];
 
   constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService,
     private medicamentoService: MedicamentosService) { }
 
   ngOnInit() {
-    this.prontuarioService.prontuariosById(this.route.snapshot.params['id'])
-    .subscribe((prontuario: Prontuario) => {
-      this.prontuario = prontuario;
+    // this.prontuarioService.prontuariosById(this.route.snapshot.params['id'])
+    // .subscribe((prontuario: Prontuario) => {
+    //   this.prontuario = prontuario;
+    //   this.prescricao = this.getUltimaPrescricao();
+    //   this.prescricao.Itens.forEach(itemPrescricao => {
+    //     this.codigosItem.push(itemPrescricao.codigoItem);
+    //   });
+    this.prontuarioService.listarPrescricoesHC(this.route.snapshot.params['id'], this.route.snapshot.params['id'])
+    .subscribe((prescricao: Prescricao) => {
+      this.prescricao = prescricao;
       this.prescricao = this.getUltimaPrescricao();
-      this.prescricao.Itens.forEach(ItemPrescricao => {
-        this.codigosItem.push(ItemPrescricao.codigoItem);
+      this.prescricao.Itens.forEach(itemPrescricao => {
+        this.codigosItem.push(itemPrescricao.codigoItem);
       });
       this.medicamentoService.itensById(this.codigosItem)
       .subscribe((itemPrescricao: ItemPrescricao) => {
@@ -87,12 +95,12 @@ export class ProntuarioComponent implements OnInit {
     this.modalMedicamento = undefined;
   }
 
-  escApra(apr2){
-    this.dados=false;
+  escApra(apr2) {
+    this.dados = false;
   }
 
-  escDet(apr1){
-    this.dados=true;
+  escDet(apr1) {
+    this.dados = true;
   }
 
 }

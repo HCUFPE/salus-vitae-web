@@ -1,0 +1,57 @@
+.card-header {
+    border-bottom: 2px solid;
+    border-color:gray;
+}
+
+a.btn {
+    font-size: 1.0em;
+    color: #000;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+    /*display: none;*/
+}
+
+.btn:hover{
+    background-color: darkturquoise;
+    font-weight: bold;
+}
+
+hr {
+    width: 101.7%;
+    margin-left: -1.2%;
+}
+
+.py-1 {
+    padding-bottom: 0.25rem !important;
+    margin-bottom: 60px;
+}
+
+
+.card-header{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+@media (min-width: 576px){
+    .col-sm-10 {
+        flex: 0 0 83.33333333%;
+        max-width: 74.333333%;
+    }
+}
+
+.text-center {
+    text-align: center !important;
+    padding-left: 12%;
+    font-weight: bold;
+}
+
+.text-left{
+    text-transform: uppercase;
+}
+
+.text-view{
+    text-transform: uppercase;
+}

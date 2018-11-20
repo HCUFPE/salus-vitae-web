@@ -1,41 +1,159 @@
-<section class="content-header">
-  <div class="row">
-    <h1 class="ml-6 mr-auto">Prontuários</h1>
-    <form class="form-inline md-form form-sm">
-      <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="filtro">
-      <i class="fa fa-search" aria-hidden="true"></i>
+<div class="py-1">
+<section class="container-fluid">
+  <div class="row m-6">
+    <div class="text-center col-sm-10">
+      <h1 class="text-center">Pacientes Internados</h1>
+    </div>
+    <div class="w-100 col-md-3">
+    <form class="form-inline m-2 mr-2">
+     <div class="input-group">
+        <input  class="form-control" type="text" placeholder="Search" aria-label="Search" [(ngModel)]="filtro">
+     </div>
     </form>
   </div>
+  </div>
+<hr>
 </section>
+<h4 class="text-left"></h4>
+</div>
+
 <section class="content">
   <div class="row">
     <div class="col-md-4">
-      <div class="card text-white bg-primary mb-3">
-        <div class="card-header" style="border-color: black">Leito 1</div>
+      <div class="card  bg-light mb-2">
+        <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
         <div class="card-body">
-          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i>ALEXSANDRO WEVERTON ALVES DA SILVA</p>
-          <p class="card-text">Prontuário:&nbsp;18705575</p>
+          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+          <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+          <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+          <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
         </div>
+<div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card text-white bg-secondary mb-3">
-        <div class="card-header">Leito 2<br></div>
-        <div class="card-body">
-          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i>ALEXSANDRO WEVERTON ALVES DA SILVA</p>
-          <p class="card-text">Prontuário:&nbsp;18705575</p>
-        </div>
+        <div class="card  bg-light mb-2">
+          <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+          <div class="card-body">
+            <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+            <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+            <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+            <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+            </div>
+  <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+          </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card text-white bg-dark mb-3">
-        <div class="card-header">Leito 3<br></div>
-        <div class="card-body">
-          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i>ALEXSANDRO WEVERTON ALVES DA SILVA</p>
-          <p class="card-text">Prontuário:&nbsp;18705575</p>
+      <div class="col-md-4">
+          <div class="card  bg-light mb-2">
+            <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+            <div class="card-body">
+              <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+              <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+              <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+              <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+                </div>
+    <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+              </div>
         </div>
-      </div>
-    </div>
+        <div class="col-md-4">
+            <div class="card  bg-light mb-2">
+              <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+              <div class="card-body">
+                <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+                <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+                <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+                <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+                    </div>
+      <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+                  </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card  bg-light mb-2">
+                <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+                <div class="card-body">
+                  <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+                  <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+                  <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+                  <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+                        </div>
+        <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+                      </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card  bg-light mb-2">
+                  <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+                  <div class="card-body">
+                    <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+                    <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+                    <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+                    <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+                            </div>
+          <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+                          </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="card  bg-light mb-2">
+                    <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+                    <div class="card-body">
+                      <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+                      <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+                      <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+                      <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+                                </div>
+            <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+                              </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card  bg-light mb-2">
+                      <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+                      <div class="card-body">
+                        <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+                        <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+                        <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+                        <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+                                    </div>
+              <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+                                  </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="card  bg-light mb-2">
+                        <div class="card-header"><span>Leito 1</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;18705575</strong></div>
+                        <div class="card-body">
+                          <p class="card-title text-left"><i class="fa fa-user fa-fw">&nbsp;</i><span class="text-view">ALEXSANDRO WEVERTON ALVES DA SILVA</span></p>
+                          <p class="card-text"><i class="fa fa-female"></i><span class="text-view">&nbsp;KÁTIA CILENE DA SILVA</span></p>
+                          <p class="card-text"><i class="fa fa-transgender"></i><span class="text-view">&nbsp;Sexo:&nbsp;M</span></p>
+                          <p class="card-text"><i class="fa fa-calendar"></i><span class="text-view">&nbsp;Data Nascimento:&nbsp;19/05/2018</span></p>
+                                        </div>
+                <div class="card-footer text-muted text-right" contenteditable="true" >
+              <a class="btn  disabled" href="#"  target="_blank">Aprazamentos</a>
+              <a class="btn " href="#"  target="_blank">Prescrição</a>
+            </div>
+                                      </div>
+                    </div>
   </div>
   <!-- <div class="panel panel-default">
     <div class="table-responsive-md">

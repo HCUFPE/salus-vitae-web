@@ -11,30 +11,39 @@ import { Prontuario } from '../../models/prontuario.model';
 import { Ala } from '../../models/ala.model';
 
 import { HttpRequest, HttpResponse,
-    HttpHeaders, HttpParams } from '@angular/common/http';
+  HttpHeaders, HttpParams } from '@angular/common/http';
+  import { Prescricao } from 'src/app/models/prescricao.model';
 
-const httpOptions = {
+  const httpOptions = {
     headers: new HttpHeaders({
-        // tslint:disable-next-line:max-line-length
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTQUxVU19WSVRBRSIsImlhdCI6MTU0MTcxOTk5NSwiYWRtaW4iOiJmYWxzZSJ9.BlzNOZz2Wh5S_Q7F6JnFx-VIyvcGfG8ewNiUQRvJq4TnUZsb-XOIMsgtzs8epj_Gj3QBmJBo5h08jQfpFjb-hg',
-        'Content-Type': 'application/json'
+      // tslint:disable-next-line:max-line-length
+      'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTQUxVU19WSVRBRSIsImlhdCI6MTU0MTcxOTk5NSwiYWRtaW4iOiJmYWxzZSJ9.BlzNOZz2Wh5S_Q7F6JnFx-VIyvcGfG8ewNiUQRvJq4TnUZsb-XOIMsgtzs8epj_Gj3QBmJBo5h08jQfpFjb-hg',
+      'Content-Type': 'application/json'
     })
-};
-const codigoAla = '5N1000';
-@Injectable()
-export class ProntuariosService {
-  constructor(private http: HttpClient) {}
+  };
+  const codigoAla = '5N1000';
+  @Injectable()
+  export class ProntuariosService {
+    constructor(private http: HttpClient) {}
 
-  prontuarios(): Observable<Prontuario[]> {
-    return this.http.get<Prontuario[]>(`${SALUS_API}/prontuarios`);
+    prontuarios(): Observable<Prontuario[]> {
+      return this.http.get<Prontuario[]>(`${SALUS_API}/prontuarios`);
+    }
+
+    prontuariosById(id: string): Observable<Prontuario> {
+      return this.http.get<Prontuario>(`${SALUS_API}/prontuarios/${id}`);
+    }
+
+    alas(): Observable<Ala> {
+      return this.http.get<Ala>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
+    }
+
+    listarProntuariosHC(prontuario: number): Observable<Prontuario> {
+      return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prontuario}`, httpOptions);
+    }
+
+    listarPrescricoesHC(prontuario: number,  atendimento: number): Observable<Prescricao> {
+      return this.http.get<Prescricao>(`${HC_API}/humaster/ws/prontuario/${prontuario}/atendimento/${atendimento}`, httpOptions);
+    }
+
   }
-
-  alas(): Observable<Ala[]> {
-    return this.http.get<Ala[]>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
-  }
-
-  prontuariosById(id: string): Observable<Prontuario> {
-    return this.http.get<Prontuario>(`${SALUS_API}/prontuarios/${id}`);
-  }
-
-}
