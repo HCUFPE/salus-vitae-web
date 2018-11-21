@@ -14,10 +14,14 @@
   background-color: #fff;
 }
 
+
 .card-link {
   color: #fff;
   font-weight: bold;
 }
 .card-link:hover {
   color: darkgray;
+}
+.row {
+  color: #000;
 }
