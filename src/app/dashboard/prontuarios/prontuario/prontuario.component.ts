@@ -25,11 +25,11 @@ export class ProntuarioComponent implements OnInit {
   modalMedicamento: Medicamento;
 
   constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) {
-   }
+  }
 
   ngOnInit() {
-    this.prontuarioService.atendimentoHC(19569516,
-      446702305)
+    this.prontuarioService.atendimentoHC(this.route.snapshot.paramMap.get('prontuario_id'),
+      this.route.snapshot.paramMap.get('atendimento_id'))
       .subscribe((atendimento: Atendimento) => {
         atendimento.prescricoes = atendimento.prescricoes.sort((a: Prescricao, b: Prescricao) => {
           if (this.getDateFromString(a.dataPrescricao) > this.getDateFromString(b.dataPrescricao)) {
