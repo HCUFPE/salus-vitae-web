@@ -9,12 +9,10 @@ export interface Prontuario {
     pesoAdmissao: string;
     dataAlta: Date;
     leito: string;
-    prescricoes: Prescricao[];
-
-// Novos atributos
     prontuario: number;
     nomeDoPaciente: string;
     dataNascimento: string;
     nomeMae: string;
     sexo: string;
+    prescricoes: Prescricao[];
 }
