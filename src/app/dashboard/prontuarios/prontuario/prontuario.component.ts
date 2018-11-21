@@ -1,14 +1,14 @@
-import { Prescricao } from 'src/app/models/prescricao.model';
-import { ItemPrescricao } from './../../../models/item-prescricao.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Prontuario } from '../../../models/prontuario.model';
+import * as moment from 'moment';
+
 import { ProntuariosService } from '../prontuarios.service';
-import { MedicamentosService } from '../medicamentos.service';
+import { Prontuario } from '../../../models/prontuario.model';
 import { Medicamento } from '../../../models/medicamento.model';
-import { Aprazamento } from 'src/app/models/aprazamento.model';
-import { stringify } from 'querystring';
+import { Aprazamento } from '../../../models/aprazamento.model';
+import { Atendimento } from '../../../models/atendimento.model';
+import { Prescricao } from '../../../models/prescricao.model';
 
 @Component({
   selector: 'app-prontuario',
@@ -16,63 +16,50 @@ import { stringify } from 'querystring';
   styleUrls: ['./prontuario.component.css']
 })
 export class ProntuarioComponent implements OnInit {
+
   dados: Boolean = false;
   prontuario: Prontuario;
-  prescricao: Prescricao;
+  atendimento: Atendimento;
   aprazamentos: Aprazamento[];
   filtro: string;
   modalMedicamento: Medicamento;
-  itemPrescricao: ItemPrescricao;
-  codigosItem: string[];
 
-  constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService,
-    private medicamentoService: MedicamentosService) { }
+  constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) { }
 
   ngOnInit() {
-   /* this.prontuarioService.prontuariosById(this.route.snapshot.params['id'])
-    .subscribe((prontuario: Prontuario) => {
-      this.prontuario = prontuario;
-      const prescricao: Prescricao = this.getUltimaPrescricao();
-      this.medicamentoService.medicamentosById(prescricao.medicamentos)
-      .subscribe((medicamento: Medicamento) => {
-        const index = prescricao.medicamentos.indexOf(medicamento._id);
-        prescricao.medicamentos[index] = medicamento;
-      });
-    });*/
-    // let id,id2:number;
-    this.prontuarioService.listarPrescricoesHC()
-    .subscribe((prescricao: Prescricao) => {
-      this.prescricao = prescricao;
-      this.prescricao = this.getUltimaPrescricao();
-      this.prescricao.Itens.forEach(itemPrescricao => {
-        this.codigosItem.push(itemPrescricao.codigoItem);
-      });
-      this.medicamentoService.itensById(this.codigosItem)
-      .subscribe((itemPrescricao: ItemPrescricao) => {
-        const index = this.prescricao.Itens.indexOf(itemPrescricao);
-        this.prescricao.Itens[index] = itemPrescricao;
-      });
+    this.prontuarioService.atendimentoHC()
+      .subscribe((atendimento: Atendimento) => {
+        atendimento.prescricoes = atendimento.prescricoes.sort((a: Prescricao, b: Prescricao) => {
+          if (this.getDateFromString(a.dataPrescricao) > this.getDateFromString(b.dataPrescricao)) {
+            return -1;
+          }
 
-    });
+          if (this.getDateFromString(a.dataPrescricao) < this.getDateFromString(b.dataPrescricao)) {
+            return 1;
+          }
+
+          return 0;
+        });
+        this.atendimento = atendimento;
+        console.log(atendimento);
+      });
     this.aprazamentos = [];
   }
 
   getUltimaPrescricao() {
-    if (!this.prontuario || !this.prontuario.prescricoes) {
+    if (!this.atendimento || !this.atendimento.prescricoes || this.atendimento.prescricoes.length === 0) {
       return null;
     }
 
-    return this.prontuario.prescricoes.sort((a: Prescricao, b: Prescricao) => {
-      if (a.dataPrescricao > b.dataPrescricao) {
-        return -1;
-      }
+    return this.atendimento.prescricoes[0];
+  }
 
-      if (a.dataPrescricao < b.dataPrescricao) {
-        return 1;
-      }
+  getDateFromString(date: string) {
+    if (!date) {
+      return null;
+    }
 
-      return 0;
-    })[0];
+    return moment(date, 'DD/MM/YYYY HH:mm:ss').toDate();
   }
 
   isAprazado(medicamento: Medicamento) {
@@ -81,10 +68,12 @@ export class ProntuarioComponent implements OnInit {
 
   getMedicamentos() {
     const prescricao: Prescricao = this.getUltimaPrescricao();
+
     if (!prescricao || !prescricao.Itens) {
       return [];
     }
-    return prescricao.medicamentos;
+
+    return prescricao.Itens.filter(i => i.codigoTipoItem === 3);
   }
 
   showModal(medicamento: Medicamento) {

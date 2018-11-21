@@ -16,15 +16,15 @@
                 <dt>Prontuário:</dt>
                 <dd>{{prontuario?.prontuario}}</dd>
                 <dt>Data da Prescrição:</dt>
-                <dd>{{prescricao?.dataPrescricao | date:'dd/MM/yyyy'}}</dd>
+                <dd>{{getDateFromString(getUltimaPrescricao()?.dataPrescricao) | date:'dd/MM/yyyy'}}</dd>
                 <dt>Tipo da Prescrição:</dt>
-                <dd>{{prescricao?.tipoPrescricao}}</dd>
+                <dd>{{getUltimaPrescricao()?.tipoPrescricao}}</dd>
                 <dt>Status da Prescrição:</dt>
-                <dd>{{prescricao?.statusPrescricao}}</dd>
+                <dd>{{getUltimaPrescricao()?.statusPrescricao}}</dd>
                 <dt>Profissional:</dt>
-                <dd>{{prescricao?.profissional}}</dd>
+                <dd>{{getUltimaPrescricao()?.profissional}}</dd>
                 <dt>Quantidade de Medicamentos:</dt>
-                <dd>{{prescricao?.Itens.length}}</dd>
+                <dd>{{getMedicamentos()?.length}}</dd>
               </dl>
             </div>
           </div>
@@ -63,7 +63,7 @@
             <td>{{itemPrescricao?.administracao}}</td>
             <td>{{itemPrescricao?.frequencia}} Horas</td>
             <td>{{itemPrescricao?.observacaoItem}}</td>
-            <td>{{itemPrescricao?.dataInicioItem | date:'dd/MM/yyyy'}}</td>
+            <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy'}}</td>
             <td>{{itemPrescricao?.gotejamento}}</td>
             <!-- <td>
               <div *ngIf="!isAprazado(medicamento);else Aprazado">
