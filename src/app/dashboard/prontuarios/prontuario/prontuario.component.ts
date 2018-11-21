@@ -66,14 +66,14 @@ export class ProntuarioComponent implements OnInit {
     return this.aprazamentos.filter(a => a.medicamento._id === medicamento._id).length > 0;
   }
 
-  getMedicamentos() {
+  getItensPrescricao(codigoTipoItem: number) {
     const prescricao: Prescricao = this.getUltimaPrescricao();
 
     if (!prescricao || !prescricao.Itens) {
       return [];
     }
 
-    return prescricao.Itens.filter(i => i.codigoTipoItem === 3);
+    return prescricao.Itens.filter(i => i.codigoTipoItem === codigoTipoItem);
   }
 
   showModal(medicamento: Medicamento) {
