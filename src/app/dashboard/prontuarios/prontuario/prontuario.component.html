@@ -13,20 +13,24 @@
           <div class="search-results">
             <div class="details">
               <dl>
-                <dt>Nome Social:</dt>
-                <dd>{{prontuario?.idPaciente?.nome}}</dd>
-                <dt>Data de Nascimento:</dt>
-                <dd>{{prontuario?.idPaciente?.dataNascimento | date:'dd/MM/yyyy'}}</dd>
-                <dt>Sexo:</dt>
-                <dd>{{prontuario?.idPaciente?.sexo}}</dd>
-                <dt>Mãe:</dt>
-                <dd>{{prontuario?.idPaciente?.nomeMae}}</dd>
+                <dt>Prontuário:</dt>
+                <dd>{{prontuario?.prontuario}}</dd>
+                <dt>Data da Prescrição:</dt>
+                <dd>{{getDateFromString(getUltimaPrescricao()?.dataPrescricao) | date:'dd/MM/yyyy'}}</dd>
+                <dt>Tipo da Prescrição:</dt>
+                <dd>{{getUltimaPrescricao()?.tipoPrescricao}}</dd>
+                <dt>Status da Prescrição:</dt>
+                <dd>{{getUltimaPrescricao()?.statusPrescricao}}</dd>
+                <dt>Profissional:</dt>
+                <dd>{{getUltimaPrescricao()?.profissional}}</dd>
+                <dt>Quantidade de Medicamentos:</dt>
+                <dd>{{getMedicamentos()?.length}}</dd>
               </dl>
             </div>
           </div>
-          <hr id="hr-line" />
-          <a  (click)="escDet(aprazamento)" value="true" class="card-link">Detalhes do paciente</a>
-          <a (click)="escApra(aprazamento)"  value="false" class="card-link">Aprazamentos</a>
+          <!-- <hr id="hr-line" /> -->
+          <!-- <a  (click)="escDet(aprazamento)" value="true" class="card-link">Detalhes do paciente</a> -->
+          <!-- <a (click)="escApra(aprazamento)"  value="false" class="card-link">Aprazamentos</a> -->
         </div>
       </div>
     </div>
@@ -34,43 +38,45 @@
 </section>
 
 <section class="content">
-  <div *ngIf="dados===true">
-       Teste
-  </div>
+  <!-- <div *ngIf="dados===true">
+    Teste
+  </div> -->
   <div *ngIf="!dados" class="panel panel-default">
     <div class="table-responsive-md">
+      <h2 class="ml-3 mr-auto">Medicamentos</h2>
       <table class="table table-striped text-center">
         <thead colspan="2">
           <tr>
-            <th>#</th>
+            <!-- <th>#</th> -->
             <th>Nome</th>
-            <th>Dosagem</th>
-            <th>Posologia</th>
-            <th>Validade</th>
-            <th>Fabricação</th>
-            <th>Aprazar medicamento</th>
+            <th>Administração</th>
+            <th>Frequencia</th>
+            <th>Observação</th>
+            <th>Data Inicio Medicação</th>
+            <th>Gotejamento</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let medicamento of getMedicamentos(); index as i">
-            <th scope="row">{{i + 1}}</th>
-            <td>{{medicamento?.nome}}</td>
-            <td>{{medicamento?.dosagem}}</td>
-            <td></td>
-            <td>{{medicamento?.dataValidade | date:'dd/MM/yyyy'}}</td>
-            <td>{{medicamento?.dataFabricacao | date:'dd/MM/yyyy'}}</td>
-            <td>
+          <tr *ngFor="let itemPrescricao of getMedicamentos(); index as i">
+            <!-- <th scope="row">{{i + 1}}</th> -->
+            <td>{{itemPrescricao?.descricaoItem}}</td>
+            <td>{{itemPrescricao?.administracao}}</td>
+            <td>{{itemPrescricao?.frequencia}} Horas</td>
+            <td>{{itemPrescricao?.observacaoItem}}</td>
+            <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy'}}</td>
+            <td>{{itemPrescricao?.gotejamento}}</td>
+            <!-- <td>
               <div *ngIf="!isAprazado(medicamento);else Aprazado">
                 <button (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento"
-                  data-backdrop="static" data-keyboard="false" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                data-backdrop="static" data-keyboard="false" class="btn btn-primary"><i class="fa fa-edit"></i></button>
               </div>
               <ng-template #Aprazado>
                 <strong>Aprazado</strong>
               </ng-template>
-            </td>
-        </tbody>
-      </table>
+            </td> -->
+          </tbody>
+        </table>
+      </div>
+      <app-modal-aprazar *ngIf="modalMedicamento" [prontuario]="prontuario" [medicamento]="modalMedicamento" (hideModal)="dismissModal($event)"></app-modal-aprazar>
     </div>
-    <app-modal-aprazar *ngIf="modalMedicamento" [prontuario]="prontuario" [medicamento]="modalMedicamento" (hideModal)="dismissModal($event)"></app-modal-aprazar>
-  </div>
-</section>
+  </section>

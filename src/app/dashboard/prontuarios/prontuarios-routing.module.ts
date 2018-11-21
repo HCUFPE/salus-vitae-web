@@ -6,7 +6,7 @@ import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuar
 
 const routes: Routes = [
   { path: ':id', component: ProntuarioComponent },
-  // { path: ':prontuario_id/:atendimento_id', component: ProntuarioComponent },
+  { path: ':prontuario_id/atendimento/:atendimento_id', component: ProntuarioComponent },
   { path: '', component: ListarProntuariosComponent, pathMatch: 'full' }
 ];
 
