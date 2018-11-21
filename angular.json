@@ -24,7 +24,8 @@
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.css",
-              "src/app/styles/app.scss"
+              "src/app/styles/app.scss",
+              "node_modules/ng-pick-datetime/assets/style/picker.min.css"
             ],
             "scripts": [
               "src/app/scripts/jquery-slim.min.js",
