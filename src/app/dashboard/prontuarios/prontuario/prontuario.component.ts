@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import * as moment from 'moment';
 
@@ -24,10 +24,12 @@ export class ProntuarioComponent implements OnInit {
   filtro: string;
   modalMedicamento: Medicamento;
 
-  constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) { }
+  constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) {
+   }
 
   ngOnInit() {
-    this.prontuarioService.atendimentoHC()
+    this.prontuarioService.atendimentoHC(19569516,
+      446702305)
       .subscribe((atendimento: Atendimento) => {
         atendimento.prescricoes = atendimento.prescricoes.sort((a: Prescricao, b: Prescricao) => {
           if (this.getDateFromString(a.dataPrescricao) > this.getDateFromString(b.dataPrescricao)) {
@@ -43,6 +45,7 @@ export class ProntuarioComponent implements OnInit {
         this.atendimento = atendimento;
         console.log(atendimento);
       });
+
     this.aprazamentos = [];
   }
 
