@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import * as moment from 'moment';
 
@@ -24,10 +24,12 @@ export class ProntuarioComponent implements OnInit {
   filtro: string;
   modalMedicamento: Medicamento;
 
-  constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) { }
+  constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) {
+  }
 
   ngOnInit() {
-    this.prontuarioService.atendimentoHC()
+    this.prontuarioService.atendimentoHC(this.route.snapshot.paramMap.get('prontuario_id'),
+      this.route.snapshot.paramMap.get('atendimento_id'))
       .subscribe((atendimento: Atendimento) => {
         atendimento.prescricoes = atendimento.prescricoes.sort((a: Prescricao, b: Prescricao) => {
           if (this.getDateFromString(a.dataPrescricao) > this.getDateFromString(b.dataPrescricao)) {
@@ -43,6 +45,7 @@ export class ProntuarioComponent implements OnInit {
         this.atendimento = atendimento;
         console.log(atendimento);
       });
+
     this.aprazamentos = [];
   }
 
@@ -66,14 +69,14 @@ export class ProntuarioComponent implements OnInit {
     return this.aprazamentos.filter(a => a.medicamento._id === medicamento._id).length > 0;
   }
 
-  getMedicamentos() {
+  getItensPrescricao(codigoTipoItem: number) {
     const prescricao: Prescricao = this.getUltimaPrescricao();
 
     if (!prescricao || !prescricao.Itens) {
       return [];
     }
 
-    return prescricao.Itens.filter(i => i.codigoTipoItem === 3);
+    return prescricao.Itens.filter(i => i.codigoTipoItem === codigoTipoItem);
   }
 
   showModal(medicamento: Medicamento) {

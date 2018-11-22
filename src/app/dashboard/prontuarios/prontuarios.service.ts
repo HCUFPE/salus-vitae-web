@@ -38,12 +38,12 @@ export class ProntuariosService {
     return this.http.get<Ala>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
   }
 
-  listarProntuariosHC(): Observable<Prontuario> {
-    return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prontuario}`, httpOptions);
+  listarProntuariosHC(prt:number | string): Observable<Prontuario> {
+    return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prt}`, httpOptions);
   }
 
-  atendimentoHC(): Observable<Atendimento> {
-    return this.http.get<Atendimento>(`${HC_API}/humaster/ws/prontuario/${prontuario}/atendimento/${atendimento}`, httpOptions);
+  atendimentoHC(prt:number | string, atd:number | string): Observable<Atendimento> {
+    return this.http.get<Atendimento>(`${HC_API}/humaster/ws/prontuario/${prt}/atendimento/${atd}`, httpOptions);
   }
 
 }
