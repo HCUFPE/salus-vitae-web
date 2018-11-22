@@ -5,10 +5,10 @@ import * as moment from 'moment';
 
 import { ProntuariosService } from '../prontuarios.service';
 import { Prontuario } from '../../../models/prontuario.model';
-import { Medicamento } from '../../../models/medicamento.model';
 import { Aprazamento } from '../../../models/aprazamento.model';
 import { Atendimento } from '../../../models/atendimento.model';
 import { Prescricao } from '../../../models/prescricao.model';
+import { ItemPrescricao } from 'src/app/models/item-prescricao.model';
 
 @Component({
   selector: 'app-prontuario',
@@ -21,15 +21,15 @@ export class ProntuarioComponent implements OnInit {
   prontuario: Prontuario;
   atendimento: Atendimento;
   aprazamentos: Aprazamento[];
+  modalMedicamento: ItemPrescricao;
   filtro: string;
-  modalMedicamento: Medicamento;
 
   constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) {
   }
 
   ngOnInit() {
-    this.prontuarioService.atendimentoHC(this.route.snapshot.paramMap.get('prontuario_id'),
-      this.route.snapshot.paramMap.get('atendimento_id'))
+    this.prontuarioService.atendimentoHC(19569516,
+      446702305)
       .subscribe((atendimento: Atendimento) => {
         atendimento.prescricoes = atendimento.prescricoes.sort((a: Prescricao, b: Prescricao) => {
           if (this.getDateFromString(a.dataPrescricao) > this.getDateFromString(b.dataPrescricao)) {
@@ -65,10 +65,6 @@ export class ProntuarioComponent implements OnInit {
     return moment(date, 'DD/MM/YYYY HH:mm:ss').toDate();
   }
 
-  isAprazado(medicamento: Medicamento) {
-    return this.aprazamentos.filter(a => a.medicamento._id === medicamento._id).length > 0;
-  }
-
   getItensPrescricao(codigoTipoItem: number) {
     const prescricao: Prescricao = this.getUltimaPrescricao();
 
@@ -79,8 +75,10 @@ export class ProntuarioComponent implements OnInit {
     return prescricao.Itens.filter(i => i.codigoTipoItem === codigoTipoItem);
   }
 
-  showModal(medicamento: Medicamento) {
-    this.modalMedicamento = medicamento;
+  showModal(itemPrescricao: ItemPrescricao) {
+    if (itemPrescricao.codigoTipoItem === 3) {
+      this.modalMedicamento = itemPrescricao;
+    }
   }
 
   dismissModal(aprazamento) {

@@ -1,14 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, ViewContainerRef } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { ToastsManager, Toast } from 'ng6-toastr/ng2-toastr';
 import * as moment from 'moment';
 
-import { Medicamento } from '../../../models/medicamento.model';
-import { Prontuario } from '../../../models/prontuario.model';
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
-import { Aprazamento } from 'src/app/models/aprazamento.model';
-import { NgForm } from '@angular/forms';
-import { PreOperacao } from 'src/app/models/pre-operacao.model';
+import { ItemPrescricao } from '../../../models/item-prescricao.model';
+import { Prontuario } from '../../../models/prontuario.model';
+import { Aprazamento } from '../../../models/aprazamento.model';
+import { PreOperacao } from '../../../models/pre-operacao.model';
+import { Atendimento } from 'src/app/models/atendimento.model';
 
 @Component({
   selector: 'app-modal-aprazar',
@@ -25,13 +26,15 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   frequencia_medicamento: number;
   observacaoMedicamento: string;
   @Input()  prontuario: Prontuario;
-  @Input()  medicamento: Medicamento;
+  @Input()  atendimento: Atendimento;
+  @Input()  medicamento: ItemPrescricao;
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
   @ViewChild('btnClose') btnClose: ElementRef;
 
   constructor(private aprazamentoService: AprazamentosService,
     public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
+    console.log(this.medicamento);
   }
 
   // Inicializar o modal com o horário atual
@@ -40,6 +43,7 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
     this.horario = new Date();
     this.min = this.horario;
     this.max = moment(this.horario).add(1, 'day').toDate();
+    console.log(this.medicamento);
   }
 
   onSubmit(form: NgForm) {
@@ -155,7 +159,7 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   // }
 
   isRequesting(): boolean {
-    return this.aprazamento !== undefined && this.aprazamento !== null;
+    return this.aprazamentos !== undefined && this.aprazamentos !== null;
   }
 
   ngOnDestroy() {
