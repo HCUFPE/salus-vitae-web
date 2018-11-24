@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgxMaskModule } from 'ngx-mask';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { ProntuariosRoutingModule } from './prontuarios-routing.module';
 import { ProntuarioComponent } from './prontuario/prontuario.component';
@@ -23,6 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    OwlNativeDateTimeModule,
+    OwlDateTimeModule,
     TranslateModule,
     NgxMaskModule.forChild(),
     NgxPaginationModule

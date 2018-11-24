@@ -5,10 +5,10 @@ import * as moment from 'moment';
 
 import { ProntuariosService } from '../prontuarios.service';
 import { Prontuario } from '../../../models/prontuario.model';
-import { Medicamento } from '../../../models/medicamento.model';
 import { Atendimento } from '../../../models/atendimento.model';
 import { Prescricao } from '../../../models/prescricao.model';
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
+import { ItemPrescricao } from 'src/app/models/item-prescricao.model';
 import { PreOperacao } from 'src/app/models/pre-operacao.model';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProntuarioComponent implements OnInit {
   atendimento: Atendimento;
   aprazamentos: PreOperacao[];
   filtro: string;
-  modalMedicamento: Medicamento;
+  modalMedicamento: ItemPrescricao;
   prescricaoSelected: Prescricao;
   paginationMedicamento = 1;
   paginationAprazamento = 1;
@@ -154,8 +154,10 @@ export class ProntuarioComponent implements OnInit {
     );
   }
 
-  showModal(medicamento: Medicamento) {
-    this.modalMedicamento = medicamento;
+  showModal(itemPrescricao: ItemPrescricao) {
+    if (itemPrescricao.codigoTipoItem === 3) {
+      this.modalMedicamento = itemPrescricao;
+    }
   }
 
   dismissModal(aprazamento) {
