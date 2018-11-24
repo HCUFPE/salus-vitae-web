@@ -1,61 +1,30 @@
 <!-- Modal -->
 <div class="modal fade" id="modalAprazamento" tabindex="-1" role="dialog" aria-labelledby="modalAprazamentoTitulo"
-aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
-  <!-- Modal content-->
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3 class="modal-title w-100" id="modalAprazamentoTitulo">
-        Aprazamento do Medicamento<br>
-        <h4 class="font-weight-bold">{{ medicamento?.descricaoItem }}</h4>
-      </h3>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(modalForm)">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="row">
-      <div class="col-md-12 ">
-        <nav>
-          <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-detalhes-tab" data-toggle="tab" href="#nav-detalhes" role="tab"
-            aria-controls="nav-detalhes" aria-selected="true">Detalhes</a>
-            <a class="nav-item nav-link" id="nav-aprazar-tab" data-toggle="tab" href="#nav-aprazar" role="tab"
-            aria-controls="nav-aprazar" aria-selected="false">Aprazar</a>
-          </div>
-        </nav>
-        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="nav-detalhes" role="tabpanel" aria-labelledby="nav-detalhes-tab">
-            <div class="modal-body">
-              <form #modalForm="ngForm" (ngSubmit)="onSubmit(modalForm)">
-                <div class="form-content">
-                  <div class="form-group align-content">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label for="frequencia" name="frequencia"><i class="fa fa-repeat"></i><b>&nbsp;Frequência:</b></label>
-                        <p [(ngModel)]="getFrequencia">{{ medicamento?.frequencia }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label for="administracao"><i class="fa fa-bookmark"></i><b>&nbsp;Administração:</b></label>
-                        <p [ngModel]="getAdministracao" [required]="!administracao" name="administracao">
-                          {{ medicamento?.administracao }}
-                        </p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <label for="frequencia"><i class="fa fa-file-text-o"></i><b>&nbsp;Observação:</b></label>
-                          <!-- <p *ngIf="!isObservacao()" [(ngModel)]="getObservacao" type="" name="observacao"></p> -->
-                          <p [(ngModel)]="getObservacao" name="observacao">{{ medicamento?.observacaoItem }}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title w-100" id="modalAprazamentoTitulo">
+          Aprazamento do Medicamento<br>
+          <h4 class="font-weight-bold">{{ medicamento?.descricaoItem }}</h4>
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(modalForm)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row">
+        <div class="col-md-12 ">
+          <nav>
+            <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-aprazar-tab" data-toggle="tab" href="#nav-aprazar" role="tab"
+                aria-controls="nav-aprazar" aria-selected="true">Aprazar</a>
+              <a class="nav-item nav-link" id="nav-detalhes-tab" data-toggle="tab" href="#nav-detalhes" role="tab"
+                aria-controls="nav-detalhes" aria-selected="false">Detalhes</a>
             </div>
-            <div class="tab-pane fade" id="nav-aprazar" role="tabpanel" aria-labelledby="nav-aprazar-tab">
+          </nav>
+          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-aprazar" role="tabpanel" aria-labelledby="nav-aprazar-tab">
               <div class="modal-body">
                 <form #modalForm="ngForm" (ngSubmit)="onSubmit(modalForm)">
                   <div class="form-content">
@@ -79,11 +48,12 @@ aria-hidden="true">
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let aprazamento of aprazamentos; index as i">
-                                      <th scope="row">{{i + 1}}</th>
+                                      <!-- <th scope="row">{{i + 1}}</th> -->
                                       <td>
                                         <label for="aprazamento"><i class="fa fa-calendar-check-o"></i><b>Data:&nbsp;</b></label>
-                                        <input name="data_hora" [(ngModel)]="aprazamento.horarioInicial" [min]="aprazamento.horarioInicial" [max]="max" [owlDateTimeTrigger]="datePicker"
-                                        [owlDateTime]="datePicker" #dateTime="ngModel">
+                                        <input name="data_hora" [(ngModel)]="aprazamento.horarioInicial" [min]="aprazamento.horarioInicial"
+                                          [max]="max" [owlDateTimeTrigger]="datePicker" [owlDateTime]="datePicker"
+                                          #dateTime="ngModel">
                                         <owl-date-time #datePicker></owl-date-time>
                                       </td>
                                       <td>
@@ -104,14 +74,48 @@ aria-hidden="true">
                   <div class="modal-footer d-flex justify-content-end">
                     <!-- <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(loginForm)">Fechar</button> -->
                     <button class="btn btn-success" [disabled]="!modalForm.valid || isRequesting()" type="submit"><b>Confirmar</b><i
-                      class="fa fa-paper-plane-o ml-1"></i></button>
+                        class="fa fa-paper-plane-o ml-1"></i></button>
+                  </div>
+                </form>
+                <!-- End form -->
+              </div>
+            </div>
+            <!-- End nav-aprazar-tab -->
+            <div class="tab-pane" id="nav-detalhes" role="tabpanel" aria-labelledby="nav-detalhes-tab">
+              <div class="modal-body">
+                <!-- <form #modalForm="ngForm" (ngSubmit)="onSubmit(modalForm)"> -->
+                  <div class="form-content">
+                    <div class="form-group align-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="frequencia"><i class="fa fa-repeat"></i><b>&nbsp;Frequência:</b></label>
+                          <p name="frequencia">{{ medicamento?.frequencia }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="administracao"><i class="fa fa-bookmark"></i><b>&nbsp;Administração:</b></label>
+                          <p name="administracao">
+                            {{ medicamento?.administracao }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12" *ngIf="medicamento?.observacaoItem" >
+                          <label for="frequencia"><i class="fa fa-file-text-o"></i><b>&nbsp;Observação:</b></label>
+                          <!-- <p *ngIf="!isObservacao()" [(ngModel)]="getObservacao" type="" name="observacao"></p> -->
+                          <p name="observacao">{{ medicamento?.observacaoItem }}</p>
+                        </div>
+                      </div>
                     </div>
-                  </form>
-                </div>
+                  </div>
+                <!-- </form> -->
               </div>
             </div>
           </div>
+          <!-- End nav-tabContent -->
         </div>
       </div>
     </div>
   </div>
+</div>

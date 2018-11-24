@@ -34,16 +34,16 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   constructor(private aprazamentoService: AprazamentosService,
     public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
-    console.log(this.medicamento);
+    // console.log(this.medicamento);
   }
 
   // Inicializar o modal com o horário atual
   ngOnInit() {
     this.aprazamentos = [];
+    console.log(this.aprazamentos);
     this.horario = new Date();
     this.min = this.horario;
     this.max = moment(this.horario).add(1, 'day').toDate();
-    console.log(this.medicamento);
   }
 
   onSubmit(form: NgForm) {
@@ -52,53 +52,14 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
 
   // Adicionar quantidade de aprazamentos para o medicamento
   adicionarAprazamento() {
-    this.aprazamentos.push({ status: 'P', cdProntuario: 0, cdAtendimento: 0, codigoPrescricao: 0, dtPreOpAprazamento: null,
-     horarioInicial: new Date(), intervalo: 48, codigoItem: '1', codigoTipoItem: 3, ordemItem: 1, quantidade: 1 });
+    // this.aprazamentos.push({ status: 'P', cdProntuario: 0, cdAtendimento: 0, aprazamentos: , dtPreOpAprazamento: null,
+    //  horarioInicial: new Date(), intervalo: 48, codigoItem: '1', codigoTipoItem: 3, ordemItem: 1, quantidade: 1 });
+    this.aprazamentos.push();
   }
 
   // Remover medicamento da lista
   removerAprazamento(index: number) {
     this.aprazamentos.splice(index, 1);
-  }
-
-  // Obter observação do medicamento
-  getObservacao() {
-    if (this.observacaoMedicamento) {
-      let observacao: string = this.observacaoMedicamento;
-
-      if (this.observacaoMedicamento) {
-        observacao += `${this.observacaoMedicamento}`;
-      }
-
-      return observacao;
-    }
-  }
-
-  // Obter informação da administração do medicamento
-  getAdministracao() {
-    if (this.adm_medicamento) {
-      let administracao: string = this.adm_medicamento;
-
-      if (this.adm_medicamento) {
-        administracao += ` ${this.adm_medicamento}`;
-      }
-
-      return administracao;
-    }
-  }
-
-  // Obter frequência do item do medicamento
-  getFrequencia() {
-    if (this.frequencia_medicamento) {
-      let frequencia: number = this.frequencia_medicamento;
-
-      if (this.frequencia_medicamento) {
-        // frequencia += ` - ${this.frequenciaItem}`;
-        frequencia += parseFloat(` - ${this.frequencia_medicamento}`);
-      }
-
-      return frequencia;
-    }
   }
 
   // Retorna observação caso exista o medicamento
