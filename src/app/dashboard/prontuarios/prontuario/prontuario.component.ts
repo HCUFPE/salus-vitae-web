@@ -38,6 +38,8 @@ export class ProntuarioComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getProntuarioById();
+
     this.prontuarioService
       .atendimentoHC(
         this.route.snapshot.paramMap.get('prontuario_id'),
@@ -65,7 +67,6 @@ export class ProntuarioComponent implements OnInit {
         );
         this.atendimento = atendimento;
         this.prescricaoSelected = this.getUltimaPrescricao();
-        console.log(atendimento);
 
         this.aprazamentoService
           .aprazamentos()
@@ -100,9 +101,10 @@ export class ProntuarioComponent implements OnInit {
     this.paginationAprazamento = 1;
   }
 
-  public printarTudo() {
-    console.log(this.paginationMedicamento);
-    console.log(this.paginationAprazamento);
+  public getProntuarioById() {
+    this.prontuarioService.listarProntuariosHC(+this.route.snapshot.paramMap.get('prontuario_id')).subscribe(data => {
+      this.prontuario = data;
+    });
   }
 
   getUltimaPrescricao() {
