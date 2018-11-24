@@ -18,8 +18,7 @@ const httpOptions = {
   })
 };
 const codigoAla = '5N1000';
-const prontuario = 19569516;
-const atendimento = 446702305;
+
 
 @Injectable()
 export class ProntuariosService {
@@ -27,7 +26,7 @@ export class ProntuariosService {
   constructor(private http: HttpClient) { }
 
   prontuarios(): Observable<Prontuario[]> {
-    return this.http.get<Prontuario[]>(`${SALUS_API}/prontuarios`);
+    return this.http.get<Prontuario[]>(`${SALUS_API}/prontuario`);
   }
 
   prontuariosById(id: string): Observable<Prontuario> {
@@ -38,11 +37,11 @@ export class ProntuariosService {
     return this.http.get<Ala>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
   }
 
-  listarProntuariosHC(prt:number | string): Observable<Prontuario> {
+  listarProntuariosHC(prt: number | string): Observable<Prontuario> {
     return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prt}`, httpOptions);
   }
 
-  atendimentoHC(prt:number | string, atd:number | string): Observable<Atendimento> {
+  atendimentoHC(prt: number | string, atd: number | string): Observable<Atendimento> {
     return this.http.get<Atendimento>(`${HC_API}/humaster/ws/prontuario/${prt}/atendimento/${atd}`, httpOptions);
   }
 

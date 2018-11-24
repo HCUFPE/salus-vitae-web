@@ -31,8 +31,11 @@ hr {
 
 
 .card-header{
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.0em;
+}
+
+.card-body p{
+   font-size: 0.9em;
 }
 
 @media (min-width: 576px){
@@ -45,6 +48,7 @@ hr {
 .text-center {
     text-align: center !important;
     padding-left: 12%;
+    font-size: 1.8em;
     font-weight: bold;
 }
 

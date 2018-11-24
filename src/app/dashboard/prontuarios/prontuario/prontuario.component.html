@@ -1,8 +1,29 @@
-<section class="content-header">
-  <div class="row">
-    <h1 class="ml-3 mr-auto">Prescrição Médica</h1>
-  </div>
-</section>
+<div class="py-1">
+  <section class="container-fluid">
+    <div class="row m-6">
+      <div class="text-center col-sm-10">
+        <h1>Prescrição Médica</h1>
+      </div>
+      <div class="w-100 col-md-2">
+        <div class="dropdown m-2 mr-2">
+          <button class="btn btn-primary dropdown-toggle pull-right" type="button" id="dropdownMenu" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Prescrições
+          </button>
+          <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu">
+            <button (click)="selecionarPrescricao(prescricao)" [class.active]="prescricaoSelected.prescricao === prescricao.prescricao"
+              class="dropdown-item" type="button" *ngFor="let prescricao of getPrescricoes()">
+              {{getDateFromString(prescricao?.dataPrescricao) | date:'dd/MM/yyyy'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+  <h4 class="text-left"></h4>
+</div>
+
 <section class="content">
   <div class="row">
     <div class="col-md-12">
@@ -17,9 +38,9 @@
                   <dt>Prontuário:</dt>
                   <dd>{{atendimento?.prontuario}}</dd>
                   <dt>Data da Prescrição:</dt>
-                  <dd>{{getDateFromString(getUltimaPrescricao()?.dataPrescricao) | date:'dd/MM/yyyy'}}</dd>
+                  <dd>{{getDateFromString(prescricaoSelected?.dataPrescricao) | date:'dd/MM/yyyy'}}</dd>
                   <dt>Tipo da Prescrição:</dt>
-                  <dd>{{getUltimaPrescricao()?.tipoPrescricao}}</dd>
+                  <dd>{{prescricaoSelected?.tipoPrescricao}}</dd>
                 </dl>
               </div>
             </div>
@@ -27,9 +48,9 @@
               <div class="details">
                 <dl>
                   <dt>Status da Prescrição:</dt>
-                  <dd>{{getUltimaPrescricao()?.statusPrescricao}}</dd>
+                  <dd>{{prescricaoSelected?.statusPrescricao}}</dd>
                   <dt>Profissional:</dt>
-                  <dd>{{getUltimaPrescricao()?.profissional}}</dd>
+                  <dd>{{prescricaoSelected?.profissional}}</dd>
                   <dt>Quantidade de Medicamentos:</dt>
                   <dd>{{getItensPrescricao(3)?.length}}</dd>
                 </dl>
@@ -77,7 +98,31 @@
   <div class="tab-content">
     <!-- Aprazamentos -->
     <div class="tab-pane fade" id="nav-aprazamentos" role="tabpanel" aria-labelledby="nav-aprazamentos-tab">
-      Aprazamentos
+      <table class="table table-striped text-center">
+        <thead colspan="2">
+          <tr>
+            <!-- <th>#</th> -->
+            <th>Nome</th>
+            <th>Administração</th>
+            <th>Frequencia</th>
+            <th>Observação</th>
+            <th>Horário</th>
+            <th>Gotejamento</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let aprazamento of aprazamentos; index as i">
+            <!-- <th scope="row">{{i + 1}}</th> -->
+            <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
+            <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
+            <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
+            <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
+            <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
+            <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
+            <td>{{aprazamento?.status}}</td>
+        </tbody>
+      </table>
     </div>
     <!-- Dietas -->
     <div class="tab-pane fade" id="nav-dietas" role="tabpanel" aria-labelledby="nav-dietas-tab">
