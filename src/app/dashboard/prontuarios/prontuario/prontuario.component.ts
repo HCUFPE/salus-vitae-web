@@ -24,6 +24,12 @@ export class ProntuarioComponent implements OnInit {
   filtro: string;
   modalMedicamento: ItemPrescricao;
   prescricaoSelected: Prescricao;
+  paginationMedicamento = 1;
+  paginationAprazamento = 1;
+  paginationDieta = 1;
+  paginationHomoderivado = 1;
+  paginationCuidado = 1;
+  paginationProcedimento = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,31 +66,43 @@ export class ProntuarioComponent implements OnInit {
         this.atendimento = atendimento;
         this.prescricaoSelected = this.getUltimaPrescricao();
         console.log(atendimento);
-      });
 
-    this.aprazamentoService
-      .aprazamentos()
-      .subscribe((aprazamentos: PreOperacao[]) => {
-        this.aprazamentos = aprazamentos.filter(
-          a =>
-            a.status === 'P' &&
-            a.cdProntuario ===
-              +this.route.snapshot.paramMap.get('prontuario_id') &&
-            a.cdAtendimento ===
-              +this.route.snapshot.paramMap.get('atendimento_id')
-        );
-        this.aprazamentos.forEach(
-          a =>
-            (a.itemPrescricao = this.atendimento.prescricoes
-              .find(p => p.prescricao === this.prescricaoSelected.prescricao)
-              .Itens.find(
-                i =>
-                  i.ordemItem === a.ordemItem &&
-                  i.codigoTipoItem === a.cdTpItem &&
-                  i.codigoItem === a.cdItem + ''
-              ))
-        );
+        this.aprazamentoService
+          .aprazamentos()
+          .subscribe((aprazamentos: PreOperacao[]) => {
+            this.aprazamentos = aprazamentos.filter(
+              a =>
+                a.status === 'P' &&
+                a.cdProntuario ===
+                  +this.route.snapshot.paramMap.get('prontuario_id') &&
+                a.cdAtendimento ===
+                  +this.route.snapshot.paramMap.get('atendimento_id')
+            );
+            this.aprazamentos.forEach(
+              a =>
+                (a.itemPrescricao = this.atendimento.prescricoes
+                  .find(
+                    p => p.prescricao === this.prescricaoSelected.prescricao
+                  )
+                  .Itens.find(
+                    i =>
+                      i.ordemItem === a.ordemItem &&
+                      i.codigoTipoItem === a.cdTpItem &&
+                      i.codigoItem === a.cdItem + ''
+                  ))
+            );
+          });
       });
+  }
+
+  public loadPageMedicamento(page: number) {
+    this.paginationMedicamento = page;
+    this.paginationAprazamento = 1;
+  }
+
+  public printarTudo() {
+    console.log(this.paginationMedicamento);
+    console.log(this.paginationAprazamento);
   }
 
   getUltimaPrescricao() {

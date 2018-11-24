@@ -7,21 +7,21 @@
       <div class="w-100 col-md-2">
         <div class="dropdown m-2 mr-2">
           <button class="btn btn-primary dropdown-toggle pull-right" type="button" id="dropdownMenu" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Prescrições
-          </button>
-          <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu">
-            <button (click)="selecionarPrescricao(prescricao)" [class.active]="prescricaoSelected.prescricao === prescricao.prescricao"
-              class="dropdown-item" type="button" *ngFor="let prescricao of getPrescricoes()">
-              {{getDateFromString(prescricao?.dataPrescricao) | date:'dd/MM/yyyy'}}
-            </button>
-          </div>
-        </div>
+          aria-haspopup="true" aria-expanded="false">
+          Prescrições
+        </button>
+        <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu">
+          <button (click)="selecionarPrescricao(prescricao)" [class.active]="prescricaoSelected.prescricao === prescricao.prescricao"
+          class="dropdown-item" type="button" *ngFor="let prescricao of getPrescricoes()">
+          {{getDateFromString(prescricao?.dataPrescricao) | date:'dd/MM/yyyy'}}
+        </button>
       </div>
     </div>
-    <hr>
-  </section>
-  <h4 class="text-left"></h4>
+  </div>
+</div>
+<hr>
+</section>
+<h4 class="text-left"></h4>
 </div>
 
 <section class="content">
@@ -70,59 +70,62 @@
   <nav>
     <div class="nav nav-tabs nav-justified" role="tablist">
       <a class="nav-item nav-link" id="nav-aprazamentos-tab" data-toggle="tab" href="#nav-aprazamentos" role="tab"
-        aria-controls="nav-aprazamentos" aria-selected="false">
-        Aprazamentos
-      </a>
-      <a class="nav-item nav-link" id="nav-dietas-tab" data-toggle="tab" href="#nav-dietas" role="tab" aria-controls="nav-dietas"
-        aria-selected="false">
-        Dietas
-      </a>
-      <a class="nav-item nav-link active" id="nav-medicamentos-tab" data-toggle="tab" href="#nav-medicamentos" role="tab"
-        aria-controls="nav-medicamentos" aria-selected="true">
-        Medicamentos
-      </a>
-      <a class="nav-item nav-link" id="nav-hemoderivados-tab" data-toggle="tab" href="#nav-hemoderivados" role="tab"
-        aria-controls="nav-hemoderivados" aria-selected="false">
-        Hemoderivados
-      </a>
-      <a class="nav-item nav-link" id="nav-cuidados-tab" data-toggle="tab" href="#nav-cuidados" role="tab"
-        aria-controls="nav-cuidados" aria-selected="false">
-        Cuidados
-      </a>
-      <a class="nav-item nav-link" id="nav-procedimentos-tab" data-toggle="tab" href="#nav-procedimentos" role="tab"
-        aria-controls="nav-procedimentos" aria-selected="false">
-        Procedimentos
-      </a>
-    </div>
-  </nav>
-  <div class="tab-content">
-    <!-- Aprazamentos -->
-    <div class="tab-pane fade" id="nav-aprazamentos" role="tabpanel" aria-labelledby="nav-aprazamentos-tab">
-      <table class="table table-striped text-center">
-        <thead colspan="2">
-          <tr>
-            <!-- <th>#</th> -->
-            <th>Nome</th>
-            <th>Administração</th>
-            <th>Frequencia</th>
-            <th>Observação</th>
-            <th>Horário</th>
-            <th>Gotejamento</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let aprazamento of aprazamentos; index as i">
-            <!-- <th scope="row">{{i + 1}}</th> -->
-            <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
-            <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
-            <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
-            <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
-            <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
-            <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
-            <td>{{aprazamento?.status}}</td>
+      aria-controls="nav-aprazamentos" aria-selected="false">
+      Aprazamentos
+    </a>
+    <a class="nav-item nav-link" id="nav-dietas-tab" data-toggle="tab" href="#nav-dietas" role="tab" aria-controls="nav-dietas"
+    aria-selected="false">
+    Dietas
+  </a>
+  <a class="nav-item nav-link active" id="nav-medicamentos-tab" data-toggle="tab" href="#nav-medicamentos" role="tab"
+  aria-controls="nav-medicamentos" aria-selected="true">
+  Medicamentos
+</a>
+<a class="nav-item nav-link" id="nav-hemoderivados-tab" data-toggle="tab" href="#nav-hemoderivados" role="tab"
+aria-controls="nav-hemoderivados" aria-selected="false">
+Hemoderivados
+</a>
+<a class="nav-item nav-link" id="nav-cuidados-tab" data-toggle="tab" href="#nav-cuidados" role="tab"
+aria-controls="nav-cuidados" aria-selected="false">
+Cuidados
+</a>
+<a class="nav-item nav-link" id="nav-procedimentos-tab" data-toggle="tab" href="#nav-procedimentos" role="tab"
+aria-controls="nav-procedimentos" aria-selected="false">
+Procedimentos
+</a>
+</div>
+</nav>
+<div class="tab-content">
+  <!-- Aprazamentos -->
+  <div class="tab-pane fade" id="nav-aprazamentos" role="tabpanel" aria-labelledby="nav-aprazamentos-tab">
+    <table class="table table-striped text-center">
+      <thead colspan="2">
+        <tr>
+          <!-- <th>#</th> -->
+          <th>Nome</th>
+          <th>Administração</th>
+          <th>Frequencia</th>
+          <th>Observação</th>
+          <th>Horário</th>
+          <th>Gotejamento</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let aprazamento of aprazamentos | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationApazamento }">
+          <!-- <th scope="row">{{i + 1}}</th> -->
+          <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
+          <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
+          <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
+          <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
+          <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
+          <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
+          <td>{{aprazamento?.status}}</td>
         </tbody>
       </table>
+      <div class="text-center col-sm-10">
+        <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationAprazamento = $event"></pagination-controls>
+      </div>
     </div>
     <!-- Dietas -->
     <div class="tab-pane fade" id="nav-dietas" role="tabpanel" aria-labelledby="nav-dietas-tab">
@@ -138,123 +141,138 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(1); index as i">
+            <tr *ngFor="let itemPrescricao of getItensPrescricao(1) | paginate: { id: 'dietas', itemsPerPage: 10, currentPage: paginationDieta }">
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
               <td>{{itemPrescricao?.observacaoItem}}</td>
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+          <div class="text-center col-sm-10">
+            <pagination-controls [id]="'dietas'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationDieta = $event"></pagination-controls>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- Medicamentos -->
-    <div class="tab-pane fade show active" id="nav-medicamentos" role="tabpanel" aria-labelledby="nav-medicamentos-tab">
-      <div class="table-responsive-md">
-        <table class="table table-striped text-center">
-          <thead colspan="2">
-            <tr>
-              <!-- <th>#</th> -->
-              <th>Nome</th>
-              <th>Administração</th>
-              <th>Frequencia</th>
-              <th>Observação</th>
-              <th>Data Inicio</th>
-              <th>Gotejamento</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(3); index as i">
-              <!-- <th scope="row">{{i + 1}}</th> -->
-              <td>{{itemPrescricao?.descricaoItem}}</td>
-              <td>{{itemPrescricao?.administracao}}</td>
-              <td>{{itemPrescricao?.frequencia}} Horas</td>
-              <td>{{itemPrescricao?.observacaoItem}}</td>
-              <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
-              <td>{{itemPrescricao?.gotejamento}}</td>
-              <td>
-                <button (click)="showModal(itemPrescricao)" data-toggle="modal" data-target="#modalAprazamento"
+      <!-- Medicamentos -->
+      <div class="tab-pane fade show active" id="nav-medicamentos" role="tabpanel" aria-labelledby="nav-medicamentos-tab">
+        <div class="table-responsive-md">
+          <table class="table table-striped text-center">
+            <thead colspan="2">
+              <tr>
+                <!-- <th>#</th> -->
+                <th>Nome</th>
+                <th>Administração</th>
+                <th>Frequencia</th>
+                <th>Observação</th>
+                <th>Data Inicio</th>
+                <th>Gotejamento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let itemPrescricao of getItensPrescricao(3) | paginate: { id: 'medicamentos', itemsPerPage: 10, currentPage: paginationMedicamento }">
+                <!-- <th scope="row">{{i + 1}}</th> -->
+                <td>{{itemPrescricao?.descricaoItem}}</td>
+                <td>{{itemPrescricao?.administracao}}</td>
+                <td>{{itemPrescricao?.frequencia}} Horas</td>
+                <td>{{itemPrescricao?.observacaoItem}}</td>
+                <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{itemPrescricao?.gotejamento}}</td>
+                <td>
+                  <button (click)="showModal(itemPrescricao)" data-toggle="modal" data-target="#modalAprazamento"
                   data-backdrop="static" data-keyboard="false" class="btn btn-primary"><i class="fa fa-edit"></i></button>
-              </td>
-          </tbody>
-        </table>
-      </div>
-      <app-modal-aprazar *ngIf="modalMedicamento" [medicamento]="modalMedicamento" [prontuario]="prontuario" [atendimento]="atendimento"
-        (hideModal)="dismissModal($event)"></app-modal-aprazar>
-    </div>
-    <!-- Hemoderivados -->
-    <div class="tab-pane fade" id="nav-hemoderivados" role="tabpanel" aria-labelledby="nav-hemoderivados-tab">
-      <div class="table-responsive-md">
-        <table class="table table-striped text-center">
-          <thead colspan="2">
-            <tr>
-              <!-- <th>#</th> -->
-              <th>Nome</th>
-              <th>Administração</th>
-              <th>Frequencia</th>
-              <th>Observação</th>
-              <th>Data Inicio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(4); index as i">
-              <!-- <th scope="row">{{i + 1}}</th> -->
-              <td>{{itemPrescricao?.descricaoItem}}</td>
-              <td>{{itemPrescricao?.administracao}}</td>
-              <td>{{itemPrescricao?.frequencia}} Horas</td>
-              <td>{{itemPrescricao?.observacaoItem}}</td>
-              <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!-- Cuidados -->
-    <div class="tab-pane fade" id="nav-cuidados" role="tabpanel" aria-labelledby="nav-cuidados-tab">
-      <div class="table-responsive-md">
-        <table class="table table-striped text-center">
-          <thead colspan="2">
-            <tr>
-              <!-- <th>#</th> -->
-              <th>Nome</th>
-              <th>Administração</th>
-              <th>Observação</th>
-              <th>Data Inicio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(5); index as i">
-              <!-- <th scope="row">{{i + 1}}</th> -->
-              <td>{{itemPrescricao?.descricaoItem}}</td>
-              <td>{{itemPrescricao?.administracao}}</td>
-              <td>{{itemPrescricao?.observacaoItem}}</td>
-              <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!-- Procedimentos -->
-    <div class="tab-pane fade" id="nav-procedimentos" role="tabpanel" aria-labelledby="nav-procedimentos-tab">
-      <div class="table-responsive-md">
-        <table class="table table-striped text-center">
-          <thead colspan="2">
-            <tr>
-              <!-- <th>#</th> -->
-              <th>Nome</th>
-              <th>Administração</th>
-              <th>Observação</th>
-              <th>Data Inicio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(6); index as i">
-              <!-- <th scope="row">{{i + 1}}</th> -->
-              <td>{{itemPrescricao?.descricaoItem}}</td>
-              <td>{{itemPrescricao?.administracao}}</td>
-              <td>{{itemPrescricao?.observacaoItem}}</td>
-              <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
+                </td>
+              </tbody>
+            </table>
+            <div class="text-center col-sm-10">
+              <pagination-controls [id]="'medicamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationMedicamento = $event"></pagination-controls>
+            </div>
+          </div>
+          <app-modal-aprazar *ngIf="modalMedicamento" [medicamento]="modalMedicamento" [prontuario]="prontuario"
+          [atendimento]="atendimento" (hideModal)="dismissModal($event)"></app-modal-aprazar>
+        </div>
+        <!-- Hemoderivados -->
+        <div class="tab-pane fade" id="nav-hemoderivados" role="tabpanel" aria-labelledby="nav-hemoderivados-tab">
+          <div class="table-responsive-md">
+            <table class="table table-striped text-center">
+              <thead colspan="2">
+                <tr>
+                  <!-- <th>#</th> -->
+                  <th>Nome</th>
+                  <th>Administração</th>
+                  <th>Frequencia</th>
+                  <th>Observação</th>
+                  <th>Data Inicio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let itemPrescricao of getItensPrescricao(4) | paginate: { id: 'homoderivados', itemsPerPage: 10, currentPage: paginationHomoderivado }">
+                  <!-- <th scope="row">{{i + 1}}</th> -->
+                  <td>{{itemPrescricao?.descricaoItem}}</td>
+                  <td>{{itemPrescricao?.administracao}}</td>
+                  <td>{{itemPrescricao?.frequencia}} Horas</td>
+                  <td>{{itemPrescricao?.observacaoItem}}</td>
+                  <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
+                </tbody>
+              </table>
+              <div class="text-center col-sm-10">
+                <pagination-controls [id]="'homoderivados'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationHomoderivado = $event"></pagination-controls>
+              </div>
+            </div>
+          </div>
+          <!-- Cuidados -->
+          <div class="tab-pane fade" id="nav-cuidados" role="tabpanel" aria-labelledby="nav-cuidados-tab">
+            <div class="table-responsive-md">
+              <table class="table table-striped text-center">
+                <thead colspan="2">
+                  <tr>
+                    <!-- <th>#</th> -->
+                    <th>Nome</th>
+                    <th>Administração</th>
+                    <th>Observação</th>
+                    <th>Data Inicio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let itemPrescricao of getItensPrescricao(5) | paginate: { id: 'cuidados', itemsPerPage: 10, currentPage: paginationCuidado }">
+                    <!-- <th scope="row">{{i + 1}}</th> -->
+                    <td>{{itemPrescricao?.descricaoItem}}</td>
+                    <td>{{itemPrescricao?.administracao}}</td>
+                    <td>{{itemPrescricao?.observacaoItem}}</td>
+                    <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
+                  </tbody>
+                </table>
+                <div class="text-center col-sm-10">
+                  <pagination-controls [id]="'cuidados'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationCuidado = $event"></pagination-controls>
+                </div>
+              </div>
+            </div>
+            <!-- Procedimentos -->
+            <div class="tab-pane fade" id="nav-procedimentos" role="tabpanel" aria-labelledby="nav-procedimentos-tab">
+              <div class="table-responsive-md">
+                <table class="table table-striped text-center">
+                  <thead colspan="2">
+                    <tr>
+                      <!-- <th>#</th> -->
+                      <th>Nome</th>
+                      <th>Administração</th>
+                      <th>Observação</th>
+                      <th>Data Inicio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let itemPrescricao of getItensPrescricao(6) | paginate: { id: 'procedimentos', itemsPerPage: 10, currentPage: paginationProcedimento }">
+                      <!-- <th scope="row">{{i + 1}}</th> -->
+                      <td>{{itemPrescricao?.descricaoItem}}</td>
+                      <td>{{itemPrescricao?.administracao}}</td>
+                      <td>{{itemPrescricao?.observacaoItem}}</td>
+                      <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
+                    </tbody>
+                  </table>
+                  <div class="text-center col-sm-10">
+                    <pagination-controls [id]="'procedimentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationProcedimento = $event"></pagination-controls>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
