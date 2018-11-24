@@ -18,8 +18,7 @@ const httpOptions = {
   })
 };
 const codigoAla = '5N1000';
-const prontuario = 19569516;
-const atendimento = 446702305;
+
 
 @Injectable()
 export class ProntuariosService {
@@ -27,7 +26,7 @@ export class ProntuariosService {
   constructor(private http: HttpClient) { }
 
   prontuarios(): Observable<Prontuario[]> {
-    return this.http.get<Prontuario[]>(`${SALUS_API}/prontuarios`);
+    return this.http.get<Prontuario[]>(`${SALUS_API}/prontuario`);
   }
 
   prontuariosById(id: string): Observable<Prontuario> {
