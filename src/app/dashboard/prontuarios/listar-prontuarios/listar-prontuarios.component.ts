@@ -1,12 +1,16 @@
 import { Leito } from './../../../models/leito.model';
 import { Alert } from './../../../shared/errorhandling/index';
 import { Ala } from './../../../models/ala.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Pipe } from '@angular/core';
 
 import { Prontuario } from '../../../models/prontuario.model';
 import { ProntuariosService } from '../prontuarios.service';
 import { TranslateService } from '@ngx-translate/core';
 
+// tslint:disable-next-line:use-pipe-transform-interface
+@Pipe({
+  name: 'myfilter',
+})
 
 @Component({
   selector: 'app-listar-prontuarios',
@@ -20,9 +24,10 @@ export class ListarProntuariosComponent implements OnInit {
   public filtro: string;
   public leito: Leito[];
   public numerosProntuarios;
-
-  @Input()
-  public alerts: Array<Alert> = [];
+  public pacientes: Leito[];
+  public pacientesInternados: any;
+  public newObj: Array<any> = [];
+  @Input() public alerts: Array<Alert> = [];
 
 
   constructor(
@@ -32,7 +37,6 @@ export class ListarProntuariosComponent implements OnInit {
 
   ngOnInit() {
     this.getAlas();
-    // this.getProntuariosHC();
   }
 
   getAlas() {
@@ -40,24 +44,25 @@ export class ListarProntuariosComponent implements OnInit {
       .subscribe(ala => {
         this.ala = ala;
         this.leito = ala.leitos;
-        console.log(this.ala.leitos[0].prontuario);
-        console.log(this.leito);
 
         for (const leito of ala.leitos) {
-          const numerosProntuarios = leito.prontuario;
-
-          console.log(numerosProntuarios);
-
+          const numeroLeito = leito;
+          const numeroProntuario = leito.prontuario;
+          if (numeroProntuario) {
+            this.getProntuariosHC(numeroProntuario, numeroLeito);
+          }
         }
+        return this.newObj;
       }, error => {
         const alert = new Alert(null, error);
         this.alerts.push(alert);
       });
   }
 
-  getProntuariosHC() {
-    this.prontuarioService.listarProntuariosHC(this.prontuario.prontuario).subscribe(prontuario => {
-      this.prontuario = this.prontuario;
+  getProntuariosHC(prontuario: number, leito: any) {
+    this.prontuarioService.listarProntuariosHC(prontuario).subscribe(data => {
+      this.prontuario = data;
+      this.newObj.push(Object.assign({}, this.prontuario, leito));
     });
   }
 }

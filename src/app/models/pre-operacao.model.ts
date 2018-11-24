@@ -7,12 +7,12 @@ export interface PreOperacao {
     status: string;
     cdProntuario: number;
     cdAtendimento: number;
-    codigoPrescricao: number;
+    cdPrescricao: number;
     dtPreOpAprazamento: Date;
     horarioInicial: Date;
     intervalo: number;
-    codigoItem: string;
-    codigoTipoItem: number;
+    cdItem: number;
+    cdTpItem: number;
     ordemItem: number;
     quantidade: number;
 
