@@ -1,58 +1,121 @@
 <!-- Modal -->
 <div class="modal fade" id="modalAprazamento" tabindex="-1" role="dialog" aria-labelledby="modalAprazamentoTitulo"
-aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-  <!-- Modal content-->
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="modalAprazamentoTitulo">Aprazamento do Medicamento</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="close(loginForm)">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form (ngSubmit)="confirmar()" #loginForm="ngForm">
-        <p><b>Nome: </b>{{ getNomeRemedio() }}</p>
-        <div class="form-content">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-6">
-                <label for="aprazamento">Hora Inicial:</label>
-                <input id="aprazamento"  [(ngModel)]="dt_horario" type="time" [required]="!aprazamento"
-                name="aprazamento" class="form-control" />
-              </div>
-              <div class="col-md-6">
-                <label for="dataaprazar">Data:</label>
-                <input id="dataaprazar" [required]="!dataaprazar"
-                type="date" name="dataaprazar" [(ngModel)]="dt_date" class="form-control" />
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title w-100" id="modalAprazamentoTitulo">
+          Aprazamento do Medicamento<br>
+          <h4 class="font-weight-bold">{{ medicamento?.descricaoItem }}</h4>
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(modalForm)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row">
+        <div class="col-md-12 ">
+          <nav>
+            <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-aprazar-tab" data-toggle="tab" href="#nav-aprazar" role="tab"
+                aria-controls="nav-aprazar" aria-selected="true">Aprazar</a>
+              <a class="nav-item nav-link" id="nav-detalhes-tab" data-toggle="tab" href="#nav-detalhes" role="tab"
+                aria-controls="nav-detalhes" aria-selected="false">Detalhes</a>
+            </div>
+          </nav>
+          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-aprazar" role="tabpanel" aria-labelledby="nav-aprazar-tab">
+              <div class="modal-body">
+                <form #modalForm="ngForm" (ngSubmit)="onSubmit(modalForm)">
+                  <div class="form-content">
+                    <div class="form-group align-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <div id="table" class="table-editable">
+                                <span class="table-add float-right mb-3 mr-2">
+                                  <a (click)="adicionarAprazamento()" class="text-success">
+                                    <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+                                  </a>
+                                </span>
+                                <table class="table table-bordered table-responsive-md table-striped text-center">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th class="text-center" colspan="2">Horário</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let aprazamento of aprazamentos; index as i">
+                                      <!-- <th scope="row">{{i + 1}}</th> -->
+                                      <td>
+                                        <label for="aprazamento"><i class="fa fa-calendar-check-o"></i><b>Data:&nbsp;</b></label>
+                                        <input name="data_hora" [(ngModel)]="aprazamento.horarioInicial" [min]="aprazamento.horarioInicial"
+                                          [max]="max" [owlDateTimeTrigger]="datePicker" [owlDateTime]="datePicker"
+                                          #dateTime="ngModel">
+                                        <owl-date-time #datePicker></owl-date-time>
+                                      </td>
+                                      <td>
+                                        <span class="table-remove">
+                                          <button type="button" class="btn btn-danger btn-rounded btn-sm my-0" (click)="removerAprazamento(i)">Remover</button>
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-end">
+                    <!-- <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(loginForm)">Fechar</button> -->
+                    <button class="btn btn-success" [disabled]="!modalForm.valid || isRequesting()" type="submit"><b>Confirmar</b><i
+                        class="fa fa-paper-plane-o ml-1"></i></button>
+                  </div>
+                </form>
+                <!-- End form -->
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label for="input-type">Quantidade de aprazamentos:</label>
-                <div id="input-type">
-                  <div class="col-md-12">
-                    <label class="radio-inline">
-                      <input name="options" [(ngModel)]="options" [checked]="!options" required [value]="false"  type="radio" />Dia inteiro
-                    </label>
+            <!-- End nav-aprazar-tab -->
+            <div class="tab-pane" id="nav-detalhes" role="tabpanel" aria-labelledby="nav-detalhes-tab">
+              <div class="modal-body">
+                <!-- <form #modalForm="ngForm" (ngSubmit)="onSubmit(modalForm)"> -->
+                  <div class="form-content">
+                    <div class="form-group align-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="frequencia"><i class="fa fa-repeat"></i><b>&nbsp;Frequência:</b></label>
+                          <p name="frequencia">{{ medicamento?.frequencia }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="administracao"><i class="fa fa-bookmark"></i><b>&nbsp;Administração:</b></label>
+                          <p name="administracao">
+                            {{ medicamento?.administracao }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12" *ngIf="medicamento?.observacaoItem" >
+                          <label for="frequencia"><i class="fa fa-file-text-o"></i><b>&nbsp;Observação:</b></label>
+                          <!-- <p *ngIf="!isObservacao()" [(ngModel)]="getObservacao" type="" name="observacao"></p> -->
+                          <p name="observacao">{{ medicamento?.observacaoItem }}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-md-12">
-                      <label class="radio-inline">
-                      <input name="options" [(ngModel)]="options" required [checked]="options" [value]="true"  type="radio" />Escolher
-                    </label>
-                    <input type="number" *ngIf="options===true" class="form-control" value="0" min="0" max="5"/>
-                  </div>
-                </div>
+                <!-- </form> -->
               </div>
             </div>
           </div>
+          <!-- End nav-tabContent -->
         </div>
-        <div class="modal-footer">
-          <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(loginForm)">Fechar</button>
-          <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid || isRequesting()"  >Confirmar</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
 </div>

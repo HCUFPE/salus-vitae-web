@@ -16,7 +16,7 @@ export interface PreOperacao {
     ordemItem: number;
     quantidade: number;
 
-    prontuario?: Prontuario;
-    atendimento?: Atendimento;
-    itemPrescricao?: ItemPrescricao;
+  prontuario?: Prontuario;
+  atendimento?: Atendimento;
+  itemPrescricao?: ItemPrescricao;
 }

@@ -172,19 +172,14 @@
               <td>{{itemPrescricao?.observacaoItem}}</td>
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
               <td>{{itemPrescricao?.gotejamento}}</td>
-              <!-- <td>
-                <div *ngIf="!isAprazado(medicamento);else Aprazado">
-                  <button (click)="showModal(medicamento)" data-toggle="modal" data-target="#modalAprazamento"
+              <td>
+                <button (click)="showModal(itemPrescricao)" data-toggle="modal" data-target="#modalAprazamento"
                   data-backdrop="static" data-keyboard="false" class="btn btn-primary"><i class="fa fa-edit"></i></button>
-                </div>
-                <ng-template #Aprazado>
-                  <strong>Aprazado</strong>
-                </ng-template>
-              </td> -->
+              </td>
           </tbody>
         </table>
       </div>
-      <app-modal-aprazar *ngIf="modalMedicamento" [prontuario]="prontuario" [medicamento]="modalMedicamento"
+      <app-modal-aprazar *ngIf="modalMedicamento" [medicamento]="modalMedicamento" [prontuario]="prontuario" [atendimento]="atendimento"
         (hideModal)="dismissModal($event)"></app-modal-aprazar>
     </div>
     <!-- Hemoderivados -->
