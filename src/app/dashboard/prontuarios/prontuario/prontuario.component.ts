@@ -23,6 +23,7 @@ export class ProntuarioComponent implements OnInit {
   aprazamentos: Aprazamento[];
   filtro: string;
   modalMedicamento: Medicamento;
+  prescricaoSelected: Prescricao;
 
   constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) {
   }
@@ -43,6 +44,7 @@ export class ProntuarioComponent implements OnInit {
           return 0;
         });
         this.atendimento = atendimento;
+        this.prescricaoSelected = this.getUltimaPrescricao();
         console.log(atendimento);
       });
 
@@ -55,6 +57,21 @@ export class ProntuarioComponent implements OnInit {
     }
 
     return this.atendimento.prescricoes[0];
+  }
+
+  selecionarPrescricao(prescricao: Prescricao) {
+    if (!prescricao) {
+      return;
+    }
+
+    this.prescricaoSelected = prescricao;
+  }
+
+  getPrescricoes() {
+    if (!this.atendimento || !this.atendimento.prescricoes || this.atendimento.prescricoes.length === 0) {
+      return [];
+    }
+    return this.atendimento.prescricoes;
   }
 
   getDateFromString(date: string) {
@@ -70,13 +87,11 @@ export class ProntuarioComponent implements OnInit {
   }
 
   getItensPrescricao(codigoTipoItem: number) {
-    const prescricao: Prescricao = this.getUltimaPrescricao();
-
-    if (!prescricao || !prescricao.Itens) {
+    if (!this.prescricaoSelected || !this.prescricaoSelected.Itens) {
       return [];
     }
 
-    return prescricao.Itens.filter(i => i.codigoTipoItem === codigoTipoItem);
+    return this.prescricaoSelected.Itens.filter(i => i.codigoTipoItem === codigoTipoItem);
   }
 
   showModal(medicamento: Medicamento) {
