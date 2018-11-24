@@ -12,5 +12,5 @@ Carlos Pessoa, Gabriel Soares, Iago Oliveira, José Vitor Oliveira, Luhan Lacerd
 
 **Equipe de Desenvolvimento Front-End**
 
-José Vitor, Luhan Lacerda
+José Vitor, Luhan Lacerda, Gabriel Soares, Rodolfo Estevam, Matheus Braz
 
