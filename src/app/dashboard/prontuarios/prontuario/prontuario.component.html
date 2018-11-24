@@ -112,7 +112,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let aprazamento of aprazamentos; index as i">
+          <tr *ngFor="let aprazamento of aprazamentos | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationApazamento }">
             <!-- <th scope="row">{{i + 1}}</th> -->
             <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
             <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
@@ -123,6 +123,9 @@
             <td>{{aprazamento?.status}}</td>
         </tbody>
       </table>
+      <div class="text-center col-sm-10">
+        <pagination-controls [id]="'aprazamentos'" (pageChange)="paginationAprazamento = $event"></pagination-controls>
+      </div>
     </div>
     <!-- Dietas -->
     <div class="tab-pane fade" id="nav-dietas" role="tabpanel" aria-labelledby="nav-dietas-tab">
@@ -138,7 +141,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(1); index as i">
+            <tr *ngFor="let itemPrescricao of getItensPrescricao(1) | paginate: { id: 'dietas', itemsPerPage: 10, currentPage: paginationDieta }">
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
@@ -146,6 +149,9 @@
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
           </tbody>
         </table>
+        <div class="text-center col-sm-10">
+          <pagination-controls [id]="'dietas'" (pageChange)="paginationDieta = $event"></pagination-controls>
+        </div>
       </div>
     </div>
     <!-- Medicamentos -->
@@ -164,7 +170,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(3); index as i">
+            <tr *ngFor="let itemPrescricao of getItensPrescricao(3) | paginate: { id: 'medicamentos', itemsPerPage: 10, currentPage: paginationMedicamento }">
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
@@ -183,6 +189,9 @@
               </td> -->
           </tbody>
         </table>
+        <div class="text-center col-sm-10">
+          <pagination-controls [id]="'medicamentos'" (pageChange)="paginationMedicamento = $event"></pagination-controls>
+        </div>
       </div>
       <app-modal-aprazar *ngIf="modalMedicamento" [prontuario]="prontuario" [medicamento]="modalMedicamento"
         (hideModal)="dismissModal($event)"></app-modal-aprazar>
@@ -202,7 +211,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(4); index as i">
+            <tr *ngFor="let itemPrescricao of getItensPrescricao(4) | paginate: { id: 'homoderivados', itemsPerPage: 10, currentPage: paginationHomoderivado }">
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
@@ -211,6 +220,9 @@
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
           </tbody>
         </table>
+        <div class="text-center col-sm-10">
+          <pagination-controls [id]="'homoderivados'" (pageChange)="paginationHomoderivado = $event"></pagination-controls>
+        </div>
       </div>
     </div>
     <!-- Cuidados -->
@@ -227,7 +239,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(5); index as i">
+            <tr *ngFor="let itemPrescricao of getItensPrescricao(5) | paginate: { id: 'cuidados', itemsPerPage: 10, currentPage: paginationCuidado }">
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
@@ -235,6 +247,9 @@
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
           </tbody>
         </table>
+        <div class="text-center col-sm-10">
+          <pagination-controls [id]="'cuidados'" (pageChange)="paginationCuidado = $event"></pagination-controls>
+        </div>
       </div>
     </div>
     <!-- Procedimentos -->
@@ -251,7 +266,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let itemPrescricao of getItensPrescricao(6); index as i">
+            <tr *ngFor="let itemPrescricao of getItensPrescricao(6) | paginate: { id: 'procedimentos', itemsPerPage: 10, currentPage: paginationProcedimento }">
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
@@ -259,6 +274,9 @@
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
           </tbody>
         </table>
+        <div class="text-center col-sm-10">
+          <pagination-controls [id]="'procedimentos'" (pageChange)="paginationProcedimento = $event"></pagination-controls>
+        </div>
       </div>
     </div>
   </div>

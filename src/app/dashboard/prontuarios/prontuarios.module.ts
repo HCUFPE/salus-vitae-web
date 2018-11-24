@@ -1,3 +1,4 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,7 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    NgxMaskModule.forChild()
+    NgxMaskModule.forChild(),
+    NgxPaginationModule
   ],
   declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent],
   providers: [

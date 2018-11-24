@@ -34,6 +34,7 @@
     "ng2-toastr": "^4.1.2",
     "ng6-toastr": "^6.0.0",
     "ngx-mask": "^6.5.18",
+    "ngx-pagination": "^3.2.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "toastr": "^2.1.4",
