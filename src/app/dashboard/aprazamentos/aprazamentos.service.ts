@@ -10,13 +10,14 @@ import 'rxjs/add/operator/catch';
 
 import { SALUS_API } from '../../app.api';
 import { Aprazamento } from '../../models/aprazamento.model';
+import { PreOperacao } from 'src/app/models/pre-operacao.model';
 
 @Injectable()
 export class AprazamentosService {
   constructor(private http: HttpClient) {}
 
-  aprazamentos(): Observable<Aprazamento[]> {
-    return this.http.get<Aprazamento[]>(`${SALUS_API}/aprazamentos`);
+  aprazamentos(): Observable<PreOperacao[]> {
+    return this.http.get<PreOperacao[]>(`${SALUS_API}/preOpAprazamentos`);
   }
 
   aprazamentosById(id: string): Observable<Aprazamento> {

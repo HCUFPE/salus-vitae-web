@@ -98,7 +98,29 @@
   <div class="tab-content">
     <!-- Aprazamentos -->
     <div class="tab-pane fade" id="nav-aprazamentos" role="tabpanel" aria-labelledby="nav-aprazamentos-tab">
-      Aprazamentos
+      <table class="table table-striped text-center">
+        <thead colspan="2">
+          <tr>
+            <!-- <th>#</th> -->
+            <th>Nome</th>
+            <th>Administração</th>
+            <th>Frequencia</th>
+            <th>Observação</th>
+            <th>Horário</th>
+            <th>Gotejamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let aprazamento of aprazamentos; index as i">
+            <!-- <th scope="row">{{i + 1}}</th> -->
+            <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
+            <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
+            <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
+            <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
+            <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
+            <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
+        </tbody>
+      </table>
     </div>
     <!-- Dietas -->
     <div class="tab-pane fade" id="nav-dietas" role="tabpanel" aria-labelledby="nav-dietas-tab">

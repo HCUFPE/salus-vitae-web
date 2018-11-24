@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AprazamentosService } from '../aprazamentos.service';
 import { Aprazamento } from '../../../models/aprazamento.model';
+import { PreOperacao } from 'src/app/models/pre-operacao.model';
 
 @Component({
   selector: 'app-listar-aprazamentos',
@@ -11,7 +12,7 @@ import { Aprazamento } from '../../../models/aprazamento.model';
 })
 export class ListarAprazamentosComponent implements OnInit {
 
-  aprazamentos: Aprazamento[] = [];
+  aprazamentos: PreOperacao[] = [];
   filtro: string;
 
   constructor(private aprazamentosService: AprazamentosService) { }
@@ -38,7 +39,7 @@ export class ListarAprazamentosComponent implements OnInit {
   }
 
   getAprazamentos(value: string) {
-    return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
+    /*return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
         if (new Date(a.horario) < new Date(b.horario)) {
           return -1;
         }
@@ -49,7 +50,7 @@ export class ListarAprazamentosComponent implements OnInit {
 
         return 0;
       }
-    );
+    );*/
   }
 
 }

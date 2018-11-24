@@ -6,9 +6,10 @@ import * as moment from 'moment';
 import { ProntuariosService } from '../prontuarios.service';
 import { Prontuario } from '../../../models/prontuario.model';
 import { Medicamento } from '../../../models/medicamento.model';
-import { Aprazamento } from '../../../models/aprazamento.model';
 import { Atendimento } from '../../../models/atendimento.model';
 import { Prescricao } from '../../../models/prescricao.model';
+import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
+import { PreOperacao } from 'src/app/models/pre-operacao.model';
 
 @Component({
   selector: 'app-prontuario',
@@ -16,43 +17,82 @@ import { Prescricao } from '../../../models/prescricao.model';
   styleUrls: ['./prontuario.component.css']
 })
 export class ProntuarioComponent implements OnInit {
-
   dados: Boolean = false;
   prontuario: Prontuario;
   atendimento: Atendimento;
-  aprazamentos: Aprazamento[];
+  aprazamentos: PreOperacao[];
   filtro: string;
   modalMedicamento: Medicamento;
   prescricaoSelected: Prescricao;
 
-  constructor(private route: ActivatedRoute, private prontuarioService: ProntuariosService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private prontuarioService: ProntuariosService,
+    private aprazamentoService: AprazamentosService
+  ) {}
 
   ngOnInit() {
-    this.prontuarioService.atendimentoHC(this.route.snapshot.paramMap.get('prontuario_id'),
-      this.route.snapshot.paramMap.get('atendimento_id'))
+    this.prontuarioService
+      .atendimentoHC(
+        this.route.snapshot.paramMap.get('prontuario_id'),
+        this.route.snapshot.paramMap.get('atendimento_id')
+      )
       .subscribe((atendimento: Atendimento) => {
-        atendimento.prescricoes = atendimento.prescricoes.sort((a: Prescricao, b: Prescricao) => {
-          if (this.getDateFromString(a.dataPrescricao) > this.getDateFromString(b.dataPrescricao)) {
-            return -1;
-          }
+        atendimento.prescricoes = atendimento.prescricoes.sort(
+          (a: Prescricao, b: Prescricao) => {
+            if (
+              this.getDateFromString(a.dataPrescricao) >
+              this.getDateFromString(b.dataPrescricao)
+            ) {
+              return -1;
+            }
 
-          if (this.getDateFromString(a.dataPrescricao) < this.getDateFromString(b.dataPrescricao)) {
-            return 1;
-          }
+            if (
+              this.getDateFromString(a.dataPrescricao) <
+              this.getDateFromString(b.dataPrescricao)
+            ) {
+              return 1;
+            }
 
-          return 0;
-        });
+            return 0;
+          }
+        );
         this.atendimento = atendimento;
         this.prescricaoSelected = this.getUltimaPrescricao();
         console.log(atendimento);
       });
 
-    this.aprazamentos = [];
+    this.aprazamentoService
+      .aprazamentos()
+      .subscribe((aprazamentos: PreOperacao[]) => {
+        this.aprazamentos = aprazamentos.filter(
+          a =>
+            a.status === 'P' &&
+            a.cdProntuario ===
+              +this.route.snapshot.paramMap.get('prontuario_id') &&
+            a.cdAtendimento ===
+              +this.route.snapshot.paramMap.get('atendimento_id')
+        );
+        this.aprazamentos.forEach(
+          a =>
+            (a.itemPrescricao = this.atendimento.prescricoes
+              .find(p => p.prescricao === this.prescricaoSelected.prescricao)
+              .Itens.find(
+                i =>
+                  i.ordemItem === a.ordemItem &&
+                  i.codigoTipoItem === a.cdTpItem &&
+                  i.codigoItem === a.cdItem + ''
+              ))
+        );
+      });
   }
 
   getUltimaPrescricao() {
-    if (!this.atendimento || !this.atendimento.prescricoes || this.atendimento.prescricoes.length === 0) {
+    if (
+      !this.atendimento ||
+      !this.atendimento.prescricoes ||
+      this.atendimento.prescricoes.length === 0
+    ) {
       return null;
     }
 
@@ -68,7 +108,11 @@ export class ProntuarioComponent implements OnInit {
   }
 
   getPrescricoes() {
-    if (!this.atendimento || !this.atendimento.prescricoes || this.atendimento.prescricoes.length === 0) {
+    if (
+      !this.atendimento ||
+      !this.atendimento.prescricoes ||
+      this.atendimento.prescricoes.length === 0
+    ) {
       return [];
     }
     return this.atendimento.prescricoes;
@@ -82,16 +126,14 @@ export class ProntuarioComponent implements OnInit {
     return moment(date, 'DD/MM/YYYY HH:mm:ss').toDate();
   }
 
-  isAprazado(medicamento: Medicamento) {
-    return this.aprazamentos.filter(a => a.medicamento._id === medicamento._id).length > 0;
-  }
-
   getItensPrescricao(codigoTipoItem: number) {
     if (!this.prescricaoSelected || !this.prescricaoSelected.Itens) {
       return [];
     }
 
-    return this.prescricaoSelected.Itens.filter(i => i.codigoTipoItem === codigoTipoItem);
+    return this.prescricaoSelected.Itens.filter(
+      i => i.codigoTipoItem === codigoTipoItem
+    );
   }
 
   showModal(medicamento: Medicamento) {
@@ -111,5 +153,4 @@ export class ProntuarioComponent implements OnInit {
   escDet(apr1) {
     this.dados = true;
   }
-
 }
