@@ -10,6 +10,7 @@ import { Prontuario } from '../../../models/prontuario.model';
 import { Aprazamento } from '../../../models/aprazamento.model';
 import { PreOperacao } from '../../../models/pre-operacao.model';
 import { Atendimento } from 'src/app/models/atendimento.model';
+import { Alert } from './../../../shared/errorhandling/index';
 
 @Component({
   selector: 'app-modal-aprazar',
@@ -25,11 +26,16 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   adm_medicamento: string;
   frequencia_medicamento: number;
   observacaoMedicamento: string;
-  @Input()  prontuario: Prontuario;
-  @Input()  atendimento: Atendimento;
-  @Input()  medicamento: ItemPrescricao;
+  @Input() prontuario: Prontuario;
+  @Input() atendimento: Atendimento;
+  @Input() medicamento: ItemPrescricao;
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
+  @Input() public alerts: Array<Alert> = [];
   @ViewChild('btnClose') btnClose: ElementRef;
+
+  public bodyParams;
+  public submitted = false;
+
 
   constructor(private aprazamentoService: AprazamentosService,
     public toastr: ToastsManager, vcr: ViewContainerRef) {
@@ -47,7 +53,28 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+    this.submitted = true;
     console.log(form);
+    const bodyParams = {
+      cdProntuario: this.prontuario.prontuario,
+      cdAtendimento: this.atendimento.atendimento,
+      cdPrescricao: this.atendimento.prescricoes[0].prescricao,
+      dtPreOpAprazamento: new Date(),
+      horarioInicial: this.horario,
+      intervalo: this.medicamento.frequencia,
+      cdItem: this.medicamento.codigoItem,
+      cdTpItem: this.medicamento.codigoTipoItem,
+      ordemItem: this.medicamento.ordemItem,
+      quantidade: 1
+    };
+
+    this.aprazamentoService.createPreOperacao(this.bodyParams).subscribe(data => {
+      this.bodyParams = data;
+
+    }, error => {
+      const alert = new Alert(null, error);
+      this.alerts.push(alert);
+    });
   }
 
   // Adicionar quantidade de aprazamentos para o medicamento
