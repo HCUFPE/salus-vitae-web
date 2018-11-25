@@ -1,3 +1,4 @@
+import { PreOperacao } from './../../../models/pre-operacao.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -9,7 +10,6 @@ import { Atendimento } from '../../../models/atendimento.model';
 import { Prescricao } from '../../../models/prescricao.model';
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
 import { ItemPrescricao } from 'src/app/models/item-prescricao.model';
-import { PreOperacao } from 'src/app/models/pre-operacao.model';
 
 @Component({
   selector: 'app-prontuario',
@@ -23,6 +23,7 @@ export class ProntuarioComponent implements OnInit {
   aprazamentos: PreOperacao[];
   filtro: string;
   modalMedicamento: ItemPrescricao;
+  modalRodelagemAprazamento: PreOperacao;
   prescricaoSelected: Prescricao;
   paginationMedicamento = 1;
   paginationAprazamento = 1;
@@ -97,7 +98,7 @@ export class ProntuarioComponent implements OnInit {
       });
   }
 
- 
+
   public getProntuarioById() {
     this.prontuarioService.listarProntuariosHC(+this.route.snapshot.paramMap.get('prontuario_id')).subscribe(data => {
       this.prontuario = data;
@@ -133,13 +134,13 @@ export class ProntuarioComponent implements OnInit {
       this.prescricaoSelected.tipoPrescricao = 'Enfermeira';
     }
 
-     if (this.prescricaoSelected.statusPrescricao === 'A') {
+    if (this.prescricaoSelected.statusPrescricao === 'A') {
       this.prescricaoSelected.statusPrescricao = 'Assinada';
-     } else if (this.prescricaoSelected.statusPrescricao === 'N') {
+    } else if (this.prescricaoSelected.statusPrescricao === 'N') {
       this.prescricaoSelected.statusPrescricao = 'Cancelada';
-     } else {
+    } else {
       this.prescricaoSelected.statusPrescricao = 'Em Uso';
-     }
+    }
   }
 
   getPrescricoes() {
@@ -177,10 +178,19 @@ export class ProntuarioComponent implements OnInit {
     }
   }
 
+  showModalRodelagemAprazamento(aprazamento: PreOperacao) {
+    this.modalRodelagemAprazamento = aprazamento;
+    console.log(this.modalRodelagemAprazamento);
+  }
+
   dismissModal(aprazamento) {
     this.aprazamentos.push(aprazamento);
 
     this.modalMedicamento = undefined;
+  }
+
+  dismissModalRodelagem(aprazamento) {
+    this.modalRodelagemAprazamento = undefined;
   }
 
   escApra(apr2) {
