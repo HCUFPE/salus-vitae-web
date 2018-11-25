@@ -10,10 +10,11 @@ import { Prontuario } from '../../models/prontuario.model';
 import { Ala } from '../../models/ala.model';
 import { Atendimento } from '../../models/atendimento.model';
 
+var token = localStorage.getItem("isLoggedin");
+
 const httpOptions = {
   headers: new HttpHeaders({
-    // tslint:disable-next-line:max-line-length
-    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTQUxVU19WSVRBRSIsImlhdCI6MTU0Mjc0NTQzNiwiYWRtaW4iOiJmYWxzZSJ9.i_L5PDneG68_j_b0DRG-AgwgVtki-9_mJQr-4GP6XMFL5zz5dJ6rcoKtsFsfRbdUJe4ufKyjl2ZCwBMCXw9Fag',
+    'Authorization': 'Bearer ' + token,
     'Content-Type': 'application/json'
   })
 };

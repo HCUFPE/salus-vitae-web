@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
         dom.classList.toggle('rtl');
     }
 
-    onLoggedout() {
+    onLoggedout() {        
         localStorage.removeItem('isLoggedin');
         this.router.navigate(['/login']);
     }

@@ -52,9 +52,4 @@ export class SidebarComponent {
         const dom: any = document.querySelector('body');
         dom.classList.toggle(this.pushRightClass);
     }
-
-    onLoggedout() {
-        localStorage.removeItem('isLoggedin');
-        this.router.navigate(['/login']);
-    }
 }
