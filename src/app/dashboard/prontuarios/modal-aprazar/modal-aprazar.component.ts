@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, 
 import { NgForm } from '@angular/forms';
 
 import { ToastsManager, Toast } from 'ng6-toastr/ng2-toastr';
+import swal from 'sweetalert2';
 import * as moment from 'moment';
 
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
@@ -14,16 +15,13 @@ import { Alert } from './../../../shared/errorhandling/index';
 import { Usuario } from '../../../models/usuario.model';
 import { TranslateService } from '@ngx-translate/core';
 
-import swal from 'sweetalert2';
-
-
 @Component({
   selector: 'app-modal-aprazar',
   templateUrl: './modal-aprazar.component.html',
   styleUrls: ['./modal-aprazar.component.css']
 })
 export class ModalAprazarComponent implements OnInit, OnDestroy {
-  
+
   aprazamentos: PreOperacao[];
   horario: Date;
   min: Date;
@@ -38,9 +36,16 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
   @Input() public alerts: Array<Alert> = [];
   @ViewChild('btnClose') btnClose: ElementRef;
+  @ViewChild('modalAprazamento') public modal: ModalAprazarComponent;
   public bodyParams;
   public submitted = false;
-  
+
+  swalWithBootstrapButtons = swal.mixin({
+    confirmButtonClass: 'btn btn-success',
+    cancelButtonClass: 'btn btn-danger',
+    buttonsStyling: false,
+  });
+
   constructor(
   private aprazamentoService: AprazamentosService,
   public toastr: ToastsManager, vcr: ViewContainerRef,
@@ -48,18 +53,19 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
     this.toastr.setRootViewContainerRef(vcr);
     // console.log(this.medicamento);
   }
-  
+
   // Inicializar o modal com o horário atual
   ngOnInit() {
     this.aprazamentos = [];
+    this.adicionarAprazamento();
     console.log(this.aprazamentos);
     this.horario = new Date();
     this.min = this.horario;
-    this.max = moment(this.horario).add(1, 'day').toDate();
+    // this.max = moment(this.horario).add(1, 'day').toDate();
   }
-  
+
   // Perfom Confirm
-  
+
   onSubmit(form: NgForm) {
     this.submitted = true;
     console.log(form);
@@ -81,51 +87,60 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
     };
     this.aprazamentoService.createPreOperacao(bodyParams).subscribe(data => {
       this.bodyParams = data;
+      this.toastr.success('Aprazamento realizado com sucesso!', 'Succeso!')
+      .then((toast: Toast) => {
+          setTimeout(() => {
+              this.toastr.dismissToast(toast);
+          }, 2000);
+      });
+
     }, error => {
       const alert = new Alert(null, error);
       this.alerts.push(alert);
     });
   }
-  
+
   // Adicionar quantidade de aprazamentos para o medicamento
   adicionarAprazamento() {
     this.aprazamentos.push({status: false , cdProntuario: 0, cdAtendimento: 0, dtPreOpAprazamento: null,
-      horarioInicial: new Date(), intervalo: 50, cdItem: '1', cdTpItem: 3, ordemItem: 1, quantidade: 1, nmMedicamento: 'teste',
+      horarioInicial: new Date(), intervalo: 60, cdItem: '1', cdTpItem: 3, ordemItem: 1, quantidade: 1, nmMedicamento: 'teste',
       nmPaciente: 'teste', nmUsuario: 'teste', cdPrescricao: 1 });
     }
-    
+
     createAlertPreOperacao(form: NgForm) {
       swal({
-        title: this.translateService.instant('ALERT@Warning'),
-        text: this.translateService.instant('ALERT@Are you sure?'),
+        title: this.translateService.instant('Deseja Realizar o aprazamento?'),
         type: 'warning',
         allowOutsideClick: false,
+        allowEnterKey: false,
+        allowEscapeKey: false,
         showCancelButton: true,
-        confirmButtonText: this.translateService.instant('GLOBAL@Yes'),
-        cancelButtonText: this.translateService.instant('GLOBAL@No')
+        confirmButtonText: this.translateService.instant('Sim'),
+        cancelButtonText: this.translateService.instant('Não')
       }).then((result) => {
         if (result.value) {
           this.onSubmit(form);
+          // this.swalWithBootstrapButtons(
+          //   'Aprazamento realizado com sucesso!'
+          // );
+        } else if (result.dismiss === swal.DismissReason.cancel) {
+          this.swalWithBootstrapButtons(
+            'Aprazamento não realizado!'
+          );
         }
+        $('#modalAprazamento').modal('destroy');
       });
     }
     // Remover medicamento da lista
     removerAprazamento(index: number) {
       this.aprazamentos.splice(index, 1);
     }
-    
-    // Retorna observação caso exista o medicamento
-    // isObservacao(observacao: ItemPrescricao) {
-      //   return this.observacaoMedicamento.match(observacao.observacaoItem);
-      // }
-      
-      close(loginForm: NgForm) {
-        loginForm.reset();
-        // this.hideModal.emit(this.aprazamento);
+
+      close(closeAprazarForm: NgForm) {
+        closeAprazarForm.reset();
       }
-      
+
       ngOnDestroy() {
         this.btnClose.nativeElement.click();
       }
     }
-    

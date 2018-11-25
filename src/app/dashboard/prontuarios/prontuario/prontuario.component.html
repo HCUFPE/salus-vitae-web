@@ -29,8 +29,6 @@
     <div class="col-md-12">
       <div class="card bg-light text-white">
         <div class="card-body">
-          <!-- <h5 class="card-title"><b>Prescrição</b></h5> -->
-          <!-- <h6 class="card-subtitle my-2">Nome Paciente:&nbsp;</h6> -->
           <div class="row">
             <div class="col-md-6">
               <div class="details">
@@ -60,9 +58,6 @@
               </div>
             </div>
           </div>
-          <!-- <hr id="hr-line" /> -->
-          <!-- <a  (click)="escDet(aprazamento)" value="true" class="card-link">Detalhes do paciente</a> -->
-          <!-- <a (click)="escApra(aprazamento)"  value="false" class="card-link">Aprazamentos</a> -->
         </div>
       </div>
     </div>
@@ -115,22 +110,29 @@ Procedimentos
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let aprazamento of aprazamentos | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationAprazamento }">
+          <tr *ngFor="let aprazamento of getAprazamentos() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationAprazamento }">
             <!-- <th scope="row">{{i + 1}}</th> -->
             <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
-            <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
+              <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
             <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
             <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
             <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
             <td>{{aprazamento?.status}}</td>
+            <td>
+                <button (click)="showModalRodelagemAprazamento(aprazamento)" data-toggle="modal" data-target="#modalRodelagemAprazamento" data-backdrop="static" data-keyboard="false"
+                  class="btn btn-danger"><i class="fa fa-remove"></i></button>
+              </td>
         </tbody>
       </table>
       <div class="text-center col-sm-10">
         
         <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationAprazamento = $event"></pagination-controls>
       </div>
+     <app-modal-rodelagem-aprazamento *ngIf="modalRodelagemAprazamento" [aprazamento]="modalRodelagemAprazamento"
+        (hideModal)="dismissModalRodelagem($event)"></app-modal-rodelagem-aprazamento>
     </div>
+    
     <!-- Dietas -->
     <div class="tab-pane fade" id="nav-dietas" role="tabpanel" aria-labelledby="nav-dietas-tab">
       <div class="table-responsive-md">
