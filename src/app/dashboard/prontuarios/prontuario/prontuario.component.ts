@@ -89,6 +89,10 @@ export class ProntuarioComponent implements OnInit {
   }
 
   getAprazamentos() {
+    if (!this.aprazamentos) {
+      return [];
+    }
+
     return this.aprazamentos.filter(a => a.cdPrescricao === this.prescricaoSelected.prescricao);
   }
 
@@ -144,8 +148,7 @@ export class ProntuarioComponent implements OnInit {
   getPrescricoes() {
     if (
       !this.atendimento ||
-      !this.atendimento.prescricoes ||
-      this.atendimento.prescricoes.length === 0
+      !this.atendimento.prescricoes
     ) {
       return [];
     }
