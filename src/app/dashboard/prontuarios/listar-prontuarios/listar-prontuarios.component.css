@@ -3,6 +3,14 @@
     border-color:gray;
 }
 
+.row {
+
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 a.btn {
     font-size: 1.0em;
     color: #000;
@@ -29,7 +37,6 @@ hr {
     margin-bottom: 60px;
 }
 
-
 .card-header{
     font-size: 1.0em;
 }
@@ -45,9 +52,11 @@ hr {
     }
 }
 
+h1{
+    text-align: center!important;
+}
 .text-center {
     text-align: center !important;
-    padding-left: 12%;
     font-size: 1.8em;
     font-weight: bold;
 }

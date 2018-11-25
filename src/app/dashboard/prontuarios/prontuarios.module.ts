@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgxMaskModule } from 'ngx-mask';
-
 import { ProntuariosRoutingModule } from './prontuarios-routing.module';
 import { ProntuarioComponent } from './prontuario/prontuario.component';
 import { ModalAprazarComponent } from './modal-aprazar/modal-aprazar.component';
@@ -13,7 +12,7 @@ import { MedicamentosService } from './medicamentos.service';
 import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuarios.component';
 import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filter.pipe';
 
 @NgModule({
   imports: [
@@ -23,9 +22,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    NgxMaskModule.forChild()
+    NgxMaskModule.forChild(),
   ],
-  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent],
+  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent,ListaProntuariosPipe],
   providers: [
     ProntuariosService,
     MedicamentosService,
