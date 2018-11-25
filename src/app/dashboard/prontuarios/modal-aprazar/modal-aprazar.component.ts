@@ -26,6 +26,7 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   adm_medicamento: string;
   frequencia_medicamento: number;
   observacaoMedicamento: string;
+  usuario: Usuario;
   @Input() prontuario: Prontuario;
   @Input() atendimento: Atendimento;
   @Input() medicamento: ItemPrescricao;
@@ -65,10 +66,13 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
       cdItem: this.medicamento.codigoItem,
       cdTpItem: this.medicamento.codigoTipoItem,
       ordemItem: this.medicamento.ordemItem,
+      nmMedicamento: this.medicamento.descricaoItem,
+      nmPaciente: this.prontuario.nomeDoPaciente,
+      nmUsuario: 'teste'
       quantidade: 1
     };
 
-    this.aprazamentoService.createPreOperacao(this.bodyParams).subscribe(data => {
+    this.aprazamentoService.createPreOperacao(bodyParams).subscribe(data => {
       this.bodyParams = data;
 
     }, error => {
@@ -79,8 +83,8 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
 
   // Adicionar quantidade de aprazamentos para o medicamento
   adicionarAprazamento() {
-    // this.aprazamentos.push({ status: 'P', cdProntuario: 0, cdAtendimento: 0, aprazamentos: , dtPreOpAprazamento: null,
-    //  horarioInicial: new Date(), intervalo: 48, codigoItem: '1', codigoTipoItem: 3, ordemItem: 1, quantidade: 1 });
+    this.aprazamentos.push({ status: 'P', cdProntuario: 0, cdAtendimento: 0, dtPreOpAprazamento: null,
+     horarioInicial: new Date(), intervalo: 48, codigoItem: '1', codigoTipoItem: 3, ordemItem: 1, quantidade: 1 });
     this.aprazamentos.push();
   }
 
@@ -99,52 +103,6 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
     // this.hideModal.emit(this.aprazamento);
   }
 
-  // confirmarAprazamento() {
-  //   const hr = this.dt_horario.toString().trim();
-  //   const regex = new RegExp('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$');
-  //   const dt_aprazamento = this.dt_date.toString().trim();
-  //   const now = moment();
-  //   const before = moment().add(-1, 'days');
-  //   const date = moment(dt_aprazamento);
-  //   const dateAfter = moment().add(1, 'days');
-
-  //   if (hr.length === 0 || hr.length === undefined) {
-  //     alert('Horário inicial campo obrigatório!');
-  //   } else if (regex.test(hr) === false) {
-  //     alert('Horário Inválido');
-  //   } else if (dt_aprazamento.length === 0 || dt_aprazamento === undefined) {
-  //     alert('Data inicial campo obrigatório!');
-  //   } else if (!date.isValid() || date.isBefore(before) || date.isAfter(dateAfter)) {
-  //     alert('Data Inválida');
-  //   } else {
-  //     if (confirm('Você tem certeza sobre o aprazamento?\n\n' + 'Data Aprazado: ' +
-  //      this.dt_date + '\nHorário Aprazada: ' + this.dt_horario)) {
-  //       this.aprazamento = { _id: now.unix().toString(), paciente: this.prontuario.idPaciente,
-  //           horario: now.toDate(), enfermeira: null, medicamento: this.medicamento, isConsumido: false,
-  //           intervalo: null, isCancelado: false };
-  //       this.aprazamentoService.aprazar(this.aprazamento)
-  //       .subscribe((res: boolean) => {
-  //         if (res) {
-  //           this.toastr.success('Aprazamento registrado', 'Successo!')
-  //           .then((toast: Toast) => {
-  //             setTimeout(() => {
-  //               this.btnClose.nativeElement.click();
-  //               this.toastr.dismissToast(toast);
-  //             }, 1500);
-  //           });
-  //         } else {
-  //           this.toastr.error('Erro ao aprazar', 'Não foi possível realizar o aprazamento.');
-  //           this.aprazamento = null;
-  //         }
-  //       }, () => {
-  //         this.toastr.error('Erro ao aprazar', 'Não foi possível realizar o aprazamento.');
-  //         this.aprazamento = null;
-  //       });
-
-  //     }
-  //   }
-
-  // }
 
   isRequesting(): boolean {
     return this.aprazamentos !== undefined && this.aprazamentos !== null;
