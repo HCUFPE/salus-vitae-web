@@ -12,6 +12,10 @@ import { PreOperacao } from '../../../models/pre-operacao.model';
 import { Atendimento } from 'src/app/models/atendimento.model';
 import { Alert } from './../../../shared/errorhandling/index';
 import { Usuario } from '../../../models/usuario.model';
+import { TranslateService } from '@ngx-translate/core';
+
+import swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-modal-aprazar',
@@ -19,7 +23,7 @@ import { Usuario } from '../../../models/usuario.model';
   styleUrls: ['./modal-aprazar.component.css']
 })
 export class ModalAprazarComponent implements OnInit, OnDestroy {
-
+  
   aprazamentos: PreOperacao[];
   horario: Date;
   min: Date;
@@ -34,17 +38,17 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
   @Input() public alerts: Array<Alert> = [];
   @ViewChild('btnClose') btnClose: ElementRef;
-
   public bodyParams;
   public submitted = false;
-
-
-  constructor(private aprazamentoService: AprazamentosService,
-    public toastr: ToastsManager, vcr: ViewContainerRef) {
+  
+  constructor(
+  private aprazamentoService: AprazamentosService,
+  public toastr: ToastsManager, vcr: ViewContainerRef,
+  private translateService: TranslateService) {
     this.toastr.setRootViewContainerRef(vcr);
     // console.log(this.medicamento);
   }
-
+  
   // Inicializar o modal com o horário atual
   ngOnInit() {
     this.aprazamentos = [];
@@ -53,7 +57,9 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
     this.min = this.horario;
     this.max = moment(this.horario).add(1, 'day').toDate();
   }
-
+  
+  // Perfom Confirm
+  
   onSubmit(form: NgForm) {
     this.submitted = true;
     console.log(form);
@@ -73,7 +79,6 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
       status: true,
       quantidade: 1
     };
-
     this.aprazamentoService.createPreOperacao(bodyParams).subscribe(data => {
       this.bodyParams = data;
     }, error => {
@@ -81,36 +86,46 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
       this.alerts.push(alert);
     });
   }
-
+  
   // Adicionar quantidade de aprazamentos para o medicamento
   adicionarAprazamento() {
-    //this.aprazamentos.push({ status: 'P', cdProntuario: 0, cdAtendimento: 0, dtPreOpAprazamento: null,
-    // horarioInicial: new Date(), intervalo: 48, codigoItem: '1', codigoTipoItem: 3, ordemItem: 1, quantidade: 1 });
-    //this.aprazamentos.push();
-  }
-
-  // Remover medicamento da lista
-  removerAprazamento(index: number) {
-    this.aprazamentos.splice(index, 1);
-  }
-
-  // Retorna observação caso exista o medicamento
-  // isObservacao(observacao: ItemPrescricao) {
-  //   return this.observacaoMedicamento.match(observacao.observacaoItem);
-  // }
-
-  close(loginForm: NgForm) {
-    loginForm.reset();
-    // this.hideModal.emit(this.aprazamento);
-  }
-
-
-  isRequesting(): boolean {
-    return this.aprazamentos !== undefined && this.aprazamentos !== null;
-  }
-
-  ngOnDestroy() {
-    this.btnClose.nativeElement.click();
-  }
-
-}
+    this.aprazamentos.push({status: false , cdProntuario: 0, cdAtendimento: 0, dtPreOpAprazamento: null,
+      horarioInicial: new Date(), intervalo: 50, cdItem: '1', cdTpItem: 3, ordemItem: 1, quantidade: 1, nmMedicamento: 'teste',
+      nmPaciente: 'teste', nmUsuario: 'teste', cdPrescricao: 1 });
+    }
+    
+    createAlertPreOperacao(form: NgForm) {
+      swal({
+        title: this.translateService.instant('ALERT@Warning'),
+        text: this.translateService.instant('ALERT@Are you sure?'),
+        type: 'warning',
+        allowOutsideClick: false,
+        showCancelButton: true,
+        confirmButtonText: this.translateService.instant('GLOBAL@Yes'),
+        cancelButtonText: this.translateService.instant('GLOBAL@No')
+      }).then((result) => {
+        if (result.value) {
+          this.onSubmit(form);
+        }
+      });
+    }
+    // Remover medicamento da lista
+    removerAprazamento(index: number) {
+      this.aprazamentos.splice(index, 1);
+    }
+    
+    // Retorna observação caso exista o medicamento
+    // isObservacao(observacao: ItemPrescricao) {
+      //   return this.observacaoMedicamento.match(observacao.observacaoItem);
+      // }
+      
+      close(loginForm: NgForm) {
+        loginForm.reset();
+        // this.hideModal.emit(this.aprazamento);
+      }
+      
+      ngOnDestroy() {
+        this.btnClose.nativeElement.click();
+      }
+    }
+    
