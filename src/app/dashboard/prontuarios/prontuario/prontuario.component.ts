@@ -42,8 +42,8 @@ export class ProntuarioComponent implements OnInit {
 
     this.prontuarioService
       .atendimentoHC(
-      this.route.snapshot.paramMap.get('prontuario_id'),
-      this.route.snapshot.paramMap.get('atendimento_id')
+        this.route.snapshot.paramMap.get('prontuario_id'),
+        this.route.snapshot.paramMap.get('atendimento_id')
       )
       .subscribe((atendimento: Atendimento) => {
         atendimento.prescricoes = atendimento.prescricoes.sort(
@@ -68,36 +68,11 @@ export class ProntuarioComponent implements OnInit {
         this.atendimento = atendimento;
         this.prescricaoSelected = this.getUltimaPrescricao();
         this.validateFields();
-
-        this.aprazamentoService
-          .aprazamentos()
-          .subscribe((aprazamentos: PreOperacao[]) => {
-            this.aprazamentos = aprazamentos.filter(
-              a =>
-                a.status &&
-                a.cdProntuario ===
-                +this.route.snapshot.paramMap.get('prontuario_id') &&
-                a.cdAtendimento ===
-                +this.route.snapshot.paramMap.get('atendimento_id')
-            );
-            this.aprazamentos.forEach(
-              a =>
-                (a.itemPrescricao = this.atendimento.prescricoes
-                  .find(
-                  p => p.prescricao === this.prescricaoSelected.prescricao
-                  )
-                  .Itens.find(
-                  i =>
-                    i.ordemItem === a.ordemItem &&
-                    i.codigoTipoItem === a.cdTpItem &&
-                    i.codigoItem === a.cdItem + ''
-                  ))
-            );
-          });
+        this.refreshAprazamentos();
       });
   }
 
- 
+
   public getProntuarioById() {
     this.prontuarioService.listarProntuariosHC(+this.route.snapshot.paramMap.get('prontuario_id')).subscribe(data => {
       this.prontuario = data;
@@ -105,15 +80,39 @@ export class ProntuarioComponent implements OnInit {
   }
 
   getUltimaPrescricao() {
-    if (
-      !this.atendimento ||
-      !this.atendimento.prescricoes ||
-      this.atendimento.prescricoes.length === 0
-    ) {
+    if (!this.atendimento || !this.atendimento.prescricoes || this.atendimento.prescricoes.length === 0) {
       return null;
     }
 
     return this.atendimento.prescricoes[0];
+  }
+
+  getAprazamentos() {
+    return this.aprazamentos.filter(a => a.cdPrescricao === this.prescricaoSelected.prescricao);
+  }
+
+  refreshAprazamentos() {
+    this.aprazamentoService
+      .aprazamentos()
+      .subscribe((aprazamentos: PreOperacao[]) => {
+        this.aprazamentos = aprazamentos.filter(
+          a =>
+            a.status &&
+            a.cdProntuario === +this.route.snapshot.paramMap.get('prontuario_id') &&
+            a.cdAtendimento === +this.route.snapshot.paramMap.get('atendimento_id')
+        );
+        this.aprazamentos.forEach(
+          a =>
+            (a.itemPrescricao = this.atendimento.prescricoes
+              .find(p => p.prescricao === a.cdPrescricao)
+              .Itens.find(
+                i =>
+                  i.ordemItem === a.ordemItem &&
+                  i.codigoTipoItem === a.cdTpItem &&
+                  i.codigoItem === a.cdItem
+              ))
+        );
+      });
   }
 
   selecionarPrescricao(prescricao: Prescricao) {
@@ -123,7 +122,6 @@ export class ProntuarioComponent implements OnInit {
 
     this.prescricaoSelected = prescricao;
     this.validateFields();
-
   }
 
   validateFields() {
@@ -133,13 +131,13 @@ export class ProntuarioComponent implements OnInit {
       this.prescricaoSelected.tipoPrescricao = 'Enfermeira';
     }
 
-     if (this.prescricaoSelected.statusPrescricao === 'A') {
+    if (this.prescricaoSelected.statusPrescricao === 'A') {
       this.prescricaoSelected.statusPrescricao = 'Assinada';
-     } else if (this.prescricaoSelected.statusPrescricao === 'N') {
+    } else if (this.prescricaoSelected.statusPrescricao === 'N') {
       this.prescricaoSelected.statusPrescricao = 'Cancelada';
-     } else {
+    } else {
       this.prescricaoSelected.statusPrescricao = 'Em Uso';
-     }
+    }
   }
 
   getPrescricoes() {

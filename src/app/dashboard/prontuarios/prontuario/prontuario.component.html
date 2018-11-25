@@ -115,7 +115,7 @@ Procedimentos
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let aprazamento of aprazamentos | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationAprazamento }">
+          <tr *ngFor="let aprazamento of getAprazamentos() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationAprazamento }">
             <!-- <th scope="row">{{i + 1}}</th> -->
             <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
             <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
