@@ -97,11 +97,7 @@ export class ProntuarioComponent implements OnInit {
       });
   }
 
-  public loadPageMedicamento(page: number) {
-    this.paginationMedicamento = page;
-    this.paginationAprazamento = 1;
-  }
-
+ 
   public getProntuarioById() {
     this.prontuarioService.listarProntuariosHC(+this.route.snapshot.paramMap.get('prontuario_id')).subscribe(data => {
       this.prontuario = data;
