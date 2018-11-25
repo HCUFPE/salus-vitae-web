@@ -17,8 +17,8 @@ const httpOptions = {
     'Content-Type': 'application/json'
   })
 };
-const codigoAla = '5N1000';
 
+const codigoAla = '5N1000';
 
 @Injectable()
 export class ProntuariosService {

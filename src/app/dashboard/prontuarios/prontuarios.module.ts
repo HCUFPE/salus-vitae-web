@@ -15,7 +15,7 @@ import { MedicamentosService } from './medicamentos.service';
 import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuarios.component';
 import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filter.pipe';
 
 @NgModule({
   imports: [
@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NgxMaskModule.forChild(),
     NgxPaginationModule
   ],
-  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent],
+  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent,ListaProntuariosPipe],
   providers: [
     ProntuariosService,
     MedicamentosService,

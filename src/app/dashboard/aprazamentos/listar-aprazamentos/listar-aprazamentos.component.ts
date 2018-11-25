@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { AprazamentosService } from '../aprazamentos.service';
 import { Aprazamento } from '../../../models/aprazamento.model';
 import { PreOperacao } from 'src/app/models/pre-operacao.model';
+import { Prontuario } from '../../../models/prontuario.model';
 
 @Component({
   selector: 'app-listar-aprazamentos',
@@ -12,33 +13,23 @@ import { PreOperacao } from 'src/app/models/pre-operacao.model';
 })
 export class ListarAprazamentosComponent implements OnInit {
 
-  aprazamentos: PreOperacao[] = [];
+  public aprazamentos: PreOperacao[] = [];
+  public apraList:Array<any>=[];
+  public prontuario:Prontuario[];
   filtro: string;
 
   constructor(private aprazamentosService: AprazamentosService) { }
 
   ngOnInit() {
-    this.aprazamentosService.aprazamentos()
-    .subscribe(aprazamentos => {
-      this.aprazamentos = aprazamentos;
-
-      // this.aprazamentos.push({ _id: '2322232', paciente: { _id: '329090', nome: '434332', sexo: 'M',
-      // numeroRg: '', numeroCpf: '', nomeMae: '', nomePai: '', alergias: [] },
-      // horario: new Date(2016, 9, 17, 20, 30, 0, 0),
-      // enfermeira: { _id: '44343', name: '', email: '', cpf: '', accesToken: '' },
-      // medicamento: { _id: '3232', nome: 'teste', dosagem: '3', dataFabricacao: '', dataValidade: new Date(2016, 9, 17, 20, 30, 0, 0) },
-      // isConsumido: false, intervalo: '2', isCancelado: false });
-
-      // this.aprazamentos.push({ _id: '2322232', paciente: { _id: '329090', nome: '434332', sexo: 'M',
-      // numeroRg: '', numeroCpf: '', nomeMae: '', nomePai: '', alergias: [] },
-      // horario: new Date(2016, 9, 17, 20, 29, 0, 0),
-      // enfermeira: { _id: '44343', name: '', email: '', cpf: '', accesToken: '' },
-      // medicamento: { _id: '3232', nome: 'teste', dosagem: '3', dataFabricacao: '', dataValidade: new Date(2016, 9, 17, 20, 30, 0, 0) },
-      // isConsumido: false, intervalo: '2', isCancelado: false });
-    });
+    this.getAprazamentos();
   }
 
-  getAprazamentos(value: string) {
+  getAprazamentos(value?: string) {
+    this.aprazamentosService.aprazamentos()
+    .subscribe(aprazamento => {
+      this.apraList = aprazamento;
+      console.log(this.apraList);
+    });
     /*return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
         if (new Date(a.horario) < new Date(b.horario)) {
           return -1;

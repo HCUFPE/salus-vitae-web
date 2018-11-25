@@ -15,24 +15,24 @@
           <tr>
             <th>#</th>
             <th>Paciente</th>
-            <th>Sexo</th>
+            <th>Prontuário</th>
             <th>Leito</th>
-            <th>Data da Prescrição</th>
             <th>Remédio</th>
-            <th>Posologia</th>
-            <th>Horário para ministração</th>
+            <th>Administração</th>
+            <th>Frequência</th>
+            <th>Observação</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let aprazamento of getAprazamentos(); index as i">
-            <th scope="row">{{i + 1}}</th>
-            <td><a [routerLink]="['/dashboard/aprazamentos', aprazamento._id]">{{aprazamento.paciente.nome}}</a></td>
-            <td>{{aprazamento.paciente.sexo}}</td>
-            <td>Leito 14</td>
-            <td>17/12/2018</td>
-            <td>{{aprazamento.medicamento.nome}}</td>
-            <td>{{aprazamento.medicamento.dosagem}} - {{aprazamento.intervalo}} em {{aprazamento.intervalo}} horas</td>
-            <td>{{aprazamento.horario | date:'dd/MM/yyyy hh:mm'}}</td>
+        <tr *ngFor="let aprazamento of apraList; index as i">
+            <th scope="row">{{i + 1}}</th>            
+            <td>{{aprazamento?.nmPaciente}}</td>
+            <td>{{aprazamento?.cdProntuario}}</td>
+            <td>{{aprazamento?.nmMedicamento}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>

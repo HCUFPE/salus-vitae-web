@@ -11,6 +11,7 @@ import { Aprazamento } from '../../../models/aprazamento.model';
 import { PreOperacao } from '../../../models/pre-operacao.model';
 import { Atendimento } from 'src/app/models/atendimento.model';
 import { Alert } from './../../../shared/errorhandling/index';
+import { Usuario } from '../../../models/usuario.model';
 
 @Component({
   selector: 'app-modal-aprazar',
@@ -56,7 +57,7 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm) {
     this.submitted = true;
     console.log(form);
-    const bodyParams = {
+    const bodyParams: PreOperacao = {
       cdProntuario: this.prontuario.prontuario,
       cdAtendimento: this.atendimento.atendimento,
       cdPrescricao: this.atendimento.prescricoes[0].prescricao,
@@ -68,13 +69,13 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
       ordemItem: this.medicamento.ordemItem,
       nmMedicamento: this.medicamento.descricaoItem,
       nmPaciente: this.prontuario.nomeDoPaciente,
-      nmUsuario: 'teste'
+      nmUsuario: 'teste',
+      status: true,
       quantidade: 1
     };
 
     this.aprazamentoService.createPreOperacao(bodyParams).subscribe(data => {
       this.bodyParams = data;
-
     }, error => {
       const alert = new Alert(null, error);
       this.alerts.push(alert);
@@ -83,9 +84,9 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
 
   // Adicionar quantidade de aprazamentos para o medicamento
   adicionarAprazamento() {
-    this.aprazamentos.push({ status: 'P', cdProntuario: 0, cdAtendimento: 0, dtPreOpAprazamento: null,
-     horarioInicial: new Date(), intervalo: 48, codigoItem: '1', codigoTipoItem: 3, ordemItem: 1, quantidade: 1 });
-    this.aprazamentos.push();
+    //this.aprazamentos.push({ status: 'P', cdProntuario: 0, cdAtendimento: 0, dtPreOpAprazamento: null,
+    // horarioInicial: new Date(), intervalo: 48, codigoItem: '1', codigoTipoItem: 3, ordemItem: 1, quantidade: 1 });
+    //this.aprazamentos.push();
   }
 
   // Remover medicamento da lista

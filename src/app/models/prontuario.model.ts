@@ -10,7 +10,7 @@ export interface Prontuario {
     pesoAdmissao: string;
     dataAlta: Date;
 
-    leito: string;
+    leito: string|number;
     nomeDoPaciente: string;
     dataNascimento: string;
     nomeMae: string;

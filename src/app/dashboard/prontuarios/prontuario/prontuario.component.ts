@@ -73,7 +73,7 @@ export class ProntuarioComponent implements OnInit {
           .subscribe((aprazamentos: PreOperacao[]) => {
             this.aprazamentos = aprazamentos.filter(
               a =>
-                a.status === 'P' &&
+                a.status &&
                 a.cdProntuario ===
                   +this.route.snapshot.paramMap.get('prontuario_id') &&
                 a.cdAtendimento ===
