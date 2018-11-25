@@ -35,15 +35,15 @@ export class ProntuarioComponent implements OnInit {
     private route: ActivatedRoute,
     private prontuarioService: ProntuariosService,
     private aprazamentoService: AprazamentosService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getProntuarioById();
 
     this.prontuarioService
       .atendimentoHC(
-        this.route.snapshot.paramMap.get('prontuario_id'),
-        this.route.snapshot.paramMap.get('atendimento_id')
+      this.route.snapshot.paramMap.get('prontuario_id'),
+      this.route.snapshot.paramMap.get('atendimento_id')
       )
       .subscribe((atendimento: Atendimento) => {
         atendimento.prescricoes = atendimento.prescricoes.sort(
@@ -67,6 +67,7 @@ export class ProntuarioComponent implements OnInit {
         );
         this.atendimento = atendimento;
         this.prescricaoSelected = this.getUltimaPrescricao();
+        this.validateFields();
 
         this.aprazamentoService
           .aprazamentos()
@@ -75,21 +76,21 @@ export class ProntuarioComponent implements OnInit {
               a =>
                 a.status &&
                 a.cdProntuario ===
-                  +this.route.snapshot.paramMap.get('prontuario_id') &&
+                +this.route.snapshot.paramMap.get('prontuario_id') &&
                 a.cdAtendimento ===
-                  +this.route.snapshot.paramMap.get('atendimento_id')
+                +this.route.snapshot.paramMap.get('atendimento_id')
             );
             this.aprazamentos.forEach(
               a =>
                 (a.itemPrescricao = this.atendimento.prescricoes
                   .find(
-                    p => p.prescricao === this.prescricaoSelected.prescricao
+                  p => p.prescricao === this.prescricaoSelected.prescricao
                   )
                   .Itens.find(
-                    i =>
-                      i.ordemItem === a.ordemItem &&
-                      i.codigoTipoItem === a.cdTpItem &&
-                      i.codigoItem === a.cdItem + ''
+                  i =>
+                    i.ordemItem === a.ordemItem &&
+                    i.codigoTipoItem === a.cdTpItem &&
+                    i.codigoItem === a.cdItem + ''
                   ))
             );
           });
@@ -125,6 +126,24 @@ export class ProntuarioComponent implements OnInit {
     }
 
     this.prescricaoSelected = prescricao;
+    this.validateFields();
+
+  }
+
+  validateFields() {
+    if (this.prescricaoSelected.tipoPrescricao === 'M') {
+      this.prescricaoSelected.tipoPrescricao = 'Medicamentos';
+    } else if (this.prescricaoSelected.tipoPrescricao === 'E') {
+      this.prescricaoSelected.tipoPrescricao = 'Enfermeira';
+    }
+
+     if (this.prescricaoSelected.statusPrescricao === 'A') {
+      this.prescricaoSelected.statusPrescricao = 'Assinada';
+     } else if (this.prescricaoSelected.statusPrescricao === 'N') {
+      this.prescricaoSelected.statusPrescricao = 'Cancelada';
+     } else {
+      this.prescricaoSelected.statusPrescricao = 'Em Uso';
+     }
   }
 
   getPrescricoes() {
