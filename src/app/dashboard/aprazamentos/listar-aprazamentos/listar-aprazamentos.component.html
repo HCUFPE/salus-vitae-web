@@ -1,6 +1,6 @@
 <section class="content-header">
   <div class="row">
-    <h1 class="ml-3 mr-auto">Listar Aprazamentos</h1>
+    <h2 class="ml-3 mr-auto">Visualizar utimos aprazamentos</h2>
     <div class="col-md-6">
       <input placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
     </div>
@@ -13,7 +13,7 @@
       <table class="table table-hover text-center">
         <thead>
           <tr>
-            <th>#</th>
+            <!--<th>#</th>-->
             <th>Paciente</th>
             <th>Prontuário</th>
             <th>Leito</th>
@@ -24,8 +24,8 @@
           </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let aprazamento of apraList; index as i">
-            <th scope="row">{{i + 1}}</th>            
+          <tr *ngFor="let aprazamento of apraList | paginate: { id: 'aprazamento', itemsPerPage: 10, currentPage: paginationAprazamento }">
+            <!--<th scope="row">{{i + 1}}</th>            -->
             <td>{{aprazamento?.nmPaciente}}</td>
             <td>{{aprazamento?.cdProntuario}}</td>
             <td>{{aprazamento?.nmMedicamento}}</td>
@@ -36,6 +36,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="text-center col-sm-10">
+        <pagination-controls [id]="'aprazamento'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationAprazamento = $event"></pagination-controls>
+      </div>
     </div>
   </div>
 </section>

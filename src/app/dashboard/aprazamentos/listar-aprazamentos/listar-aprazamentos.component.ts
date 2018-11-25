@@ -14,9 +14,10 @@ import { Prontuario } from '../../../models/prontuario.model';
 export class ListarAprazamentosComponent implements OnInit {
 
   public aprazamentos: PreOperacao[] = [];
-  public apraList:Array<any>=[];
-  public prontuario:Prontuario[];
+  public apraList: Array<any> = [];
+  public prontuario: Prontuario[];
   filtro: string;
+  paginationAprazamento = 1;
 
   constructor(private aprazamentosService: AprazamentosService) { }
 
@@ -26,10 +27,10 @@ export class ListarAprazamentosComponent implements OnInit {
 
   getAprazamentos(value?: string) {
     this.aprazamentosService.aprazamentos()
-    .subscribe(aprazamento => {
-      this.apraList = aprazamento;
-      console.log(this.apraList);
-    });
+      .subscribe(aprazamento => {
+        this.apraList = aprazamento;
+        console.log(this.apraList);
+      });
     /*return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
         if (new Date(a.horario) < new Date(b.horario)) {
           return -1;
