@@ -32,7 +32,7 @@
           </div>
           <div class="card-footer text-muted text-right">
             <a class="btn disabled" href="#" target="_blank">Aprazamentos</a>
-            <a class="btn" [routerLink]="['/pacientes-internados/',pacientes?.prontuario]" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
+            <a class="btn" [routerLink]="['/dashboard/prontuarios', pacientes?.prontuario, 'atendimento', pacientes?.atendimento]" routerLinkActive="router-link-active" routerLinkActive="router-link-active"
               target="_blank">Prescrição</a>
           </div>
         </div>
