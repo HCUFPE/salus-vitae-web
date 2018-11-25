@@ -1,17 +1,19 @@
 /* Modal Header */
 .modal-header {
-  background-color: rgba(153,153,153,0.2);
+  background-color: rgba(153, 153, 153, 0.2);
 }
 
 .modal-title {
-    text-align: center;
+  text-align: center;
 }
+
 /* End Modal Header */
 
 /* Modal Body */
 label {
   padding-top: 10px;
 }
+
 /* End Modal Body */
 
 .data-input {
@@ -21,6 +23,7 @@ label {
 .btn {
   flex: auto;
 }
+
 /* Calendar modal */
 
 
@@ -30,13 +33,15 @@ a {
   color: black;
 }
 
-#tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+#tabs .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
   color: green;
   background-color: transparent;
   border-bottom: 4px solid !important;
   font-size: 20px;
   font-weight: bold;
 }
+
 #tabs .nav-tabs .nav-link {
   border: 1px solid transparent;
   border-top-left-radius: .25rem;
@@ -49,4 +54,4 @@ a {
 
 .pt-3-half {
   padding-top: 1.4rem;
-  }
+}

@@ -47,11 +47,11 @@
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let aprazamento of aprazamentos; index as i">
-                                      <!-- <th scope="row">{{i + 1}}</th> -->
+                                      <th scope="row">{{i + 1}}</th>
                                       <td>
                                         <label for="aprazamento"><i class="fa fa-calendar-check-o"></i><b>Data:&nbsp;</b></label>
-                                        <input name="data_hora" [(ngModel)]="aprazamento.horarioInicial" [min]="aprazamento.horarioInicial" [max]="max" [owlDateTimeTrigger]="datePicker"
-                                          [owlDateTime]="datePicker" #dateTime="ngModel">
+                                        <input id="datePicker" name="data_hora" [(ngModel)]="aprazamento.horarioInicial" [min]="aprazamento.horarioInicial"
+                                        [max]="max" [owlDateTimeTrigger]="datePicker" [owlDateTime]="datePicker" #dateTime="ngModel">
                                         <owl-date-time #datePicker></owl-date-time>
                                       </td>
                                       <td>
