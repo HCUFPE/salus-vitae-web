@@ -30,7 +30,7 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     NgxMaskModule.forChild(),
     NgxPaginationModule
   ],
-  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent,ListaProntuariosPipe],
+  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent, ListaProntuariosPipe],
   providers: [
     ProntuariosService,
     MedicamentosService,
