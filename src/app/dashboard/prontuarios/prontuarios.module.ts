@@ -10,6 +10,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ProntuariosRoutingModule } from './prontuarios-routing.module';
 import { ProntuarioComponent } from './prontuario/prontuario.component';
 import { ModalAprazarComponent } from './modal-aprazar/modal-aprazar.component';
+import { ModalRodelagemAprazamentoComponent } from './../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
 import { ProntuariosService } from './prontuarios.service';
 import { MedicamentosService } from './medicamentos.service';
 import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuarios.component';
@@ -30,7 +31,14 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     NgxMaskModule.forChild(),
     NgxPaginationModule
   ],
-  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent, ListaProntuariosPipe],
+
+  declarations: [
+    ListarProntuariosComponent,
+    ProntuarioComponent,
+    ModalAprazarComponent,
+    ModalRodelagemAprazamentoComponent,
+    ListaProntuariosPipe
+  ],
   providers: [
     ProntuariosService,
     MedicamentosService,
