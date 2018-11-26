@@ -24,16 +24,20 @@ export class ProntuariosService {
 
   constructor(private http: HttpClient) { }
 
-  prontuarios(): Observable<Prontuario[]> {
-    return this.http.get<Prontuario[]>(`${SALUS_API}/prontuario`);
-  }
-
-  prontuariosById(id: string): Observable<Prontuario> {
-    return this.http.get<Prontuario>(`${HC_API}/prontuario/${id}`);
-  }
-
   alas(): Observable<Ala> {
     return this.http.get<Ala>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
+  }
+
+  async resolvedPacientesInternados(): Promise<Ala> {
+    const ala: Ala = await this.alas().toPromise();
+
+    for (const leito of ala.leitos) {
+      if (leito.prontuario !== undefined) {
+        leito.pacienteInternado = await this.listarProntuariosHC(leito.prontuario).toPromise();
+      }
+    }
+
+    return ala;
   }
 
   listarProntuariosHC(prt: number | string): Observable<Prontuario> {

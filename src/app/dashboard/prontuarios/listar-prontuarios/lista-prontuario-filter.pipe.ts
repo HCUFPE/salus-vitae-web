@@ -1,5 +1,6 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { Prontuario } from '../../../models/prontuario.model';
+
+import { Leito } from 'src/app/models/leito.model';
 
 @Pipe({
     name: 'myFilter'
@@ -7,14 +8,15 @@ import { Prontuario } from '../../../models/prontuario.model';
 
 export class ListaProntuariosPipe implements PipeTransform {
 
-    transform(values: Prontuario[], filtro: any) {
+    transform(values: Leito[], filtro: any) {
         if (!values || !filtro) {
             return values;
         }
 
-        return values.filter(data => data.nomeDoPaciente.toLowerCase().indexOf(filtro.toLowerCase()) !== -1
-        || data.nomeMae.toLowerCase().indexOf(filtro.toLowerCase()) !== -1
-        || data.prontuario.toString().indexOf(filtro) !== -1);
+        return values.filter(data => data.pacienteInternado !== undefined &&
+        (data.pacienteInternado.nomeDoPaciente.toLowerCase().indexOf(filtro.toLowerCase()) !== -1
+        || data.pacienteInternado.nomeMae.toLowerCase().indexOf(filtro.toLowerCase()) !== -1
+        || data.pacienteInternado.prontuario.toString().indexOf(filtro) !== -1));
     }
 
 }

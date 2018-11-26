@@ -36,6 +36,7 @@
     "ng2-charts": "^1.6.0",
     "ng2-toastr": "^4.1.2",
     "ng6-toastr": "^6.0.0",
+    "ngx-loading": "^3.0.1",
     "ngx-mask": "^6.5.18",
     "ngx-pagination": "^3.2.1",
     "open-iconic": "^1.1.1",
