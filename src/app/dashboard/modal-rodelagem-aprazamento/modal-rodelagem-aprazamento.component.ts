@@ -1,14 +1,14 @@
-import { Operacao } from './../../models/operacao.model';
-import { Usuario } from './../../models/usuario.model';
-import { Atendimento } from './../../models/atendimento.model';
-import { AprazamentosService } from './../aprazamentos/aprazamentos.service';
-import { Aprazamento } from 'src/app/models/aprazamento.model';
-import { PreOperacao } from './../../models/pre-operacao.model';
-import { Alert } from './../../shared/errorhandling/index';
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import { TranslateService } from '@ngx-translate/core';
 import swal from 'sweetalert2';
+
+import { Usuario } from '../../models/usuario.model';
+import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
+import { Aprazamento } from '../../models/aprazamento.model';
+import { PreOperacao } from '../../models/pre-operacao.model';
+import { Alert } from '../../shared/errorhandling/index';
 
 @Component({
   selector: 'app-modal-rodelagem-aprazamento',
@@ -41,16 +41,10 @@ export class ModalRodelagemAprazamentoComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm) {
     this.submitted = true;
     // console.log(form);
-       this.bodyParams = {
+    this.bodyParams = {
       isConsumido: false,
       cdPreOperacaoAprazamento: this.aprazamento._id,
       justificativa: this.justificativa,
-      deviceUuid: '4214214',
-      deviceSerial: '124214213',
-      deviceManufacturer: '214124214',
-      deviceModel: '412421421',
-      devicePlatform: '3231V31',
-      deviceVersion: 'VV12',
       dtOperacao: new Date(),
       nmUsuario: window.localStorage.getItem('user')
     };
