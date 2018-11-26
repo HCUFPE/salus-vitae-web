@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 
 import { Usuario } from './../models/usuario.model';
-import { SALUS_API, HC_API } from './../app.api';
+import { HC_API } from './../app.api';
 
 import {
     HttpHeaders, HttpParams
@@ -24,22 +24,14 @@ export class LoginService {
         return this.user !== undefined;
     }
 
-    usuarios(): Observable<Usuario[]> {
-        return this.http.get<Usuario[]>(`${SALUS_API}/users`);
-    }
-
-
-    loginHC(usuario:string, password:string): Observable<Usuario> {
+    loginHC(usuario: string, password: string): Observable<Usuario> {
         const body = new HttpParams()
             .set('grant_type', 'password')
             .set('username', usuario.toUpperCase())
             .set('password', password);
 
-            body.set('Content-Type', 'application/json');
+        body.set('Content-Type', 'application/json');
         return this.http.post<Usuario>(`${HC_API}/auth-service/ws/login`, body);
     }
 
-    login(id: string, cpf: string): Observable<Usuario> {
-        return this.http.get<Usuario>(`${SALUS_API}/users/${id}`);
-    }
 }
