@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable()
 export class ListarProntuariosComponent implements OnInit {
   public prontuario: Prontuario;
-  public ala: Ala[]=[];
+  public ala: Ala[] = [];
   public filtro: string;
   public leito: Leito[];
   public pacientes: Leito[];
@@ -37,10 +37,10 @@ export class ListarProntuariosComponent implements OnInit {
   getAlas() {
     this.prontuarioService.alas()
       .subscribe(ala => {
-        
+
         this.ala.push(ala);
         this.leito = ala.leitos;
-        
+
         for (const leito of ala.leitos) {
           const numeroLeito = leito;
           const numeroProntuario = leito.prontuario;
@@ -58,8 +58,8 @@ export class ListarProntuariosComponent implements OnInit {
   getProntuariosHC(prontuario: number, leito: any) {
     this.prontuarioService.listarProntuariosHC(prontuario).subscribe(data => {
       this.prontuario = data;
-      let numeroLeito = this.ala;
-      this.newObj.push(Object.assign({},this.prontuario,leito));
+      const numeroLeito = this.ala;
+      this.newObj.push(Object.assign({}, this.prontuario, leito));
     });
   }
 }

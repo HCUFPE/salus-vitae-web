@@ -17,7 +17,7 @@ export interface PreOperacao {
   quantidade: number;
   nmMedicamento: string;
   nmPaciente: string;
-  nmUsuario: string; 
+  nmUsuario: string;
 
   prontuario?: Prontuario;
   atendimento?: Atendimento;
