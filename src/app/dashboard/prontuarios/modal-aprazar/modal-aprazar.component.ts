@@ -128,7 +128,7 @@ export class ModalAprazarComponent implements OnInit, OnDestroy {
             'Aprazamento não realizado!'
           );
         }
-        $('#modalAprazamento').modal('destroy');
+        // $('#modalAprazamento').modal('destroy');
       });
     }
     // Remover medicamento da lista
