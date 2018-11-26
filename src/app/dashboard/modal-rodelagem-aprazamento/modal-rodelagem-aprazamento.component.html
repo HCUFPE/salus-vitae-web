@@ -7,7 +7,7 @@
       <div class="modal-header">
         <h3 class="modal-title w-100" id="modalRodelagemAprazamentoTitulo">
           Rodelagem do Medicamento<br>
-          <h4 class="font-weight-bold">{{ aprazamento?.descricaoItem }}</h4>
+          <h4 class="font-weight-bold">{{ aprazamento?.itemPrescricao?.descricaoItem }}</h4>
         </h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(modalForm)">
           <span aria-hidden="true">&times;</span>
@@ -42,8 +42,8 @@
                                   </div>
                                   <div class="row">
                                     <div class="col-md-12">
-                                      <label for="nmMedicamento"><i class="fa fa-repeat"></i><b>&nbsp;Nome do Medicamento:</b></label>
-                                      <p name="nmMedicamento">{{ aprazamento?.nmMedicamento }}</p>
+                                      <label for="administracao"><i class="fa fa-repeat"></i><b>&nbsp;Administração:</b></label>
+                                      <p name="administracao">{{ aprazamento?.itemPrescricao?.administracao }}</p>
                                     </div>
                                   </div>
                                   <div class="row">
