@@ -10,11 +10,9 @@ import { Prontuario } from '../../models/prontuario.model';
 import { Ala } from '../../models/ala.model';
 import { Atendimento } from '../../models/atendimento.model';
 
-var token = localStorage.getItem("isLoggedin");
-
 const httpOptions = {
   headers: new HttpHeaders({
-    'Authorization': 'Bearer ' + token,
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
     'Content-Type': 'application/json'
   })
 };
