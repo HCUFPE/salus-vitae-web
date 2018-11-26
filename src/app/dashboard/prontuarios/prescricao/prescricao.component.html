@@ -106,31 +106,31 @@ Procedimentos
             <th>Observação</th>
             <th>Horário</th>
             <th>Gotejamento</th>
+            <th>Rodelar</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let aprazamento of getAprazamentos() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationAprazamento }">
             <!-- <th scope="row">{{i + 1}}</th> -->
             <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
-              <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
+            <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
             <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
             <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
             <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
             <td>
-                <button (click)="showModalRodelagemAprazamento(aprazamento)" data-toggle="modal" data-target="#modalRodelagemAprazamento" data-backdrop="static" data-keyboard="false"
-                  class="btn btn-danger"><i class="fa fa-remove"></i></button>
-              </td>
+              <button (click)="showModalRodelagemAprazamento(aprazamento)" data-toggle="modal" data-target="#modalRodelagemAprazamento"
+                data-backdrop="static" data-keyboard="false" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+            </td>
         </tbody>
       </table>
       <div class="text-center col-sm-10">
-        
+
         <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationAprazamento = $event"></pagination-controls>
       </div>
-     <app-modal-rodelagem-aprazamento *ngIf="modalRodelagemAprazamento" [aprazamento]="modalRodelagemAprazamento"
-        (hideModal)="dismissModalRodelagem($event)"></app-modal-rodelagem-aprazamento>
+      <app-modal-rodelagem-aprazamento *ngIf="modalRodelagemAprazamento" [aprazamento]="modalRodelagemAprazamento" (hideModal)="dismissModalRodelagem($event)"></app-modal-rodelagem-aprazamento>
     </div>
-    
+
     <!-- Dietas -->
     <div class="tab-pane fade" id="nav-dietas" role="tabpanel" aria-labelledby="nav-dietas-tab">
       <div class="table-responsive-md">
@@ -172,7 +172,6 @@ Procedimentos
               <th>Data Inicio</th>
               <th>Gotejamento</th>
               <th>Aprazar</th>
-              
             </tr>
           </thead>
           <tbody>
