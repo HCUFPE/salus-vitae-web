@@ -1,19 +1,35 @@
-<section class="content-header">
-  <div class="row">
-    <h1 class="ml-3 mr-auto">Listar Aprazamentos</h1>
-    <div class="col-md-6">
-      <input placeholder="Procurar" class="form-control" [(ngModel)]="filtro">
+<div class="py">
+    <div class="container-fluid">
+      <div class="row m-6">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-9">
+              <h1 class="text-capitalize">Visualizar Aprazamentos</h1>
+            </div>
+            <div class="col-md-3 w-100">
+              <div class="btn-group w-100" >
+                <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown"> Prescrições&nbsp;</button>
+                <div class="dropdown-menu"> 
+                    <button (click)="selecionarAprazamento(aprazamento)"
+                     class="dropdown-item" [class.active]="aprazamentoSelected?.dtPreOpAprazamento === aprazamento?.dtPreOpAprazamento"
+                     type="button" *ngFor="let aprazamento of dtList[0]">
+                           {{ aprazamento?.dtPreOpAprazamento | date:'dd/MM/yyyy hh:MM:ss' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
-
+  <br>
 <section class="content">
   <div class="panel panel-default">
     <div class="table-responsive-md">
       <table class="table table-hover text-center">
         <thead>
           <tr>
-            <th>#</th>
             <th>Paciente</th>
             <th>Prontuário</th>
             <th>Leito</th>
@@ -24,18 +40,20 @@
           </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let aprazamento of apraList; index as i">
-            <th scope="row">{{i + 1}}</th>            
+          <tr *ngFor="let aprazamento of apraList | myOperacao:filtros | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationHorario }">
             <td>{{aprazamento?.nmPaciente}}</td>
             <td>{{aprazamento?.cdProntuario}}</td>
+            <td></td>
             <td>{{aprazamento?.nmMedicamento}}</td>
             <td></td>
-            <td></td>
-            <td></td>
+            <td>{{aprazamento?.intervalo}}</td>
             <td></td>
           </tr>
         </tbody>
       </table>
+      <div class="text-center col-sm-10">
+        <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationHorario = $event"></pagination-controls>
+      </div>
     </div>
   </div>
 </section>

@@ -5,6 +5,8 @@ import { AprazamentosService } from '../aprazamentos.service';
 import { Aprazamento } from '../../../models/aprazamento.model';
 import { PreOperacao } from 'src/app/models/pre-operacao.model';
 import { Prontuario } from '../../../models/prontuario.model';
+import { Prescricao } from '../../../models/prescricao.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-listar-aprazamentos',
@@ -15,22 +17,26 @@ export class ListarAprazamentosComponent implements OnInit {
 
   public aprazamentos: PreOperacao[] = [];
   public apraList:Array<any>=[];
-  public prontuario:Prontuario[];
-  filtro: string;
-
+  public dtList:Array<any>=[];  
+  aprazamentoSelected: PreOperacao;
+  lastDate:Date = null;
+  filtros: string;
+  paginationHorario=1;
+  
   constructor(private aprazamentosService: AprazamentosService) { }
 
   ngOnInit() {
     this.getAprazamentos();
   }
 
-  getAprazamentos(value?: string) {
+  getAprazamentos() {
     this.aprazamentosService.aprazamentos()
     .subscribe(aprazamento => {
-      this.apraList = aprazamento;
-      console.log(this.apraList);
-    });
-    /*return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
+      this.apraList = aprazamento.filter(a=>a.status);
+      this.getDtAprazamento(this.apraList) 
+  });    
+    /*
+    return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
         if (new Date(a.horario) < new Date(b.horario)) {
           return -1;
         }
@@ -42,6 +48,25 @@ export class ListarAprazamentosComponent implements OnInit {
         return 0;
       }
     );*/
+  }
+
+  getDtAprazamento(listP){
+    var myMap = new Map();
+    
+    for (let i = 0; i < listP.length; i++) {
+      myMap.set(listP[i].dtPreOpAprazamento,listP[i]);
+    }
+    this.dtList.push(Array.from(myMap.values()));
+
+    console.log(this.dtList);
+  }
+  
+  selecionarAprazamento(dtaprazamento: any) {
+    if (!dtaprazamento) {
+      return;
+    }
+
+    return this.filtros = dtaprazamento;
   }
 
 }
