@@ -1,3 +1,5 @@
+import { Operacao } from './../../models/operacao.model';
+import { Usuario } from './../../models/usuario.model';
 import { Atendimento } from './../../models/atendimento.model';
 import { AprazamentosService } from './../aprazamentos/aprazamentos.service';
 import { Aprazamento } from 'src/app/models/aprazamento.model';
@@ -14,13 +16,14 @@ import swal from 'sweetalert2';
   styleUrls: ['./modal-rodelagem-aprazamento.component.css']
 })
 export class ModalRodelagemAprazamentoComponent implements OnInit, OnDestroy {
-
   @Input() aprazamento: PreOperacao;
   @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
   @Input() public alerts: Array<Alert> = [];
   @ViewChild('btnClose') btnClose: ElementRef;
   public bodyParams;
   public submitted = false;
+  public justificativa: string;
+  public usuario: Usuario;
 
   constructor(
     private aprazamentoService: AprazamentosService,
@@ -36,36 +39,36 @@ export class ModalRodelagemAprazamentoComponent implements OnInit, OnDestroy {
   // Perfom Confirm
 
   onSubmit(form: NgForm) {
-    // this.submitted = true;
+    this.submitted = true;
     // console.log(form);
-    // const bodyParams: PreOperacao = {
-    //   cdProntuario: this.prontuario.prontuario,
-    //   cdAtendimento: this.atendimento.atendimento,
-    //   cdPrescricao: this.atendimento.prescricoes[0].prescricao,
-    //   dtPreOpAprazamento: new Date(),
-    //   horarioInicial: this.horario,
-    //   intervalo: this.medicamento.frequencia,
-    //   cdItem: this.medicamento.codigoItem,
-    //   cdTpItem: this.medicamento.codigoTipoItem,
-    //   ordemItem: this.medicamento.ordemItem,
-    //   nmMedicamento: this.medicamento.descricaoItem,
-    //   nmPaciente: this.prontuario.nomeDoPaciente,
-    //   nmUsuario: 'teste',
-    //   status: true,
-    //   quantidade: 1
-    // };
-    // this.aprazamentoService.createPreOperacao(bodyParams).subscribe(data => {
-    //   this.bodyParams = data;
-    // }, error => {
-    //   const alert = new Alert(null, error);
-    //   this.alerts.push(alert);
-    // });
+       this.bodyParams = {
+      isConsumido: false,
+      cdPreOperacaoAprazamento: this.aprazamento._id,
+      justificativa: this.justificativa,
+      deviceUuid: '4214214',
+      deviceSerial: '124214213',
+      deviceManufacturer: '214124214',
+      deviceModel: '412421421',
+      devicePlatform: '3231V31',
+      deviceVersion: 'VV12',
+      dtOperacao: new Date(),
+      nmUsuario: window.localStorage.getItem('user')
+    };
+
+    this.aprazamentoService.rodelagemAprazamento(this.bodyParams).subscribe(data => {
+      this.bodyParams = data;
+      console.log(this.bodyParams);
+    }, error => {
+      const alert = new Alert(null, error);
+      this.alerts.push(alert);
+      console.log(error);
+    });
   }
 
   createAlertPreOperacao(form: NgForm) {
     swal({
-      title: this.translateService.instant('ALERT@Warning'),
-      text: this.translateService.instant('ALERT@Are you sure?'),
+      title: this.translateService.instant('Cancelar Aprazamento'),
+      text: this.translateService.instant('Tem certeza que deseja rodelar?'),
       type: 'warning',
       allowOutsideClick: false,
       showCancelButton: true,
