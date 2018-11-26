@@ -106,7 +106,6 @@ Procedimentos
             <th>Observação</th>
             <th>Horário</th>
             <th>Gotejamento</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -118,7 +117,6 @@ Procedimentos
             <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
             <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
-            <td>{{aprazamento?.status}}</td>
             <td>
                 <button (click)="showModalRodelagemAprazamento(aprazamento)" data-toggle="modal" data-target="#modalRodelagemAprazamento" data-backdrop="static" data-keyboard="false"
                   class="btn btn-danger"><i class="fa fa-remove"></i></button>
