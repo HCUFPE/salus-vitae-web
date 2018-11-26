@@ -1,46 +1,49 @@
-<div class="py-1">
-  <section class="container-fluid">
-    <div class="row m-6">
-      <div class="text-center col-sm-12">
-        <h1 class="display-3 text-center">Pacientes Internados</h1>
+<section class="container-group">
+  <div class="py-1">
+    <section class="container-fluid">
+      <div class="row m-6">
+        <div class="text-center col-sm-12">
+          <h1 class="display-3 text-center">Pacientes Internados</h1>
+        </div>
       </div>
-    </div>
-    <hr>
-  </section>
-  <div class="row m-8" *ngFor="let alas of ala">
-    <div class="text-center col-sm-8">
-       <h4 class="text-left">{{alas?.Ala}}</h4>
-    </div>
-       <div class="col-md-4 pull-right">
-      <div class="form-group m-1 mr-1">
-        <div class="input-group">
-          <input class="form-control" id="filtro" name="filtro" placeholder="Prontuário, Paciente, ou Mãe" [(ngModel)]="filtro">
+      <hr>
+    </section>
+    <div class="row m-8">
+      <div class="text-center col-sm-8">
+        <h4 class="text-left">{{ala?.Ala}}</h4>
+      </div>
+      <div class="col-md-4 pull-right">
+        <div class="form-group m-1 mr-1">
+          <div class="input-group">
+            <input class="form-control" id="filtro" name="filtro" placeholder="Prontuário, Paciente, ou Mãe"
+              [(ngModel)]="filtro">
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <section class="container">
   <div class="row">
-    <div class="col-md-4" *ngFor="let pacientes of newObj | myFilter:filtro">
-      <div *ngIf="pacientes.lenght!=0">
-        <div class="card bg-light mb-4">
-          <div class="card-header"><i class="fa fa-bed"></i>&nbsp;
-            <span>{{pacientes?.leito}}</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;{{pacientes?.prontuario}}</strong></div>
-          <div class="card-body">
-            <p class="card-title"><i class="fa fa-user fa-fw">&nbsp;</i>Paciente:&nbsp;<span class="text-view text-left">{{pacientes?.nomeDoPaciente}}</span></p>
-            <p class="card-text"><i class="fa fa-female"></i>&nbsp;Mãe:<span class="text-view">&nbsp;{{pacientes?.nomeMae}}</span></p>
-            <p class="card-text"><i class="fa fa-transgender"></i>&nbsp;Sexo:<span class="text-view">&nbsp;{{pacientes?.sexo}}</span></p>
-            <p class="card-text"><i class="fa fa-calendar"></i>&nbsp;Data Nascimento:<span class="text-view">&nbsp;{{pacientes?.dataNascimento}}</span></p>
-          </div>
-          <div class="card-footer text-muted text-right">
-            <a class="btn disabled" href="#" target="_blank">Aprazamentos</a>
-            <a class="btn" [routerLink]="[pacientes?.prontuario,'atendimento',pacientes?.atendimento]" routerLinkActive="router-link-active"
-              routerLinkActive="router-link-active" target="_blank">Prescrição</a>
-          </div>
+    <div class="col-md-4 card-deck" *ngFor="let leito of getLeitos() | myFilter:filtro">
+      <div class="card bg-light mb-4">
+        <div class="card-header"><i class="fa fa-bed"></i>&nbsp;
+          <span>{{leito?.leito}}</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;{{leito?.pacienteInternado?.prontuario}}</strong></div>
+        <div class="card-body">
+          <p class="card-title"><i class="fa fa-user fa-fw">&nbsp;</i>Paciente:&nbsp;<span class="text-view text-left">{{leito?.pacienteInternado?.nomeDoPaciente}}</span></p>
+          <p class="card-text"><i class="fa fa-female"></i>&nbsp;Mãe:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.nomeMae}}</span></p>
+          <p class="card-text"><i class="fa fa-transgender"></i>&nbsp;Sexo:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.sexo}}</span></p>
+          <p class="card-text"><i class="fa fa-calendar"></i>&nbsp;Data Nascimento:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.dataNascimento}}</span></p>
+        </div>
+        <div class="card-footer text-muted text-right">
+          <a class="btn disabled" href="#">Aprazamentos</a>
+          <a class="btn" [routerLink]="[leito?.prontuario, 'atendimento', leito?.atendimento]" routerLinkActive="router-link-active"
+            routerLinkActive="router-link-active">Prescrição</a>
         </div>
       </div>
     </div>
   </div>
+
+  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true, animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: '#ffffff', backdropBorderRadius: '3px' }"></ngx-loading>
 </section>

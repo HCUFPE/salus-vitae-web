@@ -1,7 +1,7 @@
 import { Leito } from './leito.model';
 
 export interface Ala {
-    codigoAla: string;
-    ala: string;
+    'Codigo Ala': string;
+    Ala: string;
     leitos: Leito[];
 }

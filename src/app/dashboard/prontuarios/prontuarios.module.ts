@@ -6,13 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgxMaskModule } from 'ngx-mask';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { NgxLoadingModule } from 'ngx-loading';
 
 import { ProntuariosRoutingModule } from './prontuarios-routing.module';
-import { ProntuarioComponent } from './prontuario/prontuario.component';
+import { PrescricaoComponent } from './prescricao/prescricao.component';
 import { ModalAprazarComponent } from './modal-aprazar/modal-aprazar.component';
+import { ModalRodelagemAprazamentoComponent } from '../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
+
 import { ProntuariosService } from './prontuarios.service';
-import { MedicamentosService } from './medicamentos.service';
 import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuarios.component';
+
 import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filter.pipe';
@@ -28,12 +31,19 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     OwlDateTimeModule,
     TranslateModule,
     NgxMaskModule.forChild(),
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxLoadingModule.forRoot({})
   ],
-  declarations: [ListarProntuariosComponent, ProntuarioComponent, ModalAprazarComponent,ListaProntuariosPipe],
+
+  declarations: [
+    ListarProntuariosComponent,
+    PrescricaoComponent,
+    ModalAprazarComponent,
+    ModalRodelagemAprazamentoComponent,
+    ListaProntuariosPipe
+  ],
   providers: [
     ProntuariosService,
-    MedicamentosService,
     AprazamentosService,
     TranslateModule
   ]

@@ -9,11 +9,11 @@ export class AuthGuard implements CanActivate {
     canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-      if (localStorage.getItem('isLoggedin') && state.url === '/login') {
+      if (localStorage.getItem('token') && state.url === '/login') {
         // if user is logged and trying access login, then redirect to main page
         this.router.navigate(['/dashboard']);
         return false;
-      } else if (!localStorage.getItem('isLoggedin') && state.url !== '/login') {
+      } else if (!localStorage.getItem('token') && state.url !== '/login') {
         // if user is not logged, then redirect to login page
         this.router.navigate(['/login']);
         return false;

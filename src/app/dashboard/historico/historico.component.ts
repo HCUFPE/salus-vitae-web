@@ -12,11 +12,11 @@ import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
   styleUrls: ['./historico.component.css']
 })
 export class HistoricoComponent implements OnInit {
-  aprazamentos:Aprazamento[];
-  modalConsumo:Consumo;
-  filtro:string;
-  constructor(private route:ActivatedRoute,
-   private historicoService:HistoricoService) { }
+  aprazamentos: Aprazamento[];
+  modalConsumo: Consumo;
+  filtro: string;
+  constructor(private route: ActivatedRoute,
+   private historicoService: HistoricoService) { }
 
   ngOnInit() {
   }

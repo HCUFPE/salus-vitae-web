@@ -1,11 +1,12 @@
-import { Leito } from './../../../models/leito.model';
-import { Alert } from './../../../shared/errorhandling/index';
-import { Ala } from './../../../models/ala.model';
-import { Component, OnInit, Input, Pipe, Injectable } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
 
-import { Prontuario } from '../../../models/prontuario.model';
-import { ProntuariosService } from '../prontuarios.service';
 import { TranslateService } from '@ngx-translate/core';
+
+import { Alert } from '../../../shared/errorhandling/index';
+import { Ala } from '../../../models/ala.model';
+import { Leito } from '../../../models/leito.model';
+import { ProntuariosService } from '../prontuarios.service';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @Component({
   selector: 'app-listar-prontuarios',
@@ -15,15 +16,11 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class ListarProntuariosComponent implements OnInit {
-  public prontuario: Prontuario;
-  public ala: Ala[]=[];
+  public ala: Ala;
   public filtro: string;
-  public leito: Leito[];
-  public pacientes: Leito[];
-  public pacientesInternados: any;
-  public newObj: Array<any> = [];
+  public loading = true;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   @Input() public alerts: Array<Alert> = [];
-
 
   constructor(
     private prontuarioService: ProntuariosService,
@@ -35,31 +32,23 @@ export class ListarProntuariosComponent implements OnInit {
   }
 
   getAlas() {
-    this.prontuarioService.alas()
-      .subscribe(ala => {
-        
-        this.ala.push(ala);
-        this.leito = ala.leitos;
-        
-        for (const leito of ala.leitos) {
-          const numeroLeito = leito;
-          const numeroProntuario = leito.prontuario;
-          if (numeroProntuario) {
-            this.getProntuariosHC(numeroProntuario, numeroLeito);
-          }
-        }
-        return this.newObj;
-      }, error => {
+    this.prontuarioService.resolvedPacientesInternados()
+      .then(ala => {
+        this.ala = ala;
+        this.loading = false;
+      }).catch(error => {
         const alert = new Alert(null, error);
         this.alerts.push(alert);
+        this.loading = false;
       });
   }
 
-  getProntuariosHC(prontuario: number, leito: any) {
-    this.prontuarioService.listarProntuariosHC(prontuario).subscribe(data => {
-      this.prontuario = data;
-      let numeroLeito = this.ala;
-      this.newObj.push(Object.assign({},this.prontuario,leito));
-    });
+  getLeitos() {
+    if (!this.ala || !this.ala.leitos) {
+      return [];
+    }
+
+    return this.ala.leitos.filter((leito: Leito) => leito.prontuario !== undefined);
   }
+
 }

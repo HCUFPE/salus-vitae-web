@@ -7,10 +7,10 @@ import { Usuario } from '../models/usuario.model';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    animations: [routerTransition()]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
 
@@ -20,51 +20,34 @@ export class LoginComponent implements OnInit {
   isInvalidLogin: boolean;
 
   constructor(public router: Router,
-              private fb: FormBuilder,
-              private loginService: LoginService) { }
+    private fb: FormBuilder,
+    private loginService: LoginService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      id: this.fb.control('', [Validators.required, Validators.minLength(6), Validators.pattern(/^[a-zA-Z]+$/)]),
-      senha: this.fb.control('', [Validators.required, Validators.minLength(6)])
+      username: this.fb.control('', [Validators.required, Validators.minLength(6)]),
+      password: this.fb.control('', [Validators.required, Validators.minLength(6)])
     });
-    this.loginService.usuarios()
-    .subscribe(usuario => (this.usuario = usuario));
   }
 
   inputInvalid(value) {
     const formControl: AbstractControl = this.loginForm.controls[value];
-
     if (formControl.touched && formControl.errors) {
       return Object.keys(formControl.errors);
     }
-
     return [];
   }
 
-  // verificarExistencia(id: string, cpf: string, list: Usuario[]) {
-  //   return list.filter(u => u._id === id && u.cpf === cpf).length > 0;
-  // }
 
   login() {
-    if (this.loginForm.value.id === 'enfermeira' && this.loginForm.value.senha === '123456') {
-      localStorage.setItem('isLoggedin', 'enfermeira');
-      this.router.navigate(['dashboard']);
-    } else {
-      this.isInvalidLogin = true;
-    }
-    // if (this.verificarExistencia(this.loginForm.value.id, this.loginForm.value.cpf, this.usuario)) {
-    //     this.loginService.login(this.loginForm.value.id, this.loginForm.value.cpf)
-    //       .subscribe(usuario => this.notificationService.notify(`Bem vindo, ${usuario.name}`),
-    //       response => // HttpErrorResponse
-    //         this.notificationService.notify(response.error.message));
-    // }
-
-    // this.loginService.login(this.loginForm.value.id, this.loginForm.value.cpf)
-    // .subscribe(usuario =>
-    //                     this.notificationService.notify(`Bem vindo, ${usuario.name}`),
-    //                     response => // HttpErrorResponse
-    //                     this.notificationService.notify(response.error.message));
+    this.loginService.loginHC(this.loginForm.value.username, this.loginForm.value.password).subscribe((usuario: Usuario) => {
+      localStorage.setItem('token', usuario.token);
+      localStorage.setItem('user', usuario.username);
+      this.router.navigate(['dashboard/prontuarios/pacientes-internados']);
+    },
+      (err) => {
+        this.isInvalidLogin = true;
+        console.log(err); }
+    );
   }
-
 }

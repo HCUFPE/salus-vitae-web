@@ -25,7 +25,7 @@
           <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-aprazar" role="tabpanel" aria-labelledby="nav-aprazar-tab">
               <div class="modal-body">
-                <form #modalForm="ngForm" (ngSubmit)="onSubmit(modalForm)">
+                <form #modalForm="ngForm" (ngSubmit)="createAlertPreOperacao(modalForm)">
                   <div class="form-content">
                     <div class="form-group align-content">
                       <div class="row">
@@ -47,11 +47,11 @@
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let aprazamento of aprazamentos; index as i">
-                                      <!-- <th scope="row">{{i + 1}}</th> -->
+                                      <th scope="row">{{i + 1}}</th>
                                       <td>
                                         <label for="aprazamento"><i class="fa fa-calendar-check-o"></i><b>Data:&nbsp;</b></label>
-                                        <input name="data_hora" [(ngModel)]="aprazamento.horarioInicial" [min]="aprazamento.horarioInicial" [max]="max" [owlDateTimeTrigger]="datePicker"
-                                          [owlDateTime]="datePicker" #dateTime="ngModel">
+                                        <input id="datePicker" name="data_hora" [(ngModel)]="aprazamento.horarioInicial" [min]="aprazamento.horarioInicial"
+                                        [max]="max" [owlDateTimeTrigger]="datePicker" [owlDateTime]="datePicker" #dateTime="ngModel">
                                         <owl-date-time #datePicker></owl-date-time>
                                       </td>
                                       <td>

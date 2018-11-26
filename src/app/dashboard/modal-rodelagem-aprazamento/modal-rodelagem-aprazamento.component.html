@@ -1,0 +1,86 @@
+<!-- Modal -->
+<div class="modal fade" id="modalRodelagemAprazamento" tabindex="-1" role="dialog" aria-labelledby="modalRodelagemAprazamentoTitulo"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title w-100" id="modalRodelagemAprazamentoTitulo">
+          Rodelagem do Medicamento<br>
+          <h4 class="font-weight-bold">{{ aprazamento?.itemPrescricao?.descricaoItem }}</h4>
+        </h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(modalForm)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row">
+        <div class="col-md-12 ">
+          <nav>
+            <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-aprazar-tab" data-toggle="tab" href="#nav-aprazar" role="tab" aria-controls="nav-aprazar"
+                aria-selected="true">Cancelar Aprazamento</a>
+            </div>
+          </nav>
+          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-aprazar" role="tabpanel" aria-labelledby="nav-aprazar-tab">
+              <div class="modal-body">
+                <form #modalForm="ngForm" (ngSubmit)="createAlertPreOperacao(modalForm)">
+                  <div class="form-content">
+                    <div class="form-group align-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="form-content">
+                                <div class="form-group align-content">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                      <label for="nmPaciente"><i class="fa fa-file-text-o"></i><b>&nbsp;Nome do paciente:</b></label>
+                                      <!-- <p *ngIf="!isObservacao()" [(ngModel)]="getObservacao" type="" name="observacao"></p> -->
+                                      <p name="nmPaciente">{{ aprazamento?.nmPaciente }}</p>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <label for="administracao"><i class="fa fa-repeat"></i><b>&nbsp;Administração:</b></label>
+                                      <p name="administracao">{{ aprazamento?.itemPrescricao?.administracao }}</p>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <label for="dtPreOpAprazamento"><i class="fa fa-bookmark"></i><b>&nbsp;Data - Horário do aprazamento</b></label>
+                                      <p name="dtPreOpAprazamento">
+                                        {{ aprazamento?.dtPreOpAprazamento | date:'dd/MM/yyyy HH:mm'}}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div id="table" class="table-editable">
+                             
+                                <div class="form-group">
+                                  <label for="rodelagem">Justificativa da rodelagem:</label>
+                                  <textarea name="justificativa" id="justificativa" [(ngModel)]="justificativa" class="form-control" rows="5" id="comment"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-end">
+                    <!-- <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(loginForm)">Fechar</button> -->
+                    <button class="btn btn-success" type="submit" [disabled]="!justificativa"><b>Confirmar</b><i
+                        class="fa fa-paper-plane-o ml-1"></i></button>
+                  </div>
+                </form>
+                <!-- End form -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

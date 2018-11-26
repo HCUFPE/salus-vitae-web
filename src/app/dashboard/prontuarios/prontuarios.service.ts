@@ -12,8 +12,7 @@ import { Atendimento } from '../../models/atendimento.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    // tslint:disable-next-line:max-line-length
-    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTQUxVU19WSVRBRSIsImlhdCI6MTU0Mjc0NTQzNiwiYWRtaW4iOiJmYWxzZSJ9.i_L5PDneG68_j_b0DRG-AgwgVtki-9_mJQr-4GP6XMFL5zz5dJ6rcoKtsFsfRbdUJe4ufKyjl2ZCwBMCXw9Fag',
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
     'Content-Type': 'application/json'
   })
 };
@@ -25,16 +24,20 @@ export class ProntuariosService {
 
   constructor(private http: HttpClient) { }
 
-  prontuarios(): Observable<Prontuario[]> {
-    return this.http.get<Prontuario[]>(`${SALUS_API}/prontuario`);
-  }
-
-  prontuariosById(id: string): Observable<Prontuario> {
-    return this.http.get<Prontuario>(`${HC_API}/prontuario/${id}`);
-  }
-
   alas(): Observable<Ala> {
     return this.http.get<Ala>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
+  }
+
+  async resolvedPacientesInternados(): Promise<Ala> {
+    const ala: Ala = await this.alas().toPromise();
+
+    for (const leito of ala.leitos) {
+      if (leito.prontuario !== undefined) {
+        leito.pacienteInternado = await this.listarProntuariosHC(leito.prontuario).toPromise();
+      }
+    }
+
+    return ala;
   }
 
   listarProntuariosHC(prt: number | string): Observable<Prontuario> {
