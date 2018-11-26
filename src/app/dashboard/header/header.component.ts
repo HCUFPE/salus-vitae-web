@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
@@ -38,8 +38,9 @@ export class HeaderComponent implements OnInit {
         dom.classList.toggle('rtl');
     }
 
-    onLoggedout() {        
-        localStorage.removeItem('isLoggedin');
+    onLoggedout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         this.router.navigate(['/login']);
     }
 }
