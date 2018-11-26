@@ -7,8 +7,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AprazamentosRoutingModule } from './aprazamentos-routing.module';
 import { ListarAprazamentosComponent } from './listar-aprazamentos/listar-aprazamentos.component';
 import { AprazamentosService } from './aprazamentos.service';
-import { CadastrarAprazamentoComponent } from './cadastrar-aprazamento/cadastrar-aprazamento.component';
-import { DetalhesAprazamentoComponent } from './detalhes-aprazamento/detalhes-aprazamento.component';
 
 @NgModule({
   imports: [
@@ -20,7 +18,7 @@ import { DetalhesAprazamentoComponent } from './detalhes-aprazamento/detalhes-ap
     NgxPaginationModule
 
   ],
-  declarations: [DetalhesAprazamentoComponent, ListarAprazamentosComponent, CadastrarAprazamentoComponent],
+  declarations: [ListarAprazamentosComponent],
   providers: [AprazamentosService]
 
 })
