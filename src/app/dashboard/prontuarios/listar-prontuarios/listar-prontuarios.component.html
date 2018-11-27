@@ -26,7 +26,7 @@
 
 <section class="container">
   <div class="row">
-    <div class="col-md-4 card-deck" *ngFor="let leito of getLeitos() | myFilter:filtro">
+    <div class="col-md-4 card-deck" *ngFor="let leito of getLeitos() | myFilter:filtro | paginate: { id: 'leito', itemsPerPage: 6, currentPage: paginationPaciente }">
       <div class="card bg-light mb-4">
         <div class="card-header"><i class="fa fa-bed"></i>&nbsp;
           <span>{{leito?.leito}}</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;{{leito?.pacienteInternado?.prontuario}}</strong></div>
@@ -43,7 +43,9 @@
         </div>
       </div>
     </div>
+    <div class="text-center col-sm-10">
+      <pagination-controls [id]="'leito'"  previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationPaciente = $event"></pagination-controls>
+    </div>
   </div>
-
   <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true, animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: '#ffffff', backdropBorderRadius: '3px' }"></ngx-loading>
 </section>

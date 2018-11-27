@@ -20,6 +20,7 @@ export class ListarProntuariosComponent implements OnInit {
   public filtro: string;
   public loading = true;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  paginationPaciente=1;
   @Input() public alerts: Array<Alert> = [];
 
   constructor(
