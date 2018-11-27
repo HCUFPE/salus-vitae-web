@@ -7,6 +7,12 @@
   background-color: #fff;
 }
 
+.py-4 {
+  
+  margin-top: 6%;
+
+}
+
 /* Icone editar medicamento*/
 .btn-edit:hover, .btn-edit {
   color: #0a79df;
