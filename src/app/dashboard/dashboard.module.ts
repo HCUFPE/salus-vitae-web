@@ -21,7 +21,6 @@ import { HistoricoComponent } from './historico/historico.component';
         DashboardComponent,
         SidebarComponent,
         HeaderComponent,
-        HistoricoComponent
     ],
     providers: [AuthGuard]
 })
