@@ -1,39 +1,41 @@
+
 <section class="container-group">
   <div class="py-1">
     <section class="container-fluid">
       <div class="row m-6">
         <div class="text-center col-sm-12">
           <h1 class="display-3 text-center">Pacientes Internados</h1>
+          <h4 class="text-muted">{{ala?.Ala}}</h4>
         </div>
       </div>
       <hr>
     </section>
     <div class="row m-8">
       <div class="text-center col-sm-8">
-        <h4 class="text-left">{{ala?.Ala}}</h4>
       </div>
       <div class="col-md-4 pull-right">
         <div class="form-group m-1 mr-1">
-          <div class="input-group">
-            <input class="form-control" id="filtro" name="filtro" placeholder="Prontuário, Paciente, ou Mãe"
+          <div class="inner-addon pull-right">
+              <i class="fa fa-search"></i>
+              <input type="text"  placeholder="Prontuário, Mãe, Paciente" class="form-control form-rounded" id="filtro" name="filtro" 
               [(ngModel)]="filtro">
-          </div>
+            </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="container">
-  <div class="row">
+<section class="container-fluid">
+  <div class="row m-7">
     <div class="col-md-4 card-deck" *ngFor="let leito of getLeitos() | myFilter:filtro | paginate: { id: 'leito', itemsPerPage: 6, currentPage: paginationPaciente }">
-      <div class="card bg-light mb-4">
+      <div class="card bg-light mb-5">
         <div class="card-header"><i class="fa fa-bed"></i>&nbsp;
           <span>{{leito?.leito}}</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;{{leito?.pacienteInternado?.prontuario}}</strong></div>
         <div class="card-body">
           <p class="card-title"><i class="fa fa-user fa-fw">&nbsp;</i>Paciente:&nbsp;<span class="text-view text-left">{{leito?.pacienteInternado?.nomeDoPaciente}}</span></p>
           <p class="card-text"><i class="fa fa-female"></i>&nbsp;Mãe:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.nomeMae}}</span></p>
-          <p class="card-text"><i class="fa fa-transgender"></i>&nbsp;Sexo:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.sexo}}</span></p>
+          <p class="card-text"><i class="fa fa-venus-mars"></i>&nbsp;Sexo:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.sexo}}</span></p>
           <p class="card-text"><i class="fa fa-calendar"></i>&nbsp;Data Nascimento:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.dataNascimento}}</span></p>
         </div>
         <div class="card-footer text-muted text-right">
