@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { ToastsManager, Toast } from 'ng6-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { ToastrService } from 'ngx-toastr';
 import swal from 'sweetalert2';
 import * as moment from 'moment';
 
@@ -33,9 +32,7 @@ export class ModalAprazarComponent implements OnInit {
     private aprazamentoService: AprazamentosService,
     private translateService: TranslateService,
     public activeModal: NgbActiveModal,
-    private toastr: ToastsManager,
-    vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+    private toastrService: ToastrService) {
   }
 
   // Inicializar o modal com o horário atual
@@ -77,22 +74,23 @@ export class ModalAprazarComponent implements OnInit {
       if (result.value) {
         this.aprazamentoService.aprazarMedicamentos(this.aprazamentos)
           .then(res => {
-            for (let index = 0; index < this.aprazamentos.length; index++) {
-              if (res[index]._id) {
-                res[index].prontuario = this.prontuario;
-                res[index].atendimento = this.atendimento;
-                res[index].itemPrescricao = this.medicamento;
-              }
-            }
+            res = res.filter(r => r._id);
 
-            this.activeModal.close(res);
+            if (res.length > 0) {
+              for (let index = 0; index < this.aprazamentos.length; index++) {
+                if (res[index]._id) {
+                  res[index].prontuario = this.prontuario;
+                  res[index].atendimento = this.atendimento;
+                  res[index].itemPrescricao = this.medicamento;
+                }
+
+                this.activeModal.close(res);
+              }
+            } else {
+              this.toastrService.error('Não foi possível realizar o aprazamento!', 'Erro!', { timeOut: 2000 });
+            }
           }).catch(() => {
-            this.toastr.error('Não foi possível realizar o aprazamento!', 'Erro!')
-              .then((toast: Toast) => {
-                setTimeout(() => {
-                  this.toastr.dismissToast(toast);
-                }, 2000);
-              });
+            this.toastrService.error('Não foi possível realizar o aprazamento!', 'Erro!', { timeOut: 2000 });
           });
       }
     });

@@ -1,85 +1,62 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import swal from 'sweetalert2';
 
-import { Usuario } from '../../models/usuario.model';
 import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
-import { Aprazamento } from '../../models/aprazamento.model';
 import { PreOperacao } from '../../models/pre-operacao.model';
-import { Alert } from '../../shared/errorhandling/index';
+import { Operacao } from '../../models/operacao.model';
 
 @Component({
   selector: 'app-modal-rodelagem-aprazamento',
   templateUrl: './modal-rodelagem-aprazamento.component.html',
   styleUrls: ['./modal-rodelagem-aprazamento.component.css']
 })
-export class ModalRodelagemAprazamentoComponent implements OnInit, OnDestroy {
+export class ModalRodelagemAprazamentoComponent {
+
   @Input() aprazamento: PreOperacao;
-  @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
-  @Input() public alerts: Array<Alert> = [];
-  @ViewChild('btnClose') btnClose: ElementRef;
-  public bodyParams;
-  public submitted = false;
   public justificativa: string;
-  public usuario: Usuario;
 
   constructor(
     private aprazamentoService: AprazamentosService,
-    private translateService: TranslateService) {
-
-  }
-
-  // Inicializar o modal com o horário atual
-  ngOnInit() {
-    console.log(this.aprazamento);
+    private translateService: TranslateService,
+    public activeModal: NgbActiveModal,
+    private toastrService: ToastrService) {
   }
 
   // Perfom Confirm
-
-  onSubmit(form: NgForm) {
-    this.submitted = true;
-    // console.log(form);
-    this.bodyParams = {
-      isConsumido: false,
-      cdPreOperacaoAprazamento: this.aprazamento._id,
-      justificativa: this.justificativa,
-      dtOperacao: new Date(),
-      nmUsuario: window.localStorage.getItem('user')
-    };
-
-    this.aprazamentoService.rodelagemAprazamento(this.bodyParams).subscribe(data => {
-      this.bodyParams = data;
-      console.log(this.bodyParams);
-    }, error => {
-      const alert = new Alert(null, error);
-      this.alerts.push(alert);
-      console.log(error);
-    });
-  }
-
-  createAlertPreOperacao(form: NgForm) {
+  onSubmit() {
     swal({
       title: this.translateService.instant('Cancelar Aprazamento'),
       text: this.translateService.instant('Tem certeza que deseja rodelar?'),
       type: 'warning',
       allowOutsideClick: false,
+      allowEnterKey: false,
+      allowEscapeKey: false,
       showCancelButton: true,
-      confirmButtonText: this.translateService.instant('GLOBAL@Yes'),
-      cancelButtonText: this.translateService.instant('GLOBAL@No')
+      reverseButtons: true,
+      confirmButtonText: this.translateService.instant('Sim'),
+      cancelButtonText: this.translateService.instant('Não')
     }).then((result) => {
       if (result.value) {
-        this.onSubmit(form);
+        const cancelamento: Operacao = {
+          cdPreOperacaoAprazamento: this.aprazamento._id,
+          dtOperacao: new Date(),
+          isConsumido: false,
+          justificativa: this.justificativa,
+          nmUsuario: localStorage.getItem('user')
+        };
+
+        this.aprazamentoService.rodelagemAprazamento(cancelamento)
+          .subscribe(data => {
+            this.activeModal.close(data);
+          }, () => {
+            this.toastrService.error('Não foi possível cancelar o aprazamento!', 'Erro!', { timeOut: 2000 });
+          });
       }
     });
   }
 
-  close(loginForm: NgForm) {
-    loginForm.reset();
-    // this.hideModal.emit(this.aprazamento);
-  }
-  ngOnDestroy() {
-    this.btnClose.nativeElement.click();
-  }
 }

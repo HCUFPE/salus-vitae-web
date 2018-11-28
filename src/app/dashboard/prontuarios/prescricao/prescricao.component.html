@@ -6,15 +6,15 @@
       </div>
       <div class="w-100 col-md-2">
         <div class="dropdown m-2 mr-2">
-          <button class="btn btn-primary dropdown-toggle pull-right" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-          Últimas Prescrições
-        </button>
+          <button class="btn btn-primary dropdown-toggle pull-right" type="button" id="dropdownMenu" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Últimas Prescrições
+          </button>
           <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu">
             <button (click)="selecionarPrescricao(prescricao)" [class.active]="prescricaoSelected.prescricao === prescricao.prescricao"
               class="dropdown-item" type="button" *ngFor="let prescricao of getPrescricoes()">
-          {{getDateFromString(prescricao?.dataPrescricao) | date:'dd/MM/yyyy'}}
-        </button>
+              {{getDateFromString(prescricao?.dataPrescricao) | date:'dd/MM/yyyy'}}
+            </button>
           </div>
         </div>
       </div>
@@ -67,30 +67,30 @@
 <section class="content">
   <nav>
     <div class="nav nav-tabs nav-justified" role="tablist">
-      <a class="nav-item nav-link" id="nav-aprazamentos-tab" data-toggle="tab" href="#nav-aprazamentos" role="tab" aria-controls="nav-aprazamentos"
-        aria-selected="false">
-      Aprazamentos
-    </a>
+      <a class="nav-item nav-link" id="nav-aprazamentos-tab" data-toggle="tab" href="#nav-aprazamentos" role="tab"
+        aria-controls="nav-aprazamentos" aria-selected="false">
+        Aprazamentos
+      </a>
       <a class="nav-item nav-link" id="nav-dietas-tab" data-toggle="tab" href="#nav-dietas" role="tab" aria-controls="nav-dietas"
         aria-selected="false">
-    Dietas
-  </a>
-      <a class="nav-item nav-link active" id="nav-medicamentos-tab" data-toggle="tab" href="#nav-medicamentos" role="tab" aria-controls="nav-medicamentos"
-        aria-selected="true">
-  Medicamentos
-</a>
-      <a class="nav-item nav-link" id="nav-hemoderivados-tab" data-toggle="tab" href="#nav-hemoderivados" role="tab" aria-controls="nav-hemoderivados"
-        aria-selected="false">
-Hemoderivados
-</a>
-      <a class="nav-item nav-link" id="nav-cuidados-tab" data-toggle="tab" href="#nav-cuidados" role="tab" aria-controls="nav-cuidados"
-        aria-selected="false">
-Cuidados
-</a>
-      <a class="nav-item nav-link" id="nav-procedimentos-tab" data-toggle="tab" href="#nav-procedimentos" role="tab" aria-controls="nav-procedimentos"
-        aria-selected="false">
-Procedimentos
-</a>
+        Dietas
+      </a>
+      <a class="nav-item nav-link active" id="nav-medicamentos-tab" data-toggle="tab" href="#nav-medicamentos" role="tab"
+        aria-controls="nav-medicamentos" aria-selected="true">
+        Medicamentos
+      </a>
+      <a class="nav-item nav-link" id="nav-hemoderivados-tab" data-toggle="tab" href="#nav-hemoderivados" role="tab"
+        aria-controls="nav-hemoderivados" aria-selected="false">
+        Hemoderivados
+      </a>
+      <a class="nav-item nav-link" id="nav-cuidados-tab" data-toggle="tab" href="#nav-cuidados" role="tab"
+        aria-controls="nav-cuidados" aria-selected="false">
+        Cuidados
+      </a>
+      <a class="nav-item nav-link" id="nav-procedimentos-tab" data-toggle="tab" href="#nav-procedimentos" role="tab"
+        aria-controls="nav-procedimentos" aria-selected="false">
+        Procedimentos
+      </a>
     </div>
   </nav>
   <div class="tab-content">
@@ -119,16 +119,15 @@ Procedimentos
             <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
             <td>
-              <button (click)="showModalRodelagemAprazamento(aprazamento)" data-toggle="modal" data-target="#modalRodelagemAprazamento"
-                data-backdrop="static" data-keyboard="false" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+              <button (click)="showModalRodelagemAprazamento(aprazamento)" class="btn btn-danger">
+                <i class="fa fa-remove"></i>
+              </button>
             </td>
         </tbody>
       </table>
       <div class="text-center col-sm-10">
-
         <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationAprazamento = $event"></pagination-controls>
       </div>
-      <app-modal-rodelagem-aprazamento *ngIf="modalRodelagemAprazamento" [aprazamento]="modalRodelagemAprazamento" (hideModal)="dismissModalRodelagem($event)"></app-modal-rodelagem-aprazamento>
     </div>
 
     <!-- Dietas -->
@@ -184,7 +183,7 @@ Procedimentos
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
               <td>{{itemPrescricao?.gotejamento}}</td>
               <td>
-                <button (click)="showModal(itemPrescricao)" class="btn btn-primary" [disabled]="!isAtual()">
+                <button (click)="showModalAprazamento(itemPrescricao)" class="btn btn-primary" [disabled]="!isAtual()">
                   <i class="fa fa-edit"></i>
                 </button>
               </td>

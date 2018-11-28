@@ -26,7 +26,7 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "src/app/styles/app.scss",
               "node_modules/ng-pick-datetime/assets/style/picker.min.css",
-              "node_modules/ng6-toastr/ng2-toastr.min.css"
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "src/app/scripts/jquery-slim.min.js",
@@ -36,8 +36,7 @@
               "src/app/scripts/popper.min.js",
               "src/app/scripts/bootstrap.min.js",
               "node_modules/chart.js/dist/Chart.js",
-              "node_modules/moment/min/moment.min.js",
-              "node_modules/ng6-toastr/ng2-toastr.min.js"
+              "node_modules/moment/min/moment.min.js"
             ]
           },
           "configurations": {

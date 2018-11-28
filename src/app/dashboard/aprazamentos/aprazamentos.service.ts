@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import { SALUS_API } from '../../app.api';
 import { Aprazamento } from '../../models/aprazamento.model';
 import { PreOperacao } from '../../models/pre-operacao.model';
+import { Operacao } from '../../models/operacao.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -51,8 +52,8 @@ export class AprazamentosService {
     return response;
   }
 
-  rodelagemAprazamento(preOperacao: PreOperacao): Observable<PreOperacao> {
-    return this.http.post<PreOperacao>(`${SALUS_API}/opConsumoRodelagem`, preOperacao);
+  rodelagemAprazamento(preOperacao: Operacao): Observable<Operacao> {
+    return this.http.post<Operacao>(`${SALUS_API}/opConsumoRodelagem`, preOperacao);
   }
 
 }

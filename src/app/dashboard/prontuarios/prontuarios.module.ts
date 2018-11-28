@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxMaskModule } from 'ngx-mask';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { NgxLoadingModule } from 'ngx-loading';
-import { ToastModule } from 'ng6-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -35,7 +34,6 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     NgxMaskModule.forChild(),
     NgxPaginationModule,
     NgxLoadingModule.forRoot({}),
-    ToastModule.forRoot(),
     NgbModule.forRoot()
   ],
   declarations: [
@@ -45,7 +43,10 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     ModalRodelagemAprazamentoComponent,
     ListaProntuariosPipe
   ],
-  entryComponents: [ModalAprazarComponent],
+  entryComponents: [
+    ModalAprazarComponent,
+    ModalRodelagemAprazamentoComponent
+  ],
   providers: [
     ProntuariosService,
     AprazamentosService,

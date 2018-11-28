@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { ModalRodelagemAprazamentoComponent } from './../../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ToastsManager, Toast } from 'ng6-toastr';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import * as moment from 'moment';
 
@@ -14,6 +15,7 @@ import { PreOperacao } from '../../../models/pre-operacao.model';
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
 import { ProntuariosService } from '../prontuarios.service';
 import { ModalAprazarComponent } from '../modal-aprazar/modal-aprazar.component';
+import { Operacao } from 'src/app/models/operacao.model';
 
 @Component({
   selector: 'app-prescricao',
@@ -26,7 +28,6 @@ export class PrescricaoComponent implements OnInit {
   atendimento: Atendimento;
   aprazamentos: PreOperacao[];
   filtro: string;
-  modalRodelagemAprazamento: PreOperacao;
   prescricaoSelected: Prescricao;
   paginationMedicamento = 1;
   paginationAprazamento = 1;
@@ -40,10 +41,7 @@ export class PrescricaoComponent implements OnInit {
     private prontuarioService: ProntuariosService,
     private aprazamentoService: AprazamentosService,
     private modalService: NgbModal,
-    private toastr: ToastsManager,
-    private vcr: ViewContainerRef,
-  ) {
-    this.toastr.setRootViewContainerRef(vcr);
+    private toastrService: ToastrService) {
   }
 
   ngOnInit() {
@@ -187,34 +185,32 @@ export class PrescricaoComponent implements OnInit {
       .isSame(moment(this.prescricaoSelected.dataPrescricao, 'DD/MM/YYYY HH:mm'), 'day');
   }
 
-  public showModal(itemPrescricao: ItemPrescricao) {
+  public showModalAprazamento(itemPrescricao: ItemPrescricao) {
     if (itemPrescricao.codigoTipoItem === 3 && this.isAtual()) {
-      const ref = this.modalService.open(ModalAprazarComponent,
+      const modal: NgbModalRef = this.modalService.open(ModalAprazarComponent,
         { backdrop: 'static', centered: true, keyboard: false, size: 'lg' });
-      ref.componentInstance.prontuario = this.prontuario;
-      ref.componentInstance.atendimento = this.atendimento;
-      ref.componentInstance.prescricao = this.prescricaoSelected;
-      ref.componentInstance.medicamento = itemPrescricao;
-      ref.result.then((aprazamentos: PreOperacao[]) => {
-        this.aprazamentos.push(...aprazamentos);
-
-        this.toastr.success('Aprazamentos realizados com sucesso!', 'Sucesso!')
-          .then((toast: Toast) => {
-            setTimeout(() => {
-              this.toastr.dismissToast(toast);
-            }, 2000);
-          });
-      });
+      modal.componentInstance.prontuario = this.prontuario;
+      modal.componentInstance.atendimento = this.atendimento;
+      modal.componentInstance.prescricao = this.prescricaoSelected;
+      modal.componentInstance.medicamento = itemPrescricao;
+      modal.result
+        .then((aprazamentos: PreOperacao[]) => {
+          this.aprazamentos.push(...aprazamentos);
+          this.toastrService.success('Aprazamentos realizados com sucesso!', 'Sucesso!', { timeOut: 2000 });
+        }).catch(() => null);
     }
   }
 
   public showModalRodelagemAprazamento(aprazamento: PreOperacao) {
-    this.modalRodelagemAprazamento = aprazamento;
-    console.log(this.modalRodelagemAprazamento);
-  }
-
-  public dismissModalRodelagem(aprazamento) {
-    this.modalRodelagemAprazamento = undefined;
+    const modal: NgbModalRef = this.modalService.open(ModalRodelagemAprazamentoComponent,
+      { backdrop: 'static', centered: true, keyboard: false, size: 'lg' });
+    modal.componentInstance.aprazamento = aprazamento;
+    modal.result
+      .then((cancelamento: Operacao) => {
+        this.aprazamentos
+          .splice(this.aprazamentos.findIndex(a => a._id === cancelamento.cdPreOperacaoAprazamento), 1);
+        this.toastrService.success('Aprazamentos cancelados com sucesso!', 'Sucesso!', { timeOut: 2000 });
+      }).catch(() => null);;
   }
 
 }
