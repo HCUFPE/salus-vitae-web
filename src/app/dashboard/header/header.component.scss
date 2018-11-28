@@ -1,4 +1,4 @@
-$topnav-background-color: #222;
+$topnav-background-color: #5271ff;
 $blue:#007FFF;
 
 :host {
@@ -6,18 +6,57 @@ $blue:#007FFF;
         background-color: $topnav-background-color;
         .navbar-brand {
             color: #fff;
+            .h5 {
+
+                font-size: 1.45rem;
+                font-weight: bold;
+            
+            }
+            
         }
         .nav-item > a {
-            color: #999;
+            color:#FFF ;
+            font-weight: bold;
             &:hover {
-                color: #fff;
+                border-radius: 8px;
+                color: #239EDE;
+                background-color: #fff;
+                -webkit-transition: 0.7s ease;
+                -moz-transition:0.7s ease;
+                -o-transition: 0.7s ease;
+                transition: 0.5s ease;;
             }
+        }
+        img{
+            width: 47px;
+        }
+        
+        .logo-dash {
+            margin-bottom: 6%;
+        }
+
+        #title {
+            margin-bottom: -4px;
+        }
+        .navbar-toggler-icon{
+            color: #fff;   
+        }
+        .dropdown-menu-right.dropdown-menu {
+            background-color: #5c5cfb;
+        }
+
+        .dropdown-item{
+            color: #fff;
+        }
+
+        .dropdown-item:hover{
+            color: #239EDE;
         }
     }
     .messages {
         width: 300px;
         .media {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #fff;
             padding: 5px 10px;
             &:last-child {
                 border-bottom: none;
