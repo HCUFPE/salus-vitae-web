@@ -1,15 +1,15 @@
-import { PreOperacao } from './../../../models/pre-operacao.model';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import * as moment from 'moment';
 
-import { ProntuariosService } from '../prontuarios.service';
 import { Prontuario } from '../../../models/prontuario.model';
 import { Atendimento } from '../../../models/atendimento.model';
 import { Prescricao } from '../../../models/prescricao.model';
+import { ItemPrescricao } from '../../../models/item-prescricao.model';
+import { PreOperacao } from '../../../models/pre-operacao.model';
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
-import { ItemPrescricao } from 'src/app/models/item-prescricao.model';
+import { ProntuariosService } from '../prontuarios.service';
 
 @Component({
   selector: 'app-prescricao',
@@ -17,7 +17,6 @@ import { ItemPrescricao } from 'src/app/models/item-prescricao.model';
   styleUrls: ['./prescricao.component.css']
 })
 export class PrescricaoComponent implements OnInit {
-  dados: Boolean = false;
   prontuario: Prontuario;
   atendimento: Atendimento;
   aprazamentos: PreOperacao[];
@@ -173,8 +172,13 @@ export class PrescricaoComponent implements OnInit {
     );
   }
 
+  public isAtual() {
+    return moment(this.atendimento.prescricoes[0].dataPrescricao, 'DD/MM/YYYY HH:mm')
+      .isSame(moment(this.prescricaoSelected.dataPrescricao, 'DD/MM/YYYY HH:mm'), 'day');
+  }
+
   public showModal(itemPrescricao: ItemPrescricao) {
-    if (itemPrescricao.codigoTipoItem === 3) {
+    if (itemPrescricao.codigoTipoItem === 3 && this.isAtual()) {
       this.modalMedicamento = itemPrescricao;
     }
   }
@@ -192,14 +196,6 @@ export class PrescricaoComponent implements OnInit {
 
   public dismissModalRodelagem(aprazamento) {
     this.modalRodelagemAprazamento = undefined;
-  }
-
-  public escApra(apr2) {
-    this.dados = false;
-  }
-
-  public escDet(apr1) {
-    this.dados = true;
   }
 }
 
