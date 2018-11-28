@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { ToastsManager, Toast } from 'ng6-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import * as moment from 'moment';
 
@@ -10,6 +13,7 @@ import { ItemPrescricao } from '../../../models/item-prescricao.model';
 import { PreOperacao } from '../../../models/pre-operacao.model';
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
 import { ProntuariosService } from '../prontuarios.service';
+import { ModalAprazarComponent } from '../modal-aprazar/modal-aprazar.component';
 
 @Component({
   selector: 'app-prescricao',
@@ -17,11 +21,11 @@ import { ProntuariosService } from '../prontuarios.service';
   styleUrls: ['./prescricao.component.css']
 })
 export class PrescricaoComponent implements OnInit {
+
   prontuario: Prontuario;
   atendimento: Atendimento;
   aprazamentos: PreOperacao[];
   filtro: string;
-  modalMedicamento: ItemPrescricao;
   modalRodelagemAprazamento: PreOperacao;
   prescricaoSelected: Prescricao;
   paginationMedicamento = 1;
@@ -34,8 +38,13 @@ export class PrescricaoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private prontuarioService: ProntuariosService,
-    private aprazamentoService: AprazamentosService
-  ) { }
+    private aprazamentoService: AprazamentosService,
+    private modalService: NgbModal,
+    private toastr: ToastsManager,
+    private vcr: ViewContainerRef,
+  ) {
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit() {
     this.getProntuarioById();
@@ -74,9 +83,10 @@ export class PrescricaoComponent implements OnInit {
 
 
   public getProntuarioById() {
-    this.prontuarioService.listarProntuariosHC(+this.route.snapshot.paramMap.get('prontuario_id')).subscribe(data => {
-      this.prontuario = data;
-    });
+    this.prontuarioService.listarProntuariosHC(+this.route.snapshot.paramMap.get('prontuario_id'))
+      .subscribe(data => {
+        this.prontuario = data;
+      });
   }
 
   public getUltimaPrescricao() {
@@ -179,7 +189,22 @@ export class PrescricaoComponent implements OnInit {
 
   public showModal(itemPrescricao: ItemPrescricao) {
     if (itemPrescricao.codigoTipoItem === 3 && this.isAtual()) {
-      this.modalMedicamento = itemPrescricao;
+      const ref = this.modalService.open(ModalAprazarComponent,
+        { backdrop: 'static', centered: true, keyboard: false, size: 'lg' });
+      ref.componentInstance.prontuario = this.prontuario;
+      ref.componentInstance.atendimento = this.atendimento;
+      ref.componentInstance.prescricao = this.prescricaoSelected;
+      ref.componentInstance.medicamento = itemPrescricao;
+      ref.result.then((aprazamentos: PreOperacao[]) => {
+        this.aprazamentos.push(...aprazamentos);
+
+        this.toastr.success('Aprazamentos realizados com sucesso!', 'Sucesso!')
+          .then((toast: Toast) => {
+            setTimeout(() => {
+              this.toastr.dismissToast(toast);
+            }, 2000);
+          });
+      });
     }
   }
 
@@ -188,14 +213,9 @@ export class PrescricaoComponent implements OnInit {
     console.log(this.modalRodelagemAprazamento);
   }
 
-  public dismissModal(aprazamento) {
-    this.aprazamentos.push(aprazamento);
-
-    this.modalMedicamento = undefined;
-  }
-
   public dismissModalRodelagem(aprazamento) {
     this.modalRodelagemAprazamento = undefined;
   }
+
 }
 

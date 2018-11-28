@@ -1,146 +1,106 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy, ViewContainerRef } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 
-import { ToastsManager, Toast } from 'ng6-toastr/ng2-toastr';
+import { ToastsManager, Toast } from 'ng6-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import swal from 'sweetalert2';
 import * as moment from 'moment';
 
 import { AprazamentosService } from '../../aprazamentos/aprazamentos.service';
 import { ItemPrescricao } from '../../../models/item-prescricao.model';
 import { Prontuario } from '../../../models/prontuario.model';
-import { Aprazamento } from '../../../models/aprazamento.model';
 import { PreOperacao } from '../../../models/pre-operacao.model';
-import { Atendimento } from 'src/app/models/atendimento.model';
-import { Alert } from './../../../shared/errorhandling/index';
-import { Usuario } from '../../../models/usuario.model';
-import { TranslateService } from '@ngx-translate/core';
+import { Atendimento } from '../../../models/atendimento.model';
+import { Prescricao } from '../../../models/prescricao.model';
 
 @Component({
   selector: 'app-modal-aprazar',
   templateUrl: './modal-aprazar.component.html',
   styleUrls: ['./modal-aprazar.component.css']
 })
-export class ModalAprazarComponent implements OnInit, OnDestroy {
+export class ModalAprazarComponent implements OnInit {
 
-  aprazamentos: PreOperacao[];
-  horario: Date;
-  min: Date;
-  max: Date;
-  adm_medicamento: string;
-  frequencia_medicamento: number;
-  observacaoMedicamento: string;
-  usuario: Usuario;
   @Input() prontuario: Prontuario;
   @Input() atendimento: Atendimento;
+  @Input() prescricao: Prescricao;
   @Input() medicamento: ItemPrescricao;
-  @Output() hideModal: EventEmitter<Aprazamento> = new EventEmitter();
-  @Input() public alerts: Array<Alert> = [];
-  @ViewChild('btnClose') btnClose: ElementRef;
-  @ViewChild('modalAprazamento') public modal: ModalAprazarComponent;
-  public bodyParams;
-  public submitted = false;
-
-  swalWithBootstrapButtons = swal.mixin({
-    confirmButtonClass: 'btn btn-success',
-    cancelButtonClass: 'btn btn-danger',
-    buttonsStyling: false,
-  });
+  public aprazamentos: PreOperacao[] = [];
+  public min: Date;
+  public max: Date;
 
   constructor(
-  private aprazamentoService: AprazamentosService,
-  public toastr: ToastsManager, vcr: ViewContainerRef,
-  private translateService: TranslateService) {
+    private aprazamentoService: AprazamentosService,
+    private translateService: TranslateService,
+    public activeModal: NgbActiveModal,
+    private toastr: ToastsManager,
+    vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
-    // console.log(this.medicamento);
   }
 
   // Inicializar o modal com o horário atual
   ngOnInit() {
-    this.aprazamentos = [];
-    this.adicionarAprazamento();
-    console.log(this.aprazamentos);
-    this.horario = new Date();
-    this.min = this.horario;
-    // this.max = moment(this.horario).add(1, 'day').toDate();
-  }
+    this.min = new Date();
+    let hours = this.min.getHours();
 
-  // Perfom Confirm
+    if (hours < 7) {
+      hours += 24;
+    }
 
-  onSubmit(form: NgForm) {
-    this.submitted = true;
-    console.log(form);
-    const bodyParams: PreOperacao = {
-      cdProntuario: this.prontuario.prontuario,
-      cdAtendimento: this.atendimento.atendimento,
-      cdPrescricao: this.atendimento.prescricoes[0].prescricao,
-      dtPreOpAprazamento: new Date(),
-      horarioInicial: this.horario,
-      intervalo: this.medicamento.frequencia,
-      cdItem: this.medicamento.codigoItem,
-      cdTpItem: this.medicamento.codigoTipoItem,
-      ordemItem: this.medicamento.ordemItem,
-      nmMedicamento: this.medicamento.descricaoItem,
-      nmPaciente: this.prontuario.nomeDoPaciente,
-      nmUsuario: 'teste',
-      status: true,
-      quantidade: 1
-    };
-    this.aprazamentoService.createPreOperacao(bodyParams).subscribe(data => {
-      this.bodyParams = data;
-      this.toastr.success('Aprazamento realizado com sucesso!', 'Succeso!')
-      .then((toast: Toast) => {
-          setTimeout(() => {
-              this.toastr.dismissToast(toast);
-          }, 2000);
-      });
-
-    }, error => {
-      const alert = new Alert(null, error);
-      this.alerts.push(alert);
-    });
+    hours = 23 - (hours - 7);
+    this.max = moment(this.min).add(hours, 'hours').set('minutes', 59).toDate();
   }
 
   // Adicionar quantidade de aprazamentos para o medicamento
   adicionarAprazamento() {
-    this.aprazamentos.push({status: false , cdProntuario: 0, cdAtendimento: 0, dtPreOpAprazamento: null,
-      horarioInicial: new Date(), intervalo: 60, cdItem: '1', cdTpItem: 3, ordemItem: 1, quantidade: 1, nmMedicamento: 'teste',
-      nmPaciente: 'teste', nmUsuario: 'teste', cdPrescricao: 1 });
-    }
+    this.aprazamentos.push({
+      status: true, cdProntuario: this.prontuario.prontuario, cdAtendimento: this.atendimento.atendimento, dtPreOpAprazamento: new Date(),
+      horarioInicial: new Date(), intervalo: this.medicamento.frequencia, cdItem: this.medicamento.codigoItem,
+      cdTpItem: this.medicamento.codigoTipoItem, ordemItem: this.medicamento.ordemItem, quantidade: 1,
+      nmMedicamento: this.medicamento.descricaoItem, nmPaciente: this.prontuario.nomeDoPaciente, nmUsuario: localStorage.getItem('user'),
+      cdPrescricao: this.prescricao.prescricao
+    });
+  }
 
-    createAlertPreOperacao(form: NgForm) {
-      swal({
-        title: this.translateService.instant('Deseja Realizar o aprazamento?'),
-        type: 'warning',
-        allowOutsideClick: false,
-        allowEnterKey: false,
-        allowEscapeKey: false,
-        showCancelButton: true,
-        confirmButtonText: this.translateService.instant('Sim'),
-        cancelButtonText: this.translateService.instant('Não')
-      }).then((result) => {
-        if (result.value) {
-          this.onSubmit(form);
-          // this.swalWithBootstrapButtons(
-          //   'Aprazamento realizado com sucesso!'
-          // );
-        } else if (result.dismiss === swal.DismissReason.cancel) {
-          this.swalWithBootstrapButtons(
-            'Aprazamento não realizado!'
-          );
-        }
-        // $('#modalAprazamento').modal('destroy');
-      });
-    }
-    // Remover medicamento da lista
-    removerAprazamento(index: number) {
-      this.aprazamentos.splice(index, 1);
-    }
+  onSubmit() {
+    swal({
+      title: this.translateService.instant('Deseja Realizar o aprazamento?'),
+      type: 'warning',
+      allowOutsideClick: false,
+      allowEnterKey: false,
+      allowEscapeKey: false,
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonText: this.translateService.instant('Sim'),
+      cancelButtonText: this.translateService.instant('Não')
+    }).then((result) => {
+      if (result.value) {
+        this.aprazamentoService.aprazarMedicamentos(this.aprazamentos)
+          .then(res => {
+            for (let index = 0; index < this.aprazamentos.length; index++) {
+              if (res[index]._id) {
+                res[index].prontuario = this.prontuario;
+                res[index].atendimento = this.atendimento;
+                res[index].itemPrescricao = this.medicamento;
+              }
+            }
 
-      close(closeAprazarForm: NgForm) {
-        closeAprazarForm.reset();
+            this.activeModal.close(res);
+          }).catch(() => {
+            this.toastr.error('Não foi possível realizar o aprazamento!', 'Erro!')
+              .then((toast: Toast) => {
+                setTimeout(() => {
+                  this.toastr.dismissToast(toast);
+                }, 2000);
+              });
+          });
       }
+    });
+  }
 
-      ngOnDestroy() {
-        this.btnClose.nativeElement.click();
-      }
-    }
+  // Remover medicamento da lista
+  removerAprazamento(index: number) {
+    this.aprazamentos.splice(index, 1);
+  }
+
+}

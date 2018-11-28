@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { delay } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+
 import { SALUS_API } from '../../app.api';
 import { Aprazamento } from '../../models/aprazamento.model';
-import { PreOperacao } from 'src/app/models/pre-operacao.model';
+import { PreOperacao } from '../../models/pre-operacao.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,12 +28,27 @@ export class AprazamentosService {
     return this.http.get<Aprazamento>(`${SALUS_API}/preOpAprazamentos/${id}`, httpOptions);
   }
 
-  aprazar(aprazamento: Aprazamento): Observable<boolean> {
-    return of(true).pipe(delay(3000));
+  aprazarMedicamento(aprazamento: PreOperacao): Observable<PreOperacao> {
+    const body: PreOperacao = Object.assign({}, aprazamento);
+    body.prontuario = undefined;
+    body.atendimento = undefined;
+    body.itemPrescricao = undefined;
+
+    return this.http.post<PreOperacao>(`${SALUS_API}/preOpAprazamentos`, body);
   }
 
-  createPreOperacao(preOperacao: PreOperacao): Observable<PreOperacao> {
-    return this.http.post<PreOperacao>(`${SALUS_API}/preOpAprazamentos`, preOperacao);
+  async aprazarMedicamentos(aprazamentos: PreOperacao[]): Promise<PreOperacao[]> {
+    const response: PreOperacao[] = [];
+
+    for (const aprazamento of aprazamentos) {
+      try {
+        response.push(await this.aprazarMedicamento(aprazamento).toPromise());
+      } catch (error) {
+        response.push(error);
+      }
+    }
+
+    return response;
   }
 
   rodelagemAprazamento(preOperacao: PreOperacao): Observable<PreOperacao> {

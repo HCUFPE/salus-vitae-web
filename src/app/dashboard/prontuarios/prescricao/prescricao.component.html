@@ -184,8 +184,9 @@ Procedimentos
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
               <td>{{itemPrescricao?.gotejamento}}</td>
               <td>
-                <button (click)="showModal(itemPrescricao)" data-toggle="modal" data-target="#modalAprazamento" data-backdrop="static" data-keyboard="false"
-                  class="btn btn-primary" [disabled]="!isAtual()"><i class="fa fa-edit"></i></button>
+                <button (click)="showModal(itemPrescricao)" class="btn btn-primary" [disabled]="!isAtual()">
+                  <i class="fa fa-edit"></i>
+                </button>
               </td>
           </tbody>
         </table>
@@ -193,8 +194,6 @@ Procedimentos
           <pagination-controls [id]="'medicamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationMedicamento = $event"></pagination-controls>
         </div>
       </div>
-      <app-modal-aprazar *ngIf="modalMedicamento" [medicamento]="modalMedicamento" [prontuario]="prontuario" [atendimento]="atendimento"
-        (hideModal)="dismissModal($event)"></app-modal-aprazar>
     </div>
     <!-- Hemoderivados -->
     <div class="tab-pane fade" id="nav-hemoderivados" role="tabpanel" aria-labelledby="nav-hemoderivados-tab">

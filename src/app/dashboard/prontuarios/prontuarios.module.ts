@@ -1,12 +1,15 @@
-import { NgxPaginationModule } from 'ngx-pagination';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgxMaskModule } from 'ngx-mask';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { NgxLoadingModule } from 'ngx-loading';
+import { ToastModule } from 'ng6-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProntuariosRoutingModule } from './prontuarios-routing.module';
 import { PrescricaoComponent } from './prescricao/prescricao.component';
@@ -17,7 +20,6 @@ import { ProntuariosService } from './prontuarios.service';
 import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuarios.component';
 
 import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filter.pipe';
 
 @NgModule({
@@ -27,14 +29,15 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    OwlNativeDateTimeModule,
     OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     TranslateModule,
     NgxMaskModule.forChild(),
     NgxPaginationModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    ToastModule.forRoot(),
+    NgbModule.forRoot()
   ],
-
   declarations: [
     ListarProntuariosComponent,
     PrescricaoComponent,
@@ -42,10 +45,12 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     ModalRodelagemAprazamentoComponent,
     ListaProntuariosPipe
   ],
+  entryComponents: [ModalAprazarComponent],
   providers: [
     ProntuariosService,
     AprazamentosService,
-    TranslateModule
+    TranslateModule,
+    {provide: OWL_DATE_TIME_LOCALE, useValue: 'pt-BR'}
   ]
 })
 export class ProntuariosModule { }
