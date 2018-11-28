@@ -1,26 +1,39 @@
-<nav class="navbar navbar-expand-xl navbar-dark bg-primary">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-  aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation"
-  (click)="isCollapsed = !isCollapsed"><span class="navbar-toggler-icon"></span>
-</button>
-<a class="navbar-brand" href="#">Salus Vitae</a>
-<div class="navbar-collapse collapse" id="navbarToggle" role="navigation">
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item active">
-      <a class="nav-link fa fa-stethoscope" [routerLink]="['/dashboard/prontuarios/pacientes-internados']">Pacientes Internados</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link fa fa-clock-o" [routerLink]="['/dashboard/aprazamentos']">
-        Aprazamentos</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link fa fa-clipboard" [routerLink]="['/dashboard/historico']">
-        Histórico</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link fa fa-power-off" [routerLink]="['/login']" (click)="onLoggedout()">
-        Log Out</a>
-    </li>
-  </ul>
-</div>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary mb-3">
+  <div class="container">
+    <a id="title" class="navbar-brand" href="#">
+      <img class="logo-dash" src="../../../assets/images/logo-salus.png" alt="Logo">
+      <b class="h5">Salus Vitae</b>
+    </a>
+    <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbarSV">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSV">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a routerLink="/dashboard/prontuarios/pacientes-internados" [routerLinkActive]="['router-link-active']" class="nav-link">
+            <i class="fa fa-stethoscope" aria-hidden="true"></i>&nbsp;Pacientes Internados
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/dashboard/aprazamentos" [routerLinkActive]="['router-link-active']" class="nav-link">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;Aprazamentos</a>
+        </li>
+        <li class="nav-item"> <a routerLink="/dashboard/historico" [routerLinkActive]="['router-link-active']" class="nav-link"
+            contenteditable="true">
+            <i class="fa fa-clipboard" aria-hidden="true"></i>&nbsp;Histórico</a>
+        </li>
+        <li class="nav-item dropdown">
+        <li class="nav-item dropdown position-static" ngbDropdown>
+          <a class="nav-link" ngbDropdownToggle>
+            <i class="fa fa-user"></i> Enfermeira <b class="caret"></b>
+          </a>
+          <div class="dropdown-menu-right" ngbDropdownMenu>
+            <a class="dropdown-item bg-primary" [routerLink]="['/login']" (click)="onLoggedout()">
+              <i class="fa fa-fw fa-power-off"></i> Log Out
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>

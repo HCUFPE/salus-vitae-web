@@ -1,12 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { AprazamentosService } from '../aprazamentos.service';
-import { Aprazamento } from '../../../models/aprazamento.model';
 import { PreOperacao } from 'src/app/models/pre-operacao.model';
-import { Prontuario } from '../../../models/prontuario.model';
-import { Prescricao } from '../../../models/prescricao.model';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-listar-aprazamentos',
@@ -16,13 +11,13 @@ import * as moment from 'moment';
 export class ListarAprazamentosComponent implements OnInit {
 
   public aprazamentos: PreOperacao[] = [];
-  public apraList:Array<any>=[];
-  public dtList:Array<any>=[];  
+  public apraList: Array<any> = [];
+  public dtList: Array<any> = [];
   aprazamentoSelected: PreOperacao;
-  lastDate:Date = null;
+  lastDate: Date = null;
   filtros: string;
-  paginationHorario=1;
-  
+  paginationHorario = 1;
+
   constructor(private aprazamentosService: AprazamentosService) { }
 
   ngOnInit() {
@@ -32,9 +27,9 @@ export class ListarAprazamentosComponent implements OnInit {
   getAprazamentos() {
     this.aprazamentosService.aprazamentos()
     .subscribe(aprazamento => {
-      this.apraList = aprazamento.filter(a=>a.status);
-      this.getDtAprazamento(this.apraList) 
-  });    
+      this.apraList = aprazamento.filter(a => a.status);
+      this.getDtAprazamento(this.apraList);
+  });
     /*
     return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
         if (new Date(a.horario) < new Date(b.horario)) {
@@ -50,17 +45,17 @@ export class ListarAprazamentosComponent implements OnInit {
     );*/
   }
 
-  getDtAprazamento(listP){
-    var myMap = new Map();
-    
+  getDtAprazamento(listP) {
+    const myMap = new Map();
+
     for (let i = 0; i < listP.length; i++) {
-      myMap.set(listP[i].dtPreOpAprazamento,listP[i]);
+      myMap.set(listP[i].dtPreOpAprazamento, listP[i]);
     }
     this.dtList.push(Array.from(myMap.values()));
 
     console.log(this.dtList);
   }
-  
+
   selecionarAprazamento(dtaprazamento: any) {
     if (!dtaprazamento) {
       return;

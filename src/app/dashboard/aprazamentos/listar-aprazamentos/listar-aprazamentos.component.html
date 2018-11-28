@@ -1,60 +1,52 @@
-<section class="container-group">
-    <div class="py-4">
-    <div class="container-fluid">
-      <div class="row m-6">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-9">
-              <h1 class="text-capitalize">Visualizar Aprazamentos</h1>
-            </div>
-            <div class="col-md-3 w-100">
-              <div class="btn-group w-100" >
-                <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown"> Prescrições&nbsp;</button>
-                <div class="dropdown-menu"> 
-                    <button (click)="selecionarAprazamento(aprazamento)"
-                     class="dropdown-item" [class.active]="aprazamentoSelected?.dtPreOpAprazamento === aprazamento?.dtPreOpAprazamento"
-                     type="button" *ngFor="let aprazamento of dtList[0]">
-                           {{ aprazamento?.dtPreOpAprazamento | date:'dd/MM/yyyy hh:MM:ss' }}
-                  </button>
-                </div>
-              </div>
+<section>
+  <div class="row ml-5 mr-5 mt-0">
+    <div class="card w-100">
+      <h1 class="card-title text-center mt-2">Visualizar Aprazamentos</h1>
+      <div class="card-body">
+        <div class="col-md-6">
+          <div class="col-md-4">
+            <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown"> Prescrições&nbsp;</button>
+            <div class="col-md-4">
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <br>
+</section>
+<br>
 <section class="content">
-  <div class="panel panel-default">
-    <div class="table-responsive-md">
-      <table class="table table-hover text-center">
-        <thead>
-          <tr>
-            <th>Paciente</th>
-            <th>Prontuário</th>
-            <th>Leito</th>
-            <th>Remédio</th>
-            <th>Administração</th>
-            <th>Frequência</th>
-            <th>Observação</th>
-            <th>Acoes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let aprazamento of apraList | myOperacao:filtros | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationHorario }">
-            <td>{{aprazamento?.nmPaciente}}</td>
-            <td>{{aprazamento?.cdProntuario}}</td>
-            <td></td>
-            <td>{{aprazamento?.nmMedicamento}}</td>
-            <td></td>
-            <td>{{aprazamento?.intervalo}}</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="text-center col-sm-10">
-        <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationHorario = $event"></pagination-controls>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="dropdown-menu">
+        <button (click)="selecionarAprazamento(aprazamento)" class="dropdown-item" [class.active]="aprazamentoSelected?.dtPreOpAprazamento === aprazamento?.dtPreOpAprazamento"
+          type="button" *ngFor="let aprazamento of dtList[0]">
+          {{ aprazamento?.dtPreOpAprazamento | date:'dd/MM/yyyy hh:MM:ss' }}
+        </button>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="table-responsive-sm bg-white ml-5 mr-5">
+          <table class="table table-hover text-center">
+            <thead>
+              <tr class="bg-light">
+                <th>Paciente</th>
+                <th>Prontuário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let aprazamento of apraList | myOperacao:filtros | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationHorario }">
+                <td>{{aprazamento?.nmPaciente}}</td>
+                <td>{{aprazamento?.cdProntuario}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-md-12 text-center">
+            <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" responsive="true"
+              (pageChange)="paginationHorario = $event"></pagination-controls>
+          </div>
+        </div>
       </div>
     </div>
   </div>

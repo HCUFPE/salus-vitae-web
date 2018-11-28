@@ -1,3 +1,50 @@
-.navbar .navbar-toggler-icon {
-  background-image: url('https://mdbootstrap.com/img/svg/hamburger2.svg?color=fff');
+:host {
+    .navbar {
+      .navbar-toggler-icon {
+        background-image: url('https://mdbootstrap.com/img/svg/hamburger2.svg?color=fff');
+        }
+        .navbar-brand {
+            color: #fff;
+            .h5 {
+
+                font-size: 1.45rem;
+                font-weight: bold;
+
+            }
+
+        }
+        .nav-item > a {
+            color:#FFF ;
+            font-weight: bold;
+            &:hover {
+                border-radius: 8px;
+                color: #239EDE;
+                background-color: #fff;
+                -webkit-transition: 0.7s ease;
+                -moz-transition:0.7s ease;
+                -o-transition: 0.7s ease;
+                transition: 0.5s ease;;
+            }
+        }
+        img{
+            width: 47px;
+        }
+
+        .logo-dash {
+            margin-bottom: 6%;
+        }
+
+        #title {
+            margin-bottom: -4px;
+        }
+        .navbar-toggler-icon{
+            color: #fff;
+        }
+
+        .dropdown-item{
+            color: #fff;
+        }
+
+    }
+
 }
