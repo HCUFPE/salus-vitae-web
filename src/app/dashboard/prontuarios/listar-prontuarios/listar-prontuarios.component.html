@@ -1,35 +1,17 @@
-
 <section class="container-group">
-  <div class="py-1">
-    <section class="container-fluid">
-      <div class="row m-6">
-        <div class="text-center col-sm-12">
+      <div class="m-6">
+        <div class="col-sm-12 text-center">
           <h1 class="display-3 text-center">Pacientes Internados</h1>
           <h4 class="text-muted">{{ala?.Ala}}</h4>
         </div>
       </div>
       <hr>
-    </section>
-    <div class="row m-8">
-      <div class="text-center col-sm-8">
-      </div>
-      <div class="col-md-4 pull-right">
-        <div class="form-group m-1 mr-1">
-          <div class="inner-addon pull-right">
-              <i class="fa fa-search"></i>
-              <input type="text"  placeholder="Prontuário, Mãe, Paciente" class="form-control form-rounded" id="filtro" name="filtro" 
-              [(ngModel)]="filtro">
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <section class="container-fluid">
-  <div class="row m-7">
+  <div class="row m-5">
     <div class="col-md-4 card-deck" *ngFor="let leito of getLeitos() | myFilter:filtro | paginate: { id: 'leito', itemsPerPage: 6, currentPage: paginationPaciente }">
-      <div class="card bg-light mb-5">
+      <div class="card border-primary bg-light mb-5">
         <div class="card-header"><i class="fa fa-bed"></i>&nbsp;
           <span>{{leito?.leito}}</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;{{leito?.pacienteInternado?.prontuario}}</strong></div>
         <div class="card-body">
@@ -45,8 +27,8 @@
         </div>
       </div>
     </div>
-    <div class="text-center col-sm-10">
-      <pagination-controls [id]="'leito'"  previousLabel="Anterior" nextLabel="Próximo" (pageChange)="paginationPaciente = $event"></pagination-controls>
+    <div class="col-md-12 text-center">
+      <pagination-controls [id]="'leito'"  previousLabel="Anterior" nextLabel="Próximo" responsive="true" (pageChange)="paginationPaciente = $event"></pagination-controls>
     </div>
   </div>
   <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true, animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: '#ffffff', backdropBorderRadius: '3px' }"></ngx-loading>
