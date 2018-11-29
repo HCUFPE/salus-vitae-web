@@ -55,19 +55,52 @@ input::-moz-placeholder {
   position: relative;
 }
 
-/* style icon */
+@media only screen and (min-width:1024px){
 
-.inner-addon .fa {
-  position: absolute;
-  padding: 10px;
-  pointer-events: none;
-  padding-left: 179px;
-  color: #fff;
+  .inner-addon .fa {
+    position: absolute;
+    padding: 10px;
+    color: #fff;
+    pointer-events: none;
+    padding-left: 169px;
+  }
+}
+
+/* style icon */
+@media only screen and (max-width:1024px){
+  .inner-addon .fa {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    padding-left: 169px;
+    color: #fff;
+  }
+}
+
+@media only screen and (min-width:2024px){
+  .inner-addon .fa {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    padding-left: 159px;
+    color: #fff;
+  }
+}
+
+@media only screen and (max-width:960px){
+  .inner-addon .fa {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    padding-left: 157px;
+    color: #fff;
+}
 }
 
 #filtro:focus {
   width: 114%;
 }
+
 
 .form-rounded {
   border-radius: 1rem;
