@@ -33,3 +33,19 @@ table {
   width: 111%;
   margin-left: -5%;
 }
+
+.btn.btn-danger:hover{
+  background-color:#fff;
+  color: red;
+  
+}
+
+.btn.btn-danger{
+  background-color:red;
+  border-radius: 33px;
+}
+
+
+span{
+  float: right !important;
+}

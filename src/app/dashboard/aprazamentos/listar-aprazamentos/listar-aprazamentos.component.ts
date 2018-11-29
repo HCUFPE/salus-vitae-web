@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalRodelagemAprazamentoComponent } from './../../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
+import { ToastrService } from 'ngx-toastr';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import * as moment from 'moment';
 
 import { AprazamentosService } from '../aprazamentos.service';
 import { PreOperacao } from '../../../models/pre-operacao.model';
+import { Operacao } from 'src/app/models/operacao.model';
 
 @Component({
   selector: 'app-listar-aprazamentos',
@@ -18,8 +22,12 @@ export class ListarAprazamentosComponent implements OnInit {
   public aprazamentos: Map<number, { isCollapsed: boolean , aprazamentos: PreOperacao[]}> = new Map();
   public paginationAprazamentos = 1;
   public filtro = 'Sem filtro';
+  public aprazamentoz: PreOperacao[];
 
-  constructor(private aprazamentosService: AprazamentosService) { }
+  constructor(
+    private aprazamentosService: AprazamentosService,
+        private modalService: NgbModal,
+        private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.aprazamentosService.aprazamentosComDetalhes(null, true)
@@ -91,4 +99,16 @@ export class ListarAprazamentosComponent implements OnInit {
     return moment(date).format('DD/MM/YYYY HH') + 'h';
   }
 
+
+  public showModalRodelagemAprazamento(aprazamento: PreOperacao) {
+    const modal: NgbModalRef = this.modalService.open(ModalRodelagemAprazamentoComponent,
+      { backdrop: 'static', centered: true, keyboard: false, size: 'lg' });
+    modal.componentInstance.aprazamento = aprazamento;
+    modal.result
+      .then((cancelamento: Operacao) => {
+        this.aprazamentoz
+          .splice(this.aprazamentoz.findIndex(a => a._id === cancelamento.cdPreOperacaoAprazamento), 1);
+        this.toastrService.success('Aprazamento cancelado com sucesso!', 'Sucesso!', { timeOut: 2000 });
+      }).catch(() => null);
+  }
 }
