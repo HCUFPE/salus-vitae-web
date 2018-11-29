@@ -210,7 +210,7 @@ export class PrescricaoComponent implements OnInit {
         this.aprazamentos
           .splice(this.aprazamentos.findIndex(a => a._id === cancelamento.cdPreOperacaoAprazamento), 1);
         this.toastrService.success('Aprazamento cancelado com sucesso!', 'Sucesso!', { timeOut: 2000 });
-      }).catch(() => null);;
+      }).catch(() => null);
   }
 
 }

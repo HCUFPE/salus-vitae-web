@@ -22,8 +22,8 @@
         <div class="card-header"><i class="fa fa-bed"></i>&nbsp;
           <span>{{leito?.leito}}</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;{{leito?.pacienteInternado?.prontuario}}</strong></div>
         <div class="card-body">
-          <p class="card-title"><i class="fa fa-user fa-fw">&nbsp;</i>Paciente:&nbsp;<span class="text-view text-left">{{leito?.pacienteInternado?.nomeDoPaciente}}</span></p>
-          <p class="card-text"><i class="fa fa-female"></i>&nbsp;Mãe:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.nomeMae}}</span></p>
+          <p class="card-title text-capitalize"><i class="fa fa-user fa-fw">&nbsp;</i>Paciente:&nbsp;<span class="text-view text-left">{{leito?.pacienteInternado?.nomeDoPaciente | titlecase}}</span></p>
+          <p class="card-text"><i class="fa fa-female"></i>&nbsp;Mãe:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.nomeMae | titlecase}}</span></p>
           <p class="card-text"><i class="fa fa-venus-mars"></i>&nbsp;Sexo:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.sexo}}</span></p>
           <p class="card-text"><i class="fa fa-calendar"></i>&nbsp;Data Nascimento:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.dataNascimento}}</span></p>
         </div>
