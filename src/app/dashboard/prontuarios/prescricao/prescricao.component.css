@@ -8,10 +8,30 @@
 }
 
 .py-4 {
-  
   margin-top: 6%;
-
 }
+
+.btn.btn-primary.circle{
+  background-color:#0a79df;
+  border-radius: 33px;
+}
+
+.btn.btn-primary.circle:hover{
+  background-color:#fff;
+  color: #0a79df;
+}
+
+.btn.btn-danger.circle:hover{
+  background-color:#fff;
+  color: red;
+  
+}
+
+.btn.btn-danger.circle{
+  background-color:red;
+  border-radius: 33px;
+}
+
 
 /* Icone editar medicamento*/
 .btn-edit:hover, .btn-edit {
