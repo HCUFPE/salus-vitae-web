@@ -1,45 +1,79 @@
-<section class="content-header">
-    <div class="row py-4">
-      <h2 class="ml-3 mr-auto">Histórico Administrados</h2>
-      
-      <div class="col-md-4"> 
-        <input type="date" placeholder="99/99/9999" class="form-control" >
-        <p id="dtapra">Data Consumo</p>
-      </div>
-    </div>
-  </section>
-  <section class="content">
-      <div class="panel panel-default">
-        <div class="table-responsive-md">
-          <table class="table table-hover text-center">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Paciente</th>
-                <th>Número Prontuário</th>
-                <th>Remédio</th>
-                <th>Horário Aprazamento</th>
-                <th>Data Administrado</th>
-                <th>Horário Administrado</th>
-                <th>Intervalo</th>
-                <th>Detalhes</th>
-              </tr>
-            </thead>
-            <tbody >
-              <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th><button type="button" class="btn btn-info"><i class="fa fa-info fa-4" aria-hidden="true"></i>
-                </button></th>
-              </tr>
-            </tbody>
-          </table>
+<section>
+  <div class="row ml-5 mr-5 mt-0">
+    <div class="card w-100">
+      <h1 class="card-title text-center mt-2">Históricos Administrados</h1>
+      <div class="card-body">
+        <div class="col-md-6">
+          <div class="col-md-4">
+            <div class="inner-addon pull-right">
+              <i class="fa fa-search"></i>
+              <input type="text" placeholder="Paciente" class="form-control form-rounded" id="filtro"
+                name="filtro" [(ngModel)]="filtro">
+            </div>
+          </div>
         </div>
       </div>
-    </section>    
+    </div>
+  </div>
+</section>
+<br>
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="card">
+          <div *ngFor="let horario of getHorarios() | paginate: { id: 'administracoes', itemsPerPage: 10, currentPage: paginationAdministracoes }">
+            <div class="card-header" (click)="mostrarAdministracoes(horario)">
+              <a class="card-title">
+                {{ horario }}
+              </a>
+            </div>
+            <div id="collapseOne" class="card-body" [ngbCollapse]="isCollapsed(horario)">
+              <div class="table-responsive-sm bg-white ml-5 mr-5">
+                <table class="table table-hover text-center">
+                  <thead>
+                    <tr class="bg-light">
+                      <th>Horário</th>
+                      <th>Paciente</th>
+                      <th>Profissional</th>
+                      <th>Medicamento</th>
+                      <th>Consumido?</th>
+                      <th>Justificativa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let administracao of getAdministracoes(horario)">
+                      <td>
+                        {{ administracao?.dtOperacao ?
+                        (administracao.dtOperacao | date:'HH:mm dd/MM/yy') : 'Não identificado' }}
+                      </td>
+                      <td>
+                        {{ administracao?.aprazamento?.prontuario?.nomeDoPaciente ?
+                        administracao.aprazamento.prontuario.nomeDoPaciente : 'Não identificado' }}
+                      </td>
+                      <td>
+                        {{ administracao?.aprazamento?.nmUsuario ?
+                        administracao.aprazamento.nmUsuario : 'Não identificado' }}
+                      </td>
+                      <td>
+                        {{ administracao?.aprazamento?.itemPrescricao?.descricaoItem ?
+                        administracao.aprazamento.itemPrescricao.descricaoItem : 'Não identificado' }}
+                      </td>
+                      <td>{{ administracao?.isConsumido ? 'Sim' : 'Não' }}</td>
+                      <td>{{ administracao?.justificativa }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 text-center mt-3">
+          <pagination-controls [id]="'administracoes'" previousLabel="Anterior" nextLabel="Próximo" responsive="true"
+            (pageChange)="paginationAdministracoes = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true, animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: '#ffffff', backdropBorderRadius: '3px' }"></ngx-loading>
+</section>

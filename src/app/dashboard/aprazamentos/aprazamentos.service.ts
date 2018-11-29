@@ -6,13 +6,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { SALUS_API } from '../../app.api';
-import { Aprazamento } from '../../models/aprazamento.model';
 import { PreOperacao } from '../../models/pre-operacao.model';
 import { Operacao } from '../../models/operacao.model';
 import { Prontuario } from '../../models/prontuario.model';
 import { Atendimento } from '../../models/atendimento.model';
 import { Ala } from '../../models/ala.model';
 import { Leito } from '../../models/leito.model';
+import { Prescricao } from '../../models/prescricao.model';
 import { ProntuariosService } from '../prontuarios/prontuarios.service';
 
 const httpOptions = {
@@ -30,15 +30,35 @@ export class AprazamentosService {
     return this.http.get<PreOperacao[]>(`${SALUS_API}/preOpAprazamentos`);
   }
 
-  async aprazamentosComDetalhes(): Promise<PreOperacao[]> {
+  async aprazamentoComDetalhes(aprazamento: PreOperacao): Promise<PreOperacao> {
+    aprazamento.prontuario = await this.prontuariosService.prontuario(aprazamento.cdProntuario).toPromise();
+    aprazamento.atendimento = await this.prontuariosService.atendimentoByPrescricao(aprazamento.cdProntuario,
+      aprazamento.cdAtendimento, aprazamento.cdPrescricao).toPromise();
+
+    const prescricao: Prescricao = aprazamento.atendimento.prescricoes
+      .find(p => p.prescricao === aprazamento.cdPrescricao);
+
+    if (prescricao !== undefined) {
+      aprazamento.itemPrescricao = prescricao.Itens.find(i => i.ordemItem === aprazamento.ordemItem &&
+        i.codigoTipoItem === aprazamento.cdTpItem &&
+        i.codigoItem === aprazamento.cdItem);
+    }
+
+    return aprazamento;
+  }
+
+  async aprazamentosComDetalhes(aprazamentos?: PreOperacao[], isNotConsumido?: boolean): Promise<PreOperacao[]> {
     const prontuarios: Map<number, Prontuario> = new Map();
     const atendimentos: Map<Number, Atendimento> = new Map();
-    let aprazamentos: PreOperacao[] = [];
     let ala: Ala;
 
-    try {
-      aprazamentos = await this.aprazamentos().toPromise();
-    } catch (err) {
+    if (!aprazamentos) {
+      aprazamentos = [];
+
+      try {
+        aprazamentos = await this.aprazamentos().toPromise();
+      } catch (err) {
+      }
     }
 
     try {
@@ -46,7 +66,7 @@ export class AprazamentosService {
     } catch (err) {
     }
 
-    if (aprazamentos) {
+    if (isNotConsumido) {
       aprazamentos = aprazamentos.filter(a => a.status);
     }
 
@@ -55,7 +75,7 @@ export class AprazamentosService {
         let prontuario: Prontuario;
 
         try {
-          prontuario = await this.prontuariosService.listarProntuariosHC(aprazamento.cdProntuario).toPromise();
+          prontuario = await this.prontuariosService.prontuario(aprazamento.cdProntuario).toPromise();
           prontuario.leito = ala.leitos.find((l: Leito) => l.prontuario === prontuario.prontuario);
         } catch (err) {
         }
@@ -67,7 +87,7 @@ export class AprazamentosService {
         let atendimento: Atendimento;
 
         try {
-          atendimento = await this.prontuariosService.atendimentoHC(aprazamento.cdProntuario, aprazamento.cdAtendimento).toPromise();
+          atendimento = await this.prontuariosService.atendimentos(aprazamento.cdProntuario, aprazamento.cdAtendimento).toPromise();
         } catch (err) {
         }
 
@@ -90,10 +110,6 @@ export class AprazamentosService {
     }
 
     return aprazamentos;
-  }
-
-  aprazamentosById(id: string): Observable<Aprazamento> {
-    return this.http.get<Aprazamento>(`${SALUS_API}/preOpAprazamentos/${id}`, httpOptions);
   }
 
   aprazarMedicamento(aprazamento: PreOperacao): Observable<PreOperacao> {

@@ -1,3 +1,5 @@
+import { PreOperacao } from './pre-operacao.model';
+
 export interface Operacao {
     _id?: string;
     cdPreOperacaoAprazamento: string;
@@ -11,4 +13,6 @@ export interface Operacao {
     devicePlatform?: string;
     deviceVersion?: string;
     nmUsuario: string;
+
+    aprazamento?: PreOperacao;
 }

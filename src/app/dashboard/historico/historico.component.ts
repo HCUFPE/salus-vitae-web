@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Prontuario } from '../../models/prontuario.model';
-import { Consumo } from '../../models/consumo.model';
-import { Aprazamento } from 'src/app/models/aprazamento.model';
-import { ActivatedRoute } from '@angular/router';
+
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import * as moment from 'moment';
+
 import { HistoricoService } from './historico.service';
-import { AprazamentosService } from '../aprazamentos/aprazamentos.service';
-import { PreOperacao } from '../../models/pre-operacao.model';
 import { Operacao } from '../../models/operacao.model';
 
 @Component({
@@ -14,28 +12,91 @@ import { Operacao } from '../../models/operacao.model';
   styleUrls: ['./historico.component.css']
 })
 export class HistoricoComponent implements OnInit {
-  public dtOpera: Array<any>=[];
-  public dtList:Array<Operacao>=[];
-  public idOperacao;
-  public operacao:PreOperacao;
-  public modalConsumo: Consumo;
+
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = true;
+  public administracoes: Map<string, { isCollapsed: boolean, administracoes: Operacao[] }> = new Map();
+  public paginationAdministracoes = 1;
   public filtro: string;
-  constructor(private route: ActivatedRoute,private historicoService: HistoricoService) { }
+
+  constructor(private historicoService: HistoricoService) { }
 
   ngOnInit() {
-    this.getHistorico();
+    this.historicoService.administracoesComDetalhes()
+      .then((administracoes: Operacao[]) => {
+        administracoes.forEach(administracao => {
+          if (this.administracoes.has(this.formatDate(administracao.dtOperacao))) {
+            this.administracoes.get(this.formatDate(administracao.dtOperacao)).administracoes.push(administracao);
+          } else {
+            this.administracoes.set(this.formatDate(administracao.dtOperacao), { isCollapsed: true, administracoes: [administracao] });
+          }
+        });
+
+        this.loading = false;
+      });
   }
 
-  getHistorico(){
-    this.historicoService.historicoConsumo().subscribe(historico=>{
-      this.operacao
-      this.dtList = historico.filter(a=>a.isConsumido)
-      this.getPreOperacao(this.dtList);
+  getHorarios() {
+    if (this.filtro) {
+      const horarios: Set<string> = new Set();
+
+      this.administracoes.forEach((value, key) => {
+        if (value.administracoes.some(a => a.aprazamento.prontuario.nomeDoPaciente.toLowerCase().includes(this.filtro.toLowerCase()))) {
+          horarios.add(key);
+        }
+      });
+
+      return this.ordenarCrescente(Array.from(horarios));
+    }
+
+    return this.ordenarCrescente(Array.from(this.administracoes.keys()));
+  }
+
+  getAdministracoes(horario: string) {
+    if (!this.administracoes.has(horario)) {
+      return [];
+    }
+
+    if (this.filtro) {
+      return this.administracoes.get(horario).administracoes
+        .filter(a => a.aprazamento.prontuario.nomeDoPaciente.toLowerCase().includes(this.filtro.toLowerCase()));
+    }
+
+    return this.administracoes.get(horario).administracoes;
+  }
+
+  mostrarAdministracoes(horario: string) {
+    this.administracoes.get(horario).isCollapsed = !this.administracoes.get(horario).isCollapsed;
+  }
+
+  isCollapsed(horario: string) {
+    return this.administracoes.get(horario).isCollapsed;
+  }
+
+  selecionarHorario(horario: string) {
+    this.filtro = horario;
+  }
+
+  formatDate(date: Date) {
+    return moment(date).format('DD/MM/YYYY');
+  }
+
+  getDateFromString(date: string) {
+    return moment(date, 'DD/MM/YYYY');
+  }
+
+  ordenarCrescente(arr: string[]) {
+    return arr.sort((a: string, b: string) => {
+      if (this.getDateFromString(a) > this.getDateFromString(b)) {
+        return -1;
+      }
+
+      if (this.getDateFromString(a) < this.getDateFromString(b)) {
+        return 1;
+      }
+
+      return 0;
     });
-  }
-
-  getPreOperacao(opList){
-      
   }
 
 }

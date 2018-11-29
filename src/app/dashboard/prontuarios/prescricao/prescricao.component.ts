@@ -48,7 +48,7 @@ export class PrescricaoComponent implements OnInit {
     this.getProntuarioById();
 
     this.prontuarioService
-      .atendimentoHC(
+      .atendimentos(
         this.route.snapshot.paramMap.get('prontuario_id'),
         this.route.snapshot.paramMap.get('atendimento_id')
       )
@@ -81,7 +81,7 @@ export class PrescricaoComponent implements OnInit {
 
 
   public getProntuarioById() {
-    this.prontuarioService.listarProntuariosHC(+this.route.snapshot.paramMap.get('prontuario_id'))
+    this.prontuarioService.prontuario(this.route.snapshot.paramMap.get('prontuario_id'))
       .subscribe(data => {
         this.prontuario = data;
       });

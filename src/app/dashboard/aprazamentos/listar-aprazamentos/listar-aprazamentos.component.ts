@@ -22,7 +22,7 @@ export class ListarAprazamentosComponent implements OnInit {
   constructor(private aprazamentosService: AprazamentosService) { }
 
   ngOnInit() {
-    this.aprazamentosService.aprazamentosComDetalhes()
+    this.aprazamentosService.aprazamentosComDetalhes(null, true)
     .then((aprazamentos: PreOperacao[]) => {
       aprazamentos.forEach(aprazamento => {
         if (this.aprazamentos.has(aprazamento.cdProntuario)) {

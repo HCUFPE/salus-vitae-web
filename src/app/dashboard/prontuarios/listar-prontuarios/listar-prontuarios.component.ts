@@ -32,7 +32,7 @@ export class ListarProntuariosComponent implements OnInit {
   }
 
   getAlas() {
-    this.prontuarioService.resolvedPacientesInternados()
+    this.prontuarioService.pacientesInternados()
       .then(ala => {
         this.ala = ala;
         this.loading = false;

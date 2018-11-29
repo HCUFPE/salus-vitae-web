@@ -5,12 +5,10 @@
       <div class="card-body">
         <div class="col-md-6">
           <div class="col-md-4">
-            <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">Prescrições&nbsp;</button>
+            <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">Horários&nbsp;</button>
             <div class="col-md-4">
               <div class="dropdown-menu">
-                 <!---->
-                <button (click)="selecionarHorario(horario)" class="dropdown-item"
-                  type="button" [class.active]="horario === filtro"
+                <button (click)="selecionarHorario(horario)" class="dropdown-item" type="button" [class.active]="horario === filtro"
                   *ngFor="let horario of getHorarios()">
                   {{ horario }}
                 </button>

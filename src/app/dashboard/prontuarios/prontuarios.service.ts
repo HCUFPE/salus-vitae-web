@@ -28,24 +28,29 @@ export class ProntuariosService {
     return this.http.get<Ala>(`${HC_API}/humaster/ws/ala/${codigoAla}`, httpOptions);
   }
 
-  async resolvedPacientesInternados(): Promise<Ala> {
+  async pacientesInternados(): Promise<Ala> {
     const ala: Ala = await this.alas().toPromise();
 
     for (const leito of ala.leitos) {
       if (leito.prontuario !== undefined) {
-        leito.pacienteInternado = await this.listarProntuariosHC(leito.prontuario).toPromise();
+        leito.pacienteInternado = await this.prontuario(leito.prontuario).toPromise();
       }
     }
 
     return ala;
   }
 
-  listarProntuariosHC(prt: number | string): Observable<Prontuario> {
-    return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prt}`, httpOptions);
+  prontuario(prontuario: number|string): Observable<Prontuario> {
+    return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prontuario}`, httpOptions);
   }
 
-  atendimentoHC(prt: number | string, atd: number | string): Observable<Atendimento> {
-    return this.http.get<Atendimento>(`${HC_API}/humaster/ws/prontuario/${prt}/atendimento/${atd}`, httpOptions);
+  atendimentos(prontuario: number|string, atendimento: number|string): Observable<Atendimento> {
+    return this.http.get<Atendimento>(`${HC_API}/humaster/ws/prontuario/${prontuario}/atendimento/${atendimento}`, httpOptions);
+  }
+
+  atendimentoByPrescricao(prontuario: number|string, atendimento: number|string, prescricao: number|string): Observable<Atendimento> {
+    return this.http
+      .get<Atendimento>(`${HC_API}/humaster/ws/prontuario/${prontuario}/atendimento/${atendimento}?prescricao=${prescricao}`, httpOptions);
   }
 
 }
