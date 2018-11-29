@@ -1,5 +1,6 @@
 :host {
     .navbar {
+        width: 102%;
       .navbar-toggler-icon {
         background-image: url('https://mdbootstrap.com/img/svg/hamburger2.svg?color=fff');
         }
@@ -44,7 +45,6 @@
         .dropdown-item{
             color: #fff;
         }
-
     }
-
 }
+
