@@ -11,20 +11,32 @@
   padding-bottom: 43px;
 }
 
-.form-control.form-rounded {
-  float: right;
-  width: 21%;
-  background-color: #007bff;
-  color: #fff;
-  padding-right: 3px;
-  padding-right: 4px \9;
-  padding-left: 3px;
-  padding-left: 4px \9;
-  -webkit-input-placeholder: color transparent;
-  -webkit-transition: width 0.7s ease-in-out;
-  -moz-transition: width 0.7s ease-in-out;
-  -o-transition: width 0.7s ease-in-out;
-  transition: width 0.7s ease-in-out;
+.input-group{
+    padding: 10px;
+  }
+
+.container.pull-right {
+    margin-right: 6%;
+}
+
+hr {
+    margin-top: 3rem;
+}
+  
+.form-control.form-rounded{
+    float: right;
+    width: 21%;
+    background-color: #007bff;
+    color: #fff;
+    padding-right: 3px;
+    padding-right: 4px \9;
+    padding-left: 3px;
+    padding-left: 4px \9;
+    -webkit-input-placeholder: color transparent;
+    -webkit-transition: width  0.7s ease-in-out;
+    -moz-transition:width  0.7s ease-in-out;
+    -o-transition: width  0.7s ease-in-out;
+    transition: width  0.7s ease-in-out;
 }
 
 input::-webkit-input-placeholder {
