@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { HC_API, SALUS_API } from '../../app.api';
+import { HC_API } from '../../app.api';
 import { Prontuario } from '../../models/prontuario.model';
 import { Ala } from '../../models/ala.model';
 import { Atendimento } from '../../models/atendimento.model';
-import { Leito } from 'src/app/models/leito.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -43,30 +42,6 @@ export class ProntuariosService {
 
   listarProntuariosHC(prt: number | string): Observable<Prontuario> {
     return this.http.get<Prontuario>(`${HC_API}/humaster/ws/prontuario/${prt}`, httpOptions);
-  }
-
-  prontuarioComDetalhes(prontuario: Prontuario): Promise<Prontuario> {
-    return new Promise((resolve, reject) => {
-      this.leitoByProntuario(prontuario.prontuario).then((leito: Leito) => {
-        prontuario.leito = leito;
-
-        resolve(prontuario);
-      }).catch((err) => reject(err));
-    });
-  }
-
-  leitoByProntuario(prontuario_id: number): Promise<Leito> {
-    return new Promise((resolve, reject) => {
-      this.alas().subscribe((ala: Ala) => {
-        const leito: Leito = ala.leitos.find((l: Leito) => l.prontuario === prontuario_id);
-
-        if (leito) {
-          leito.ala = ala;
-        }
-
-        resolve(leito);
-      }, (err) => reject(err));
-    });
   }
 
   atendimentoHC(prt: number | string, atd: number | string): Observable<Atendimento> {

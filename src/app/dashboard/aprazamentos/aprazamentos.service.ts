@@ -11,6 +11,8 @@ import { PreOperacao } from '../../models/pre-operacao.model';
 import { Operacao } from '../../models/operacao.model';
 import { Prontuario } from '../../models/prontuario.model';
 import { Atendimento } from '../../models/atendimento.model';
+import { Ala } from '../../models/ala.model';
+import { Leito } from '../../models/leito.model';
 import { ProntuariosService } from '../prontuarios/prontuarios.service';
 
 const httpOptions = {
@@ -31,7 +33,18 @@ export class AprazamentosService {
   async aprazamentosComDetalhes(): Promise<PreOperacao[]> {
     const prontuarios: Map<number, Prontuario> = new Map();
     const atendimentos: Map<Number, Atendimento> = new Map();
-    let aprazamentos: PreOperacao[] = await this.aprazamentos().toPromise();
+    let aprazamentos: PreOperacao[] = [];
+    let ala: Ala;
+
+    try {
+      aprazamentos = await this.aprazamentos().toPromise();
+    } catch (err) {
+    }
+
+    try {
+      ala = await this.prontuariosService.alas().toPromise();
+    } catch (err) {
+    }
 
     if (aprazamentos) {
       aprazamentos = aprazamentos.filter(a => a.status);
@@ -43,7 +56,7 @@ export class AprazamentosService {
 
         try {
           prontuario = await this.prontuariosService.listarProntuariosHC(aprazamento.cdProntuario).toPromise();
-          prontuario = await this.prontuariosService.prontuarioComDetalhes(prontuario);
+          prontuario.leito = ala.leitos.find((l: Leito) => l.prontuario === prontuario.prontuario);
         } catch (err) {
         }
 
