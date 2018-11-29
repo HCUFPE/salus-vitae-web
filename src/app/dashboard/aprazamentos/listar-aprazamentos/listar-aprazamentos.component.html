@@ -8,8 +8,7 @@
             <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">Horários&nbsp;</button>
             <div class="col-md-4">
               <div class="dropdown-menu">
-                <button (click)="selecionarHorario(horario)" class="dropdown-item" type="button" [class.active]="horario === filtro"
-                  *ngFor="let horario of getHorarios()">
+                <button (click)="selecionarHorario(horario)" class="dropdown-item" type="button" [class.active]="horario === filtro" *ngFor="let horario of getHorarios()">
                   {{ horario }}
                 </button>
               </div>
@@ -56,21 +55,22 @@
                   <tbody>
                     <tr *ngFor="let aprazamento of getAprazamentos(prontuario)">
                       <td>
-                        {{ aprazamento?.horarioInicial ?
-                        (aprazamento.horarioInicial | date:'HH:mm - dd/MM/yyyy') : 'Não identificado' }}
+                        {{ aprazamento?.horarioInicial ? (aprazamento.horarioInicial | date:'HH:mm - dd/MM/yyyy') : 'Não identificado' }}
                       </td>
                       <td>
-                        {{ aprazamento?.itemPrescricao?.descricaoItem ?
-                        aprazamento.itemPrescricao.descricaoItem : 'Não identificado' }}
+                        {{ aprazamento?.itemPrescricao?.descricaoItem ? aprazamento.itemPrescricao.descricaoItem : 'Não identificado' }}
                       </td>
                       <td>
-                        {{ aprazamento?.itemPrescricao?.administracao ?
-                        aprazamento.itemPrescricao.administracao : 'Não identificado' }}
+                        {{ aprazamento?.itemPrescricao?.administracao ? aprazamento.itemPrescricao.administracao : 'Não identificado' }}
                       </td>
                       <td>{{ aprazamento?.itemPrescricao?.frequencia }}h</td>
                       <td>{{ aprazamento?.itemPrescricao?.observacaoItem }}</td>
                       <td>{{ aprazamento?.itemPrescricao?.gotejamento }}</td>
-                      <td></td>
+                      <td>
+                        <button (click)="showModalRodelagemAprazamento(aprazamento)" class="btn btn-danger circle">
+                          <i class="fa fa-remove"></i>
+                          </button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -79,8 +79,7 @@
           </div>
         </div>
         <div class="col-md-12 text-center mt-3">
-          <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" responsive="true"
-            (pageChange)="paginationAprazamentos = $event"></pagination-controls>
+          <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" responsive="true" (pageChange)="paginationAprazamentos = $event"></pagination-controls>
         </div>
       </div>
     </div>
