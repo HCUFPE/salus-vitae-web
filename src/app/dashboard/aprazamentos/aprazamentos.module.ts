@@ -29,6 +29,6 @@ import { ListaPreOperacaoPipe } from './listar-aprazamentos/listar-aprazamentos-
   providers: [AprazamentosService, ProntuariosService],
   entryComponents: [
   ModalRodelagemAprazamentoComponent
-  ],
+  ]
 })
 export class AprazamentosModule { }
