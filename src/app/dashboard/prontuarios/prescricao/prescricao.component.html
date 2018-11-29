@@ -100,11 +100,11 @@
         <thead colspan="2">
           <tr>
             <!-- <th>#</th> -->
-            <th>Nome</th>
+            <th>Horário do Aprazamento</th>
+            <th>Nome do medicamento</th>
             <th>Administração</th>
             <th>Frequencia</th>
             <th>Observação</th>
-            <th>Horário</th>
             <th>Gotejamento</th>
             <th>Rodelar</th>
           </tr>
@@ -112,11 +112,11 @@
         <tbody>
           <tr *ngFor="let aprazamento of getAprazamentos() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationAprazamento }">
             <!-- <th scope="row">{{i + 1}}</th> -->
+            <td class="data-aprazamento">{{aprazamento?.horarioInicial | date:'HH:mm - dd/MM/yy'}}</td>
             <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
             <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
-            <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
+            <td>{{aprazamento?.itemPrescricao?.frequencia}}h</td>
             <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
-            <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
             <td>
               <button (click)="showModalRodelagemAprazamento(aprazamento)" class="btn btn-danger circle">
