@@ -2,3 +2,7 @@
 *{
     font-family: "Segoe UI";
 }
+
+body{
+    margin: -9px;
+}
