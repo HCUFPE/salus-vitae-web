@@ -62,7 +62,7 @@ input::-moz-placeholder {
     padding: 10px;
     color: #fff;
     pointer-events: none;
-    padding-left: 169px;
+    padding-left: 152px;
   }
 }
 
@@ -72,7 +72,7 @@ input::-moz-placeholder {
     position: absolute;
     padding: 10px;
     pointer-events: none;
-    padding-left: 169px;
+    padding-left: 152px;
     color: #fff;
   }
 }

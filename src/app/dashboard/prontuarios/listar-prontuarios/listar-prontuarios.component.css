@@ -5,6 +5,7 @@
 
 .fa.fa-search {
   color: #fff;
+  padding-left: 152px;
 }
 
 .container-group {
@@ -86,7 +87,7 @@ input::-moz-placeholder {
     position: absolute;
     padding: 10px;
     pointer-events: none;
-    padding-left: 163px;
+    padding-left: 152px;
     color: #fff;
 }
 }

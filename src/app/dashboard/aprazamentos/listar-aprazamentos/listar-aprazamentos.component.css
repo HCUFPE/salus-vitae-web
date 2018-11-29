@@ -18,7 +18,6 @@ table {
 
 .ml-5{
   margin-left: 3rem !important;
-  padding-bottom: 2%;
 }
 
 .content.horario {
@@ -27,11 +26,6 @@ table {
 
 .container-group {
   padding-bottom: 3%;
-}
-
-.card.apra {
-  width: 111%;
-  margin-left: -5%;
 }
 
 .btn.btn-danger:hover{
