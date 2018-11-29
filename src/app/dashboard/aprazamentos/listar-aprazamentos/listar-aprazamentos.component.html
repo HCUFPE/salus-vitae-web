@@ -1,32 +1,35 @@
-<section>
+<section class="container-group">
   <div class="row ml-5 mr-5 mt-0">
     <div class="card w-100">
       <h1 class="card-title text-center mt-2">Visualizar Aprazamentos</h1>
       <div class="card-body">
         <div class="col-md-6">
-          <div class="col-md-4">
-            <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">Horários&nbsp;</button>
-            <div class="col-md-4">
-              <div class="dropdown-menu">
-                <button (click)="selecionarHorario(horario)" class="dropdown-item" type="button" [class.active]="horario === filtro"
-                  *ngFor="let horario of getHorarios()">
-                  {{ horario }}
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-
       </div>
     </div>
   </div>
 </section>
-<br>
+<section class="content horario">
+    <div class="row ml-4 mr-4 pull-right">
+      <div class="btn-group">
+        <div class="col-md-2">
+        <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown" type="button">Horários&nbsp;</button>
+          <div class="dropdown-menu scrollable-menu" role="menu">
+            <button (click)="selecionarHorario(horario)" class="dropdown-item" type="button" [class.active]="horario === filtro"
+              *ngFor="let horario of getHorarios()">
+              {{ horario }}
+            </button>
+          </div>
+          </div>
+      </div>
+    </div>
+</section>
+
 <section class="content">
-  <div class="row">
-    <div class="col-md-12">
+  <div class="row m-5">
+    <div class="panel-group col-md-12 w-100">
       <div class="panel panel-default">
-        <div class="card">
+        <div class="card apra">
           <div *ngFor="let prontuario of getProntuarios() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationHorario }">
             <div class="card-header" (click)="mostrarAprazamentos(prontuario)">
               <a class="card-title">

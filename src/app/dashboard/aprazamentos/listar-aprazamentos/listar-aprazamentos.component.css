@@ -1,3 +1,35 @@
 table {
   border: 2px solid #ccc;
 }
+
+.dropdown-menu {
+  width: 100%;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 110px;
+  overflow-x: hidden;
+}
+
+.mr-4 {
+  margin-right: 2.5rem !important;
+}
+
+.ml-5{
+  margin-left: 3rem !important;
+  padding-bottom: 2%;
+}
+
+.content.horario {
+  padding-bottom: 3%;
+}
+
+.container-group {
+  padding-bottom: 3%;
+}
+
+.card.apra {
+  width: 111%;
+  margin-left: -5%;
+}
