@@ -3,6 +3,39 @@
   background-color: rgba(153, 153, 153, 0.2);
 }
 
+#nav-aprazar-tab{
+  color: #007bff;
+}
+
+.col-md-4.center-block {
+  margin: auto;
+}
+
+.btn.btn-success{
+  background-color: #fff;
+  color: #28a745;
+  border-radius: 33px;
+  height: 73px;
+  width: 235px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn.btn-danger.circle:hover{
+  background-color:#fff;
+  color: red; 
+}
+
+.btn.btn-danger.circle{
+  background-color:red;
+  border-radius: 33px;
+}
+
+.btn.btn-success:hover{
+  background-color: #28a745;
+  color: #fff;
+}
+
 .modal-title {
   text-align: center;
 }

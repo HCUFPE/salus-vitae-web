@@ -15,8 +15,8 @@
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-aprazar-tab" data-toggle="tab" href="#nav-aprazar" role="tab"
             aria-controls="nav-aprazar" aria-selected="true">Aprazar</a>
-          <a class="nav-item nav-link" id="nav-detalhes-tab" data-toggle="tab" href="#nav-detalhes" role="tab"
-            aria-controls="nav-detalhes" aria-selected="false">Detalhes</a>
+        <!--  <a class="nav-item nav-link" id="nav-detalhes-tab" data-toggle="tab" href="#nav-detalhes" role="tab"
+            aria-controls="nav-detalhes" aria-selected="false">Detalhes</a>-->
         </div>
       </nav>
       <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
@@ -53,8 +53,8 @@
                                   </td>
                                   <td>
                                     <span class="table-remove">
-                                      <button type="button" class="btn btn-danger btn-rounded btn-sm my-0" (click)="removerAprazamento(i)">
-                                        Remover
+                                      <button type="button" class="btn btn-danger circle" (click)="removerAprazamento(i)">
+                                        <i class="fa fa-remove"></i>
                                       </button>
                                     </span>
                                   </td>
@@ -68,9 +68,11 @@
                   </div>
                 </div>
               </div>
-              <div class="modal-footer d-flex justify-content-end">
-                <!-- <button #btnClose type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(loginForm)">Fechar</button> -->
-                <button class="btn btn-success" type="submit"><b>Confirmar</b><i class="fa fa-paper-plane-o ml-1"></i></button>
+              <hr>
+              <div class="form-group pull-center">
+              <div class="col-md-4 center-block">
+                <button class="btn btn-success text-center" type="submit"><b>Confirmar</b></button>
+              </div>
               </div>
             </form>
             <!-- End form -->
