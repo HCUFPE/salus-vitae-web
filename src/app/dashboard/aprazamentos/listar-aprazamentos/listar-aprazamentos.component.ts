@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalRodelagemAprazamentoComponent } from './../../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import * as moment from 'moment';
 
-import { AprazamentosService } from '../aprazamentos.service';
 import { PreOperacao } from '../../../models/pre-operacao.model';
-import { Operacao } from 'src/app/models/operacao.model';
+import { Operacao } from '../../../models/operacao.model';
+import { AprazamentosService } from '../aprazamentos.service';
+import { ModalRodelagemAprazamentoComponent } from '../../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
 
 @Component({
   selector: 'app-listar-aprazamentos',
@@ -19,29 +19,28 @@ export class ListarAprazamentosComponent implements OnInit {
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public loading = true;
-  public aprazamentos: Map<number, { isCollapsed: boolean , aprazamentos: PreOperacao[]}> = new Map();
+  public aprazamentos: Map<number, { isCollapsed: boolean, aprazamentos: PreOperacao[] }> = new Map();
   public paginationAprazamentos = 1;
   public filtro = 'Sem filtro';
-  public aprazamentoz: PreOperacao[];
 
   constructor(
     private aprazamentosService: AprazamentosService,
-        private modalService: NgbModal,
-        private toastrService: ToastrService) { }
+    private modalService: NgbModal,
+    private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.aprazamentosService.aprazamentosComDetalhes(null, true)
-    .then((aprazamentos: PreOperacao[]) => {
-      aprazamentos.forEach(aprazamento => {
-        if (this.aprazamentos.has(aprazamento.cdProntuario)) {
-          this.aprazamentos.get(aprazamento.cdProntuario).aprazamentos.push(aprazamento);
-        } else {
-          this.aprazamentos.set(aprazamento.cdProntuario, { isCollapsed: true , aprazamentos: [aprazamento] });
-        }
-      });
+      .then((aprazamentos: PreOperacao[]) => {
+        aprazamentos.forEach(aprazamento => {
+          if (this.aprazamentos.has(aprazamento.cdProntuario)) {
+            this.aprazamentos.get(aprazamento.cdProntuario).aprazamentos.push(aprazamento);
+          } else {
+            this.aprazamentos.set(aprazamento.cdProntuario, { isCollapsed: true, aprazamentos: [aprazamento] });
+          }
+        });
 
-      this.loading = false;
-    });
+        this.loading = false;
+      });
   }
 
   getProntuarios() {
@@ -99,16 +98,21 @@ export class ListarAprazamentosComponent implements OnInit {
     return moment(date).format('DD/MM/YYYY HH') + 'h';
   }
 
-
-  public showModalRodelagemAprazamento(aprazamento: PreOperacao) {
+  public showModalRodelagemAprazamento(prontuario: number, aprazamento: PreOperacao) {
     const modal: NgbModalRef = this.modalService.open(ModalRodelagemAprazamentoComponent,
       { backdrop: 'static', centered: true, keyboard: false, size: 'lg' });
     modal.componentInstance.aprazamento = aprazamento;
     modal.result
       .then((cancelamento: Operacao) => {
-        this.aprazamentoz
-          .splice(this.aprazamentoz.findIndex(a => a._id === cancelamento.cdPreOperacaoAprazamento), 1);
+        if (this.aprazamentos.get(prontuario).aprazamentos.length > 1) {
+          this.aprazamentos.get(prontuario).aprazamentos
+          .splice(this.aprazamentos.get(prontuario).aprazamentos.findIndex(a => a._id === cancelamento.cdPreOperacaoAprazamento), 1);
+        } else {
+          this.aprazamentos.delete(prontuario);
+        }
+
         this.toastrService.success('Aprazamento cancelado com sucesso!', 'Sucesso!', { timeOut: 2000 });
       }).catch(() => null);
   }
+
 }

@@ -13,7 +13,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProntuariosRoutingModule } from './prontuarios-routing.module';
 import { PrescricaoComponent } from './prescricao/prescricao.component';
 import { ModalAprazarComponent } from './modal-aprazar/modal-aprazar.component';
-import { ModalRodelagemAprazamentoComponent } from '../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
 
 import { ProntuariosService } from './prontuarios.service';
 import { ListarProntuariosComponent } from './listar-prontuarios/listar-prontuarios.component';
@@ -40,12 +39,10 @@ import { ListaProntuariosPipe } from './listar-prontuarios/lista-prontuario-filt
     ListarProntuariosComponent,
     PrescricaoComponent,
     ModalAprazarComponent,
-    ModalRodelagemAprazamentoComponent,
     ListaProntuariosPipe
   ],
   entryComponents: [
-    ModalAprazarComponent,
-    ModalRodelagemAprazamentoComponent
+    ModalAprazarComponent
   ],
   providers: [
     ProntuariosService,

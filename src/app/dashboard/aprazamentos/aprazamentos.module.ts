@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxLoadingModule } from 'ngx-loading';
-import { ModalRodelagemAprazamentoComponent } from '../modal-rodelagem-aprazamento/modal-rodelagem-aprazamento.component';
 
 import { AprazamentosRoutingModule } from './aprazamentos-routing.module';
 import { ListarAprazamentosComponent } from './listar-aprazamentos/listar-aprazamentos.component';
@@ -25,10 +24,7 @@ import { ListaPreOperacaoPipe } from './listar-aprazamentos/listar-aprazamentos-
   NgxLoadingModule.forRoot({}),
   NgbModule.forRoot()
   ],
-  declarations: [ ListarAprazamentosComponent, ListaPreOperacaoPipe, ModalRodelagemAprazamentoComponent],
-  providers: [AprazamentosService, ProntuariosService],
-  entryComponents: [
-  ModalRodelagemAprazamentoComponent
-  ]
+  declarations: [ListarAprazamentosComponent, ListaPreOperacaoPipe],
+  providers: [AprazamentosService, ProntuariosService]
 })
 export class AprazamentosModule { }
