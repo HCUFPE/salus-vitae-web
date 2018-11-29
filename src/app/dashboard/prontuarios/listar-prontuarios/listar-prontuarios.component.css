@@ -1,48 +1,56 @@
 .card-header {
-    border-bottom: 2px solid;
-    border-color:gray;
+  border-bottom: 2px solid;
+  border-color: gray;
 }
 
 .fa.fa-search {
-    color: #fff;
+  color: #fff;
 }
 
 .container-group {
-    padding-bottom: 43px;
+  padding-bottom: 43px;
 }
 
-.form-control.form-rounded{
-    float: right;
-    width: 21%;
-    background-color: #007bff;
-    color: #fff;
-    padding-right: 3px;
-    padding-right: 4px \9;
-    padding-left: 3px;
-    padding-left: 4px \9;
-    -webkit-input-placeholder: color transparent;
-    -webkit-transition: width  0.7s ease-in-out;
-    -moz-transition:width  0.7s ease-in-out;
-    -o-transition: width  0.7s ease-in-out;
-    transition: width  0.7s ease-in-out;
+.form-control.form-rounded {
+  float: right;
+  width: 21%;
+  background-color: #007bff;
+  color: #fff;
+  padding-right: 3px;
+  padding-right: 4px \9;
+  padding-left: 3px;
+  padding-left: 4px \9;
+  -webkit-input-placeholder: color transparent;
+  -webkit-transition: width 0.7s ease-in-out;
+  -moz-transition: width 0.7s ease-in-out;
+  -o-transition: width 0.7s ease-in-out;
+  transition: width 0.7s ease-in-out;
 }
 
-input::-webkit-input-placeholder{
-    color: transparent;
+input::-webkit-input-placeholder {
+  color: transparent;
 }
-input::-moz-placeholder{
-    color: transparent;
+
+.card-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
-input::-moz-placeholder{
-    color: transparent;
+
+input::-moz-placeholder {
+  color: transparent;
+}
+
+input::-moz-placeholder {
+  color: transparent;
 }
 
 /* enable absolute positioning */
+
 .inner-addon {
-    position: relative;
+  position: relative;
 }
 
 /* style icon */
+
 .inner-addon .fa {
   position: absolute;
   padding: 10px;
@@ -50,49 +58,67 @@ input::-moz-placeholder{
   padding-left: 182px;
 }
 
-#filtro:focus{
-    width: 114%;
+#filtro:focus {
+  width: 114%;
 }
 
 .form-rounded {
-    border-radius: 1rem;
+  border-radius: 1rem;
+}
+
+.shadow-cards {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 /* align icon */
-.left-addon .fa  { left:  0px;}
-.right-addon .fa { right: 0px;}
+
+.left-addon .fa {
+  left: 0px;
+}
+
+.right-addon .fa {
+  right: 0px;
+}
 
 /* add padding  */
-.left-addon input  { padding-left:  30px; }
-.right-addon input { padding-right: 30px; }
 
-input:focus::-webkit-input-placeholder{
-    color: #fff;
-    font-weight: bold;
+.left-addon input {
+  padding-left: 30px;
 }
-input:focus::-moz-placeholder{
-    color: #fff;
-    font-weight: bold;
+
+.right-addon input {
+  padding-right: 30px;
 }
-input:focus:-moz-placeholder{
-    color: #fff;
-    font-weight: bold;
+
+input:focus::-webkit-input-placeholder {
+  color: #fff;
+  font-weight: bold;
+}
+
+input:focus::-moz-placeholder {
+  color: #fff;
+  font-weight: bold;
+}
+
+input:focus:-moz-placeholder {
+  color: #fff;
+  font-weight: bold;
 }
 
 a.btn {
-    font-size: 1.0em;
-    color: #000;
+  font-size: 1.0em;
+  color: #000;
 }
 
 a.disabled {
-    pointer-events: none;
-    cursor: default;
-    /*display: none;*/
+  pointer-events: none;
+  cursor: default;
+  /*display: none;*/
 }
 
-.btn:hover{
-    background-color: darkturquoise;
-    font-weight: bold;
+.btn:hover {
+  background-color: darkturquoise;
+  font-weight: bold;
 }
 
 .card-deck {
