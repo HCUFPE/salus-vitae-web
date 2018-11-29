@@ -8,6 +8,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
     isCollapsed = true;
+    public user: string = localStorage.getItem('user');
 
     constructor(public router: Router) {
     }
