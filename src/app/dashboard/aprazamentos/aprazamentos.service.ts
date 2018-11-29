@@ -9,6 +9,9 @@ import { SALUS_API } from '../../app.api';
 import { Aprazamento } from '../../models/aprazamento.model';
 import { PreOperacao } from '../../models/pre-operacao.model';
 import { Operacao } from '../../models/operacao.model';
+import { Prontuario } from '../../models/prontuario.model';
+import { Atendimento } from '../../models/atendimento.model';
+import { ProntuariosService } from '../prontuarios/prontuarios.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -19,10 +22,61 @@ const httpOptions = {
 
 @Injectable()
 export class AprazamentosService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private prontuariosService: ProntuariosService) { }
 
   aprazamentos(): Observable<PreOperacao[]> {
     return this.http.get<PreOperacao[]>(`${SALUS_API}/preOpAprazamentos`);
+  }
+
+  async aprazamentosComDetalhes(): Promise<PreOperacao[]> {
+    const prontuarios: Map<number, Prontuario> = new Map();
+    const atendimentos: Map<Number, Atendimento> = new Map();
+    let aprazamentos: PreOperacao[] = await this.aprazamentos().toPromise();
+
+    if (aprazamentos) {
+      aprazamentos = aprazamentos.filter(a => a.status);
+    }
+
+    for (const aprazamento of aprazamentos) {
+      if (!prontuarios.has(aprazamento.cdProntuario)) {
+        let prontuario: Prontuario;
+
+        try {
+          prontuario = await this.prontuariosService.listarProntuariosHC(aprazamento.cdProntuario).toPromise();
+          prontuario = await this.prontuariosService.prontuarioComDetalhes(prontuario);
+        } catch (err) {
+        }
+
+        prontuarios.set(aprazamento.cdProntuario, prontuario);
+      }
+
+      if (!atendimentos.has(aprazamento.cdAtendimento)) {
+        let atendimento: Atendimento;
+
+        try {
+          atendimento = await this.prontuariosService.atendimentoHC(aprazamento.cdProntuario, aprazamento.cdAtendimento).toPromise();
+        } catch (err) {
+        }
+
+        atendimentos.set(aprazamento.cdAtendimento, atendimento);
+      }
+
+      aprazamento.prontuario = prontuarios.get(aprazamento.cdProntuario);
+      aprazamento.atendimento = atendimentos.get(aprazamento.cdAtendimento);
+
+      if (aprazamento.atendimento !== undefined) {
+        aprazamento.prescricao = aprazamento.atendimento.prescricoes
+          .find(p => p.prescricao === aprazamento.cdPrescricao);
+      }
+
+      if (aprazamento.prescricao !== undefined) {
+        aprazamento.itemPrescricao = aprazamento.prescricao.Itens.find(i => i.ordemItem === aprazamento.ordemItem &&
+          i.codigoTipoItem === aprazamento.cdTpItem &&
+          i.codigoItem === aprazamento.cdItem);
+      }
+    }
+
+    return aprazamentos;
   }
 
   aprazamentosById(id: string): Observable<Aprazamento> {

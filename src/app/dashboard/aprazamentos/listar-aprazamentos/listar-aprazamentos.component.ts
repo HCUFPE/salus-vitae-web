@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import * as moment from 'moment';
+
 import { AprazamentosService } from '../aprazamentos.service';
-import { PreOperacao } from 'src/app/models/pre-operacao.model';
+import { PreOperacao } from '../../../models/pre-operacao.model';
 
 @Component({
   selector: 'app-listar-aprazamentos',
@@ -10,58 +13,82 @@ import { PreOperacao } from 'src/app/models/pre-operacao.model';
 })
 export class ListarAprazamentosComponent implements OnInit {
 
-  public aprazamentos: PreOperacao[] = [];
-  public apraList: Array<any> = [];
-  public dtList: Array<any> = [];
-  aprazamentoSelected: PreOperacao;
-  lastDate: Date = null;
-  filtros: string;
-  paginationHorario = 1;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = true;
+  public aprazamentos: Map<number, { isCollapsed: boolean , aprazamentos: PreOperacao[]}> = new Map();
+  public paginationAprazamentos = 1;
+  public filtro = 'Sem filtro';
 
   constructor(private aprazamentosService: AprazamentosService) { }
 
   ngOnInit() {
-    this.getAprazamentos();
-  }
-
-  getAprazamentos() {
-    this.aprazamentosService.aprazamentos()
-    .subscribe(aprazamento => {
-      this.apraList = aprazamento.filter(a => a.status);
-      this.getDtAprazamento(this.apraList);
-  });
-    /*
-    return this.aprazamentos.filter(a => !a.isConsumido).sort((a: Aprazamento, b: Aprazamento) => {
-        if (new Date(a.horario) < new Date(b.horario)) {
-          return -1;
+    this.aprazamentosService.aprazamentosComDetalhes()
+    .then((aprazamentos: PreOperacao[]) => {
+      aprazamentos.forEach(aprazamento => {
+        if (this.aprazamentos.has(aprazamento.cdProntuario)) {
+          this.aprazamentos.get(aprazamento.cdProntuario).aprazamentos.push(aprazamento);
+        } else {
+          this.aprazamentos.set(aprazamento.cdProntuario, { isCollapsed: true , aprazamentos: [aprazamento] });
         }
+      });
 
-        if (new Date(a.horario) > new Date(b.horario)) {
-          return 1;
+      this.loading = false;
+    });
+  }
+
+  getProntuarios() {
+    if (this.filtro !== 'Sem filtro') {
+      const prontuarios: Set<number> = new Set();
+
+      this.aprazamentos.forEach((value, key) => {
+        if (value.aprazamentos.some(a => this.formatDate(a.horarioInicial) === this.filtro)) {
+          prontuarios.add(key);
         }
+      });
 
-        return 0;
-      }
-    );*/
-  }
-
-  getDtAprazamento(listP) {
-    const myMap = new Map();
-
-    for (let i = 0; i < listP.length; i++) {
-      myMap.set(listP[i].dtPreOpAprazamento, listP[i]);
-    }
-    this.dtList.push(Array.from(myMap.values()));
-
-    console.log(this.dtList);
-  }
-
-  selecionarAprazamento(dtaprazamento: any) {
-    if (!dtaprazamento) {
-      return;
+      return Array.from(prontuarios);
     }
 
-    return this.filtros = dtaprazamento;
+    return Array.from(this.aprazamentos.keys());
+  }
+
+  mostrarAprazamentos(prontuario: number) {
+    this.aprazamentos.get(prontuario).isCollapsed = !this.aprazamentos.get(prontuario).isCollapsed;
+  }
+
+  isCollapsed(prontuario: number) {
+    return this.aprazamentos.get(prontuario).isCollapsed;
+  }
+
+  getAprazamentos(prontuario: number) {
+    if (!this.aprazamentos.has(prontuario)) {
+      return [];
+    }
+
+    if (this.filtro !== 'Sem filtro') {
+      return this.aprazamentos.get(prontuario).aprazamentos.filter(a => this.formatDate(a.horarioInicial) === this.filtro);
+    }
+
+    return this.aprazamentos.get(prontuario).aprazamentos;
+  }
+
+  getHorarios() {
+    const horarios: Set<string> = new Set();
+
+    horarios.add('Sem filtro');
+    [].concat(...Array.from(this.aprazamentos.values()).map(a => a.aprazamentos)).forEach(a => {
+      horarios.add(this.formatDate(a.horarioInicial));
+    });
+
+    return horarios;
+  }
+
+  selecionarHorario(horario: string) {
+    this.filtro = horario;
+  }
+
+  formatDate(date: Date) {
+    return moment(date).format('DD/MM/YYYY HH') + 'h';
   }
 
 }

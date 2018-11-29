@@ -1,5 +1,6 @@
 import { Paciente } from './paciente.model';
 import { Prescricao } from './prescricao.model';
+import { Leito } from './leito.model';
 
 export interface Prontuario {
     prontuario: number;
@@ -10,7 +11,7 @@ export interface Prontuario {
     pesoAdmissao: string;
     dataAlta: Date;
 
-    leito: string|number;
+    leito: string|number|Leito;
     nomeDoPaciente: string;
     dataNascimento: string;
     nomeMae: string;

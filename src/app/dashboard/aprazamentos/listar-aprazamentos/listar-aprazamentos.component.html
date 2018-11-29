@@ -5,11 +5,20 @@
       <div class="card-body">
         <div class="col-md-6">
           <div class="col-md-4">
-            <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown"> Prescrições&nbsp;</button>
+            <button class="btn btn-primary btn-large dropdown-toggle" data-toggle="dropdown">Prescrições&nbsp;</button>
             <div class="col-md-4">
+              <div class="dropdown-menu">
+                 <!---->
+                <button (click)="selecionarHorario(horario)" class="dropdown-item"
+                  type="button" [class.active]="horario === filtro"
+                  *ngFor="let horario of getHorarios()">
+                  {{ horario }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -18,36 +27,65 @@
 <section class="content">
   <div class="row">
     <div class="col-md-12">
-      <div class="dropdown-menu">
-        <button (click)="selecionarAprazamento(aprazamento)" class="dropdown-item" [class.active]="aprazamentoSelected?.dtPreOpAprazamento === aprazamento?.dtPreOpAprazamento"
-          type="button" *ngFor="let aprazamento of dtList[0]">
-          {{ aprazamento?.dtPreOpAprazamento | date:'dd/MM/yyyy hh:MM:ss' }}
-        </button>
-      </div>
-    </div>
-    <div class="col-md-12">
       <div class="panel panel-default">
-        <div class="table-responsive-sm bg-white ml-5 mr-5">
-          <table class="table table-hover text-center">
-            <thead>
-              <tr class="bg-light">
-                <th>Paciente</th>
-                <th>Prontuário</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let aprazamento of apraList | myOperacao:filtros | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationHorario }">
-                <td>{{aprazamento?.nmPaciente}}</td>
-                <td>{{aprazamento?.cdProntuario}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="col-md-12 text-center">
-            <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" responsive="true"
-              (pageChange)="paginationHorario = $event"></pagination-controls>
+        <div class="card">
+          <div *ngFor="let prontuario of getProntuarios() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationHorario }">
+            <div class="card-header" (click)="mostrarAprazamentos(prontuario)">
+              <a class="card-title">
+                {{ aprazamentos?.get(prontuario) &&
+                aprazamentos?.get(prontuario)?.aprazamentos[0]?.prontuario?.nomeDoPaciente ?
+                aprazamentos.get(prontuario).aprazamentos[0].prontuario.nomeDoPaciente : 'Paciente não identificado' }}
+                ({{ prontuario }}):
+                Leito {{ aprazamentos?.get(prontuario) &&
+                aprazamentos?.get(prontuario)?.aprazamentos[0]?.prontuario?.leito?.leito ?
+                aprazamentos.get(prontuario).aprazamentos[0].prontuario.leito.leito : 'não identificado' }}
+              </a>
+            </div>
+            <div id="collapseOne" class="card-body" [ngbCollapse]="isCollapsed(prontuario)">
+              <div class="table-responsive-sm bg-white ml-5 mr-5">
+                <table class="table table-hover text-center">
+                  <thead>
+                    <tr class="bg-light">
+                      <th>Horário</th>
+                      <th>Nome</th>
+                      <th>Administração</th>
+                      <th>Frequencia</th>
+                      <th>Observação</th>
+                      <th>Gotejamento</th>
+                      <th>Rodelar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let aprazamento of getAprazamentos(prontuario)">
+                      <td>
+                        {{ aprazamento?.horarioInicial ?
+                        (aprazamento.horarioInicial | date:'dd/MM/yyyy HH:mm') : 'Não identificado' }}
+                      </td>
+                      <td>
+                        {{ aprazamento?.itemPrescricao?.descricaoItem ?
+                        aprazamento.itemPrescricao.descricaoItem : 'Não identificado' }}
+                      </td>
+                      <td>
+                        {{ aprazamento?.itemPrescricao?.administracao ?
+                        aprazamento.itemPrescricao.administracao : 'Não identificado' }}
+                      </td>
+                      <td>{{ aprazamento?.itemPrescricao?.frequencia }}</td>
+                      <td>{{ aprazamento?.itemPrescricao?.observacaoItem }}</td>
+                      <td>{{ aprazamento?.itemPrescricao?.gotejamento }}</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="col-md-12 text-center mt-3">
+          <pagination-controls [id]="'aprazamentos'" previousLabel="Anterior" nextLabel="Próximo" responsive="true"
+            (pageChange)="paginationAprazamentos = $event"></pagination-controls>
         </div>
       </div>
     </div>
   </div>
+  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true, animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: '#ffffff', backdropBorderRadius: '3px' }"></ngx-loading>
 </section>

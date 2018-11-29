@@ -1,6 +1,7 @@
 import { ItemPrescricao } from './item-prescricao.model';
 import { Atendimento } from './atendimento.model';
 import { Prontuario } from './prontuario.model';
+import { Prescricao } from './prescricao.model';
 
 export interface PreOperacao {
   _id?: string;
@@ -21,5 +22,6 @@ export interface PreOperacao {
 
   prontuario?: Prontuario;
   atendimento?: Atendimento;
+  prescricao?: Prescricao;
   itemPrescricao?: ItemPrescricao;
 }
