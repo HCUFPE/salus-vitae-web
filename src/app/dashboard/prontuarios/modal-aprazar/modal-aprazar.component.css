@@ -7,10 +7,10 @@
   color: #007bff;
 }
 
-.col-md-4.center-block {
+/*.col-md-4.center-block {
   margin: auto;
 }
-
+*/
 .btn.btn-success{
   background-color: #fff;
   color: #28a745;
@@ -32,7 +32,7 @@
 }
 
 .btn.btn-success:hover{
-  background-color: #28a745;
+background-color: #31f1aa;
   color: #fff;
 }
 

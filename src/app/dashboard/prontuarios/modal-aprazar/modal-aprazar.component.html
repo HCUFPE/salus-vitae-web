@@ -15,7 +15,7 @@
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
           <a class="nav-item nav-link active" id="nav-aprazar-tab" data-toggle="tab" href="#nav-aprazar" role="tab"
             aria-controls="nav-aprazar" aria-selected="true">Aprazar</a>
-        <!--  <a class="nav-item nav-link" id="nav-detalhes-tab" data-toggle="tab" href="#nav-detalhes" role="tab"
+          <!--  <a class="nav-item nav-link" id="nav-detalhes-tab" data-toggle="tab" href="#nav-detalhes" role="tab"
             aria-controls="nav-detalhes" aria-selected="false">Detalhes</a>-->
         </div>
       </nav>
@@ -47,8 +47,9 @@
                                   <th scope="row">{{i + 1}}</th>
                                   <td>
                                     <label for="horario"><i class="fa fa-calendar-check-o"></i><b>Data:&nbsp;</b></label>
-                                    <input name="{{'horario_' + i}}" [(ngModel)]="aprazamento.horarioInicial" [min]="min" [max]="max"
-                                      [owlDateTimeTrigger]="datePicker" [owlDateTime]="datePicker" onkeypress="return false;">
+                                    <input name="{{'horario_' + i}}" [(ngModel)]="aprazamento.horarioInicial" [min]="min"
+                                      [max]="max" [owlDateTimeTrigger]="datePicker" [owlDateTime]="datePicker"
+                                      onkeypress="return false;">
                                     <owl-date-time #datePicker="owlDateTime"></owl-date-time>
                                   </td>
                                   <td>
@@ -69,10 +70,12 @@
                 </div>
               </div>
               <hr>
-              <div class="form-group pull-center">
-              <div class="col-md-4 center-block">
-                <button class="btn btn-success text-center" type="submit"><b>Confirmar</b></button>
-              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <button class="btn btn-success " type="submit"><b>Confirmar</b></button>
+                  </div>
+                </div>
               </div>
             </form>
             <!-- End form -->

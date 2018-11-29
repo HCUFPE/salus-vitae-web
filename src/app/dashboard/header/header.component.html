@@ -25,7 +25,7 @@
         <li class="nav-item dropdown">
         <li class="nav-item dropdown position-static" ngbDropdown>
           <a class="nav-link" ngbDropdownToggle>
-            <i class="fa fa-user"></i> Enfermeira <b class="caret"></b>
+            <i class="fa fa-user"></i> {{ user }} <b class="caret"></b>
           </a>
           <div class="dropdown-menu-right" ngbDropdownMenu>
             <a class="dropdown-item bg-primary" [routerLink]="['/login']" (click)="onLoggedout()">

@@ -44,10 +44,10 @@
                 <table class="table table-hover text-center">
                   <thead>
                     <tr class="bg-light">
-                      <th>Horário</th>
-                      <th>Nome</th>
+                      <th>Horário do Aprazamento</th>
+                      <th>Nome do Medicamento</th>
                       <th>Administração</th>
-                      <th>Frequencia</th>
+                      <th>Intervalo</th>
                       <th>Observação</th>
                       <th>Gotejamento</th>
                       <th>Rodelar</th>
@@ -57,7 +57,7 @@
                     <tr *ngFor="let aprazamento of getAprazamentos(prontuario)">
                       <td>
                         {{ aprazamento?.horarioInicial ?
-                        (aprazamento.horarioInicial | date:'dd/MM/yyyy HH:mm') : 'Não identificado' }}
+                        (aprazamento.horarioInicial | date:'HH:mm - dd/MM/yyyy') : 'Não identificado' }}
                       </td>
                       <td>
                         {{ aprazamento?.itemPrescricao?.descricaoItem ?
@@ -67,7 +67,7 @@
                         {{ aprazamento?.itemPrescricao?.administracao ?
                         aprazamento.itemPrescricao.administracao : 'Não identificado' }}
                       </td>
-                      <td>{{ aprazamento?.itemPrescricao?.frequencia }}</td>
+                      <td>{{ aprazamento?.itemPrescricao?.frequencia }}h</td>
                       <td>{{ aprazamento?.itemPrescricao?.observacaoItem }}</td>
                       <td>{{ aprazamento?.itemPrescricao?.gotejamento }}</td>
                       <td></td>

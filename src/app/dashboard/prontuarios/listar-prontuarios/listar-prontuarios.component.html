@@ -1,22 +1,24 @@
 <section class="container-group">
-      <div class="m-6">
-        <div class="col-sm-12 text-center">
-          <h1 class="display-3 text-center">Pacientes Internados</h1>
-          <h4 class="text-muted">{{ala?.Ala}}</h4>
-        </div>
-      </div>
-      <hr>
-      <div class="inner-addon pull-right">
-          <i class="fa fa-search"></i>
-          <input type="text"  placeholder="Prontuário, Mãe, Paciente" class="form-control form-rounded" id="filtro" name="filtro" 
-          [(ngModel)]="filtro">
-</div>
+  <div class="m-6">
+    <div class="col-sm-12 text-center">
+      <h1 class="display-3 text-center">Pacientes Internados</h1>
+      <h4 class="text-muted">{{ala?.Ala}}</h4>
+    </div>
+  </div>
+  <hr>
+  <div class="container pull-right">
+    <div class="form-group inner-addon pull-right">
+      <i class="fa fa-search"></i>
+      <input type="text" placeholder="Prontuário, Mãe, Paciente" class="form-control form-rounded" id="filtro" name="filtro"
+        [(ngModel)]="filtro">
+    </div>
+  </div>
 </section>
 
 <section class="container-fluid">
   <div class="row m-5">
     <div class="col-md-4 card-deck" *ngFor="let leito of getLeitos() | myFilter:filtro | paginate: { id: 'leito', itemsPerPage: 6, currentPage: paginationPaciente }">
-      <div class="card border-primary bg-light mb-5">
+      <div class="card border-primary bg-light mb-5 shadow-cards">
         <div class="card-header"><i class="fa fa-bed"></i>&nbsp;
           <span>{{leito?.leito}}</span><strong class="float-right"><i class="fa fa-clipboard"></i>&nbsp;{{leito?.pacienteInternado?.prontuario}}</strong></div>
         <div class="card-body">
@@ -26,14 +28,13 @@
           <p class="card-text"><i class="fa fa-calendar"></i>&nbsp;Data Nascimento:<span class="text-view">&nbsp;{{leito?.pacienteInternado?.dataNascimento}}</span></p>
         </div>
         <div class="card-footer text-muted text-right">
-          <a class="btn disabled" href="#">Aprazamentos</a>
           <a class="btn" [routerLink]="[leito?.prontuario, 'atendimento', leito?.atendimento]" routerLinkActive="router-link-active"
-            routerLinkActive="router-link-active">Prescrição</a>
+            routerLinkActive="router-link-active">Ir para prescrição</a>
         </div>
       </div>
     </div>
     <div class="col-md-12 text-center">
-      <pagination-controls [id]="'leito'"  previousLabel="Anterior" nextLabel="Próximo" responsive="true" (pageChange)="paginationPaciente = $event"></pagination-controls>
+      <pagination-controls [id]="'leito'" previousLabel="Anterior" nextLabel="Próximo" responsive="true" (pageChange)="paginationPaciente = $event"></pagination-controls>
     </div>
   </div>
   <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true, animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: '#ffffff', backdropBorderRadius: '3px' }"></ngx-loading>

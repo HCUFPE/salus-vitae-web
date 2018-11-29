@@ -2,7 +2,7 @@
   <section class="container-fluid">
     <div class="row m-6">
       <div class="text-left col-sm-10">
-        <h1>Prescrição Médica</h1>
+        <h1 class="display-3">Prescrição Médica</h1>
       </div>
       <div class="w-100 col-md-2">
         <div class="dropdown m-2 mr-2">
@@ -100,11 +100,11 @@
         <thead colspan="2">
           <tr>
             <!-- <th>#</th> -->
-            <th>Nome</th>
+            <th>Horário do Aprazamento</th>
+            <th>Nome do medicamento</th>
             <th>Administração</th>
-            <th>Frequencia</th>
+            <th>Intervalo</th>
             <th>Observação</th>
-            <th>Horário</th>
             <th>Gotejamento</th>
             <th>Rodelar</th>
           </tr>
@@ -112,11 +112,11 @@
         <tbody>
           <tr *ngFor="let aprazamento of getAprazamentos() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationAprazamento }">
             <!-- <th scope="row">{{i + 1}}</th> -->
+            <td class="data-aprazamento">{{aprazamento?.horarioInicial | date:'HH:mm - dd/MM/yy'}}</td>
             <td>{{aprazamento?.itemPrescricao?.descricaoItem}}</td>
             <td>{{aprazamento?.itemPrescricao?.administracao}}</td>
-            <td>{{aprazamento?.itemPrescricao?.frequencia}} Horas</td>
+            <td>{{aprazamento?.itemPrescricao?.frequencia}}h</td>
             <td>{{aprazamento?.itemPrescricao?.observacaoItem}}</td>
-            <td>{{aprazamento?.horarioInicial | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{aprazamento?.itemPrescricao?.gotejamento}}</td>
             <td>
               <button (click)="showModalRodelagemAprazamento(aprazamento)" class="btn btn-danger circle">
@@ -137,7 +137,7 @@
           <thead colspan="2">
             <tr>
               <!-- <th>#</th> -->
-              <th>Nome</th>
+              <th>Descricao</th>
               <th>Administração</th>
               <th>Observação</th>
               <th>Data Inicio</th>
@@ -164,9 +164,9 @@
           <thead colspan="2">
             <tr>
               <!-- <th>#</th> -->
-              <th>Nome</th>
+              <th>Nome do Medicamento</th>
               <th>Administração</th>
-              <th>Frequencia</th>
+              <th>Intervalo</th>
               <th>Observação</th>
               <th>Data Inicio</th>
               <th>Gotejamento</th>
@@ -178,7 +178,7 @@
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
-              <td>{{itemPrescricao?.frequencia}} Horas</td>
+              <td>{{itemPrescricao?.frequencia}}h</td>
               <td>{{itemPrescricao?.observacaoItem}}</td>
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy HH:mm'}}</td>
               <td>{{itemPrescricao?.gotejamento}}</td>
@@ -201,7 +201,7 @@
           <thead colspan="2">
             <tr>
               <!-- <th>#</th> -->
-              <th>Nome</th>
+              <th>Descrição</th>
               <th>Administração</th>
               <th>Frequencia</th>
               <th>Observação</th>
@@ -213,7 +213,7 @@
               <!-- <th scope="row">{{i + 1}}</th> -->
               <td>{{itemPrescricao?.descricaoItem}}</td>
               <td>{{itemPrescricao?.administracao}}</td>
-              <td>{{itemPrescricao?.frequencia}} Horas</td>
+              <td>{{itemPrescricao?.frequencia}}h</td>
               <td>{{itemPrescricao?.observacaoItem}}</td>
               <td>{{getDateFromString(itemPrescricao?.dataInicioItem) | date:'dd/MM/yyyy hh:mm'}}</td>
           </tbody>
@@ -230,7 +230,7 @@
           <thead colspan="2">
             <tr>
               <!-- <th>#</th> -->
-              <th>Nome</th>
+              <th>Descrição</th>
               <th>Administração</th>
               <th>Observação</th>
               <th>Data Inicio</th>
@@ -257,7 +257,7 @@
           <thead colspan="2">
             <tr>
               <!-- <th>#</th> -->
-              <th>Nome</th>
+              <th>Descricao</th>
               <th>Administração</th>
               <th>Observação</th>
               <th>Data Inicio</th>

@@ -196,7 +196,7 @@ export class PrescricaoComponent implements OnInit {
       modal.result
         .then((aprazamentos: PreOperacao[]) => {
           this.aprazamentos.push(...aprazamentos);
-          this.toastrService.success('Aprazamentos realizados com sucesso!', 'Sucesso!', { timeOut: 2000 });
+          this.toastrService.success('Aprazamento(s) realizado(s) com sucesso!', 'Sucesso!', { timeOut: 2000 });
         }).catch(() => null);
     }
   }
@@ -209,7 +209,7 @@ export class PrescricaoComponent implements OnInit {
       .then((cancelamento: Operacao) => {
         this.aprazamentos
           .splice(this.aprazamentos.findIndex(a => a._id === cancelamento.cdPreOperacaoAprazamento), 1);
-        this.toastrService.success('Aprazamentos cancelados com sucesso!', 'Sucesso!', { timeOut: 2000 });
+        this.toastrService.success('Aprazamento cancelado com sucesso!', 'Sucesso!', { timeOut: 2000 });
       }).catch(() => null);;
   }
 
