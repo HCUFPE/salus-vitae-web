@@ -20,10 +20,10 @@
 </section>
 <br>
 <section class="content">
-  <div class="row">
-    <div class="col-md-12">
+  <div class="row m-5">
+    <div class="panel-group col-md-12 w-100">
       <div class="panel panel-default">
-        <div class="card full">
+        <div class="card">
           <div *ngFor="let horario of getHorarios() | paginate: { id: 'administracoes', itemsPerPage: 10, currentPage: paginationAdministracoes }">
             <div class="card-header" (click)="mostrarAdministracoes(horario)">
               <a class="card-title">

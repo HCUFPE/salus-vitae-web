@@ -25,7 +25,7 @@
   <div class="row m-5">
     <div class="panel-group col-md-12 w-100">
       <div class="panel panel-default">
-        <div class="card apra">
+        <div class="card">
           <div *ngFor="let prontuario of getProntuarios() | paginate: { id: 'aprazamentos', itemsPerPage: 10, currentPage: paginationHorario }">
             <div class="card-header" (click)="mostrarAprazamentos(prontuario)">
               <a class="card-title">
