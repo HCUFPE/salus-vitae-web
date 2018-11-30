@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 
 import * as moment from 'moment';
 
@@ -24,6 +25,8 @@ import { Operacao } from 'src/app/models/operacao.model';
 })
 export class PrescricaoComponent implements OnInit {
 
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = true;
   prontuario: Prontuario;
   atendimento: Atendimento;
   aprazamentos: PreOperacao[];
@@ -45,46 +48,41 @@ export class PrescricaoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProntuarioById();
-
-    this.prontuarioService
-      .atendimentos(
-        this.route.snapshot.paramMap.get('prontuario_id'),
-        this.route.snapshot.paramMap.get('atendimento_id')
-      )
-      .subscribe((atendimento: Atendimento) => {
-        atendimento.prescricoes = atendimento.prescricoes.sort(
-          (a: Prescricao, b: Prescricao) => {
-            if (
-              this.getDateFromString(a.dataPrescricao) >
-              this.getDateFromString(b.dataPrescricao)
-            ) {
-              return -1;
-            }
-
-            if (
-              this.getDateFromString(a.dataPrescricao) <
-              this.getDateFromString(b.dataPrescricao)
-            ) {
-              return 1;
-            }
-
-            return 0;
-          }
-        );
-        this.atendimento = atendimento;
-        this.prescricaoSelected = this.getUltimaPrescricao();
-        this.validateFields();
-        this.refreshAprazamentos();
-      });
-  }
-
-
-  public getProntuarioById() {
     this.prontuarioService.prontuario(this.route.snapshot.paramMap.get('prontuario_id'))
-      .subscribe(data => {
-        this.prontuario = data;
-      });
+      .subscribe(prontuario => {
+        this.prontuario = prontuario;
+
+        this.prontuarioService
+          .atendimentos(
+            this.route.snapshot.paramMap.get('prontuario_id'),
+            this.route.snapshot.paramMap.get('atendimento_id')
+          )
+          .subscribe((atendimento: Atendimento) => {
+            atendimento.prescricoes = atendimento.prescricoes.sort(
+              (a: Prescricao, b: Prescricao) => {
+                if (
+                  this.getDateFromString(a.dataPrescricao) >
+                  this.getDateFromString(b.dataPrescricao)
+                ) {
+                  return -1;
+                }
+
+                if (
+                  this.getDateFromString(a.dataPrescricao) <
+                  this.getDateFromString(b.dataPrescricao)
+                ) {
+                  return 1;
+                }
+
+                return 0;
+              }
+            );
+            this.atendimento = atendimento;
+            this.prescricaoSelected = this.getUltimaPrescricao();
+            this.validateFields();
+            this.refreshAprazamentos();
+          }, () => this.loading = false);
+      }, () => this.loading = false);
   }
 
   public getUltimaPrescricao() {
@@ -124,7 +122,9 @@ export class PrescricaoComponent implements OnInit {
                   i.codigoItem === a.cdItem
               ))
         );
-      });
+
+        this.loading = false;
+      }, () => this.loading = false);
   }
 
   public selecionarPrescricao(prescricao: Prescricao) {
