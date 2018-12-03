@@ -69,7 +69,7 @@ input::-moz-placeholder {
   padding: 10px;
   color: #fff;
   pointer-events: none;
-  padding-left: 182px;
+  padding-left: 176px;
 }
 
 @media only screen and (max-width:1024px){
@@ -87,7 +87,7 @@ input::-moz-placeholder {
     position: absolute;
     padding: 10px;
     pointer-events: none;
-    padding-left: 152px;
+    padding-left: 160px;
     color: #fff;
 }
 }
