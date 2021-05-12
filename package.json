@@ -26,7 +26,7 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "@types/moment": "^2.13.0",
     "angular-font-awesome": "^3.1.2",
-    "chart.js": "^2.7.3",
+    "chart.js": "^2.9.4",
     "core-js": "^2.5.4",
     "flatpickr": "^4.5.2",
     "font-awesome": "^4.7.0",
